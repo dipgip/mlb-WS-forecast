@@ -1,0 +1,54 @@
+{
+  "snapshot_id": "2026-10-13_v1_live_ALCS-CLE1-TB0_NLCS-MIL2-LAD0",
+  "kind": "live",
+  "model_version": "v1",
+  "created_at_utc": "2026-10-13T18:58:10Z",
+  "code_commit": {
+    "sha": "5455bc2",
+    "src_has_uncommitted_changes": false
+  },
+  "information": {
+    "games_through": "2026-10-12",
+    "postseason_games_included": 28
+  },
+  "series_state": {
+    "ALCS": {
+      "Cleveland Guardians": 1,
+      "Tampa Bay Rays": 0
+    },
+    "NLCS": {
+      "Los Angeles Dodgers": 0,
+      "Milwaukee Brewers": 2
+    }
+  },
+  "state_key": "ALCS-CLE1-TB0_NLCS-MIL2-LAD0",
+  "next_games": [
+    {
+      "series": "AL Championship Series",
+      "game": 2,
+      "first_pitch_utc": "2026-10-14T00:00:00Z",
+      "matchup": "Cleveland Guardians @ Tampa Bay Rays"
+    }
+  ],
+  "pregame_verified": true,
+  "odds": {
+    "Cleveland Guardians": {
+      "title": 0.15570045455246462,
+      "pennant": 0.5718343740805227
+    },
+    "Tampa Bay Rays": {
+      "title": 0.15211832912150805,
+      "pennant": 0.42816562591947727
+    },
+    "Los Angeles Dodgers": {
+      "title": 0.12023101929991399,
+      "pennant": 0.1776403264297186
+    },
+    "Milwaukee Brewers": {
+      "title": 0.5719501970261134,
+      "pennant": 0.8223596735702814
+    }
+  },
+  "market": null,
+  "notes": "Original call. Reconstructed verbatim from outputs/odds_2026.json in commit 5455bc2 (committed and pushed 2026-10-13 18:58:10 UTC). Model v1 had no bootstrap interval. Superseded by v2 after the partner review; kept unchanged as the first forecast on record."
+}

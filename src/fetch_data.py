@@ -59,6 +59,7 @@ def fetch_season(season):
                 "season": season,
                 "game_pk": g["gamePk"],
                 "date": g["officialDate"],
+                "game_time_utc": g.get("gameDate"),  # scheduled first pitch (UTC)
                 "game_type": g["gameType"],
                 "series_desc": g.get("seriesDescription"),
                 "series_game": g.get("seriesGameNumber"),

@@ -1,0 +1,70 @@
+{
+  "snapshot_id": "2026-10-13_v2_live_ALCS-CLE1-TB0_NLCS-MIL2-LAD0",
+  "kind": "live",
+  "model_version": "v2",
+  "created_at_utc": "2026-10-13T22:32:03Z",
+  "code_commit": {
+    "sha": "17d0d6b",
+    "src_has_uncommitted_changes": true
+  },
+  "information": {
+    "games_through": "2026-10-12",
+    "postseason_games_included": 28
+  },
+  "series_state": {
+    "ALCS": {
+      "Cleveland Guardians": 1,
+      "Tampa Bay Rays": 0
+    },
+    "NLCS": {
+      "Los Angeles Dodgers": 0,
+      "Milwaukee Brewers": 2
+    }
+  },
+  "state_key": "ALCS-CLE1-TB0_NLCS-MIL2-LAD0",
+  "next_games": [
+    {
+      "series": "AL Championship Series",
+      "game": 2,
+      "first_pitch_utc": "2026-10-14T00:00:00Z",
+      "matchup": "Cleveland Guardians @ Tampa Bay Rays"
+    }
+  ],
+  "pregame_verified": true,
+  "odds": {
+    "Cleveland Guardians": {
+      "title": 0.15168731228543794,
+      "pennant": 0.5716193543896124,
+      "title_p05": 0.0787030466212587,
+      "title_p95": 0.2466891383404066
+    },
+    "Tampa Bay Rays": {
+      "title": 0.14904463155534925,
+      "pennant": 0.4283806456103876,
+      "title_p05": 0.0773162429897714,
+      "title_p95": 0.258958143556037
+    },
+    "Los Angeles Dodgers": {
+      "title": 0.12498053430822456,
+      "pennant": 0.1827097842040495,
+      "title_p05": 0.0701014941746834,
+      "title_p95": 0.2021963680806442
+    },
+    "Milwaukee Brewers": {
+      "title": 0.5742875218509883,
+      "pennant": 0.8172902157959505,
+      "title_p05": 0.426770364113245,
+      "title_p95": 0.6961703504621072
+    }
+  },
+  "market": {
+    "captured": "2026-10-13",
+    "fair_power": {
+      "Cleveland Guardians": 0.1797837892587278,
+      "Los Angeles Dodgers": 0.2035983421625468,
+      "Milwaukee Brewers": 0.4651623157202801,
+      "Tampa Bay Rays": 0.1514555528584472
+    }
+  },
+  "notes": "First v2 forecast. The same numbers were first published in commit f6142a3 (2026-10-13 19:37:09 UTC); this record was written later the same day, before ALCS Game 2."
+}

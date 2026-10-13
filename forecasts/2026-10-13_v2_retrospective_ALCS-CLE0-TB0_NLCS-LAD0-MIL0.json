@@ -1,0 +1,47 @@
+{
+  "snapshot_id": "2026-10-13_v2_retrospective_ALCS-CLE0-TB0_NLCS-LAD0-MIL0",
+  "kind": "retrospective",
+  "model_version": "v2",
+  "created_at_utc": "2026-10-13T22:32:03Z",
+  "code_commit": {
+    "sha": "17d0d6b",
+    "src_has_uncommitted_changes": true
+  },
+  "information": {
+    "games_through": "2026-10-10",
+    "postseason_games_included": 25
+  },
+  "series_state": {
+    "ALCS": {
+      "Cleveland Guardians": 0,
+      "Tampa Bay Rays": 0
+    },
+    "NLCS": {
+      "Los Angeles Dodgers": 0,
+      "Milwaukee Brewers": 0
+    }
+  },
+  "state_key": "ALCS-CLE0-TB0_NLCS-LAD0-MIL0",
+  "next_games": [],
+  "pregame_verified": false,
+  "odds": {
+    "Cleveland Guardians": {
+      "title": 0.10734872204702439,
+      "pennant": 0.39681968058832073
+    },
+    "Tampa Bay Rays": {
+      "title": 0.2132799950465696,
+      "pennant": 0.6031803194116793
+    },
+    "Los Angeles Dodgers": {
+      "title": 0.3154157786556087,
+      "pennant": 0.47122335716200103
+    },
+    "Milwaukee Brewers": {
+      "title": 0.3639555042507973,
+      "pennant": 0.528776642837999
+    }
+  },
+  "market": null,
+  "notes": "Retrospective: model v2 (built Oct 13) applied to the bracket as it stood before LCS Game 1. Not a forecast made at the time, so it is never scored. Shown only to anchor the timeline."
+}
