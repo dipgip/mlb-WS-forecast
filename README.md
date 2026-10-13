@@ -6,7 +6,8 @@
 
 - `LOG.md` — the step-by-step record of every decision and result. Start here.
 - `REVIEW.md` — a partner review of the weak links, with evidence and the fixes made.
-- `report/index.html` — the presentation of findings.
+- **[REPORT.md](REPORT.md) — the full report, readable right here on GitHub.**
+- `report/index.html` — the same report as an interactive web page (open it in a browser for hover detail).
 - `run_all.sh` — rebuilds everything from the MLB Stats API.
 
 **Data:** raw API responses (`data/raw/`) are not committed. They are MLB Advanced Media content, and the fetch scripts rebuild them. The committed `data/processed/` tables contain only game facts (dates, teams, scores, starting pitchers).
@@ -21,7 +22,7 @@
 | 5a. Postseason roster adjustment | `src/fetch_rosters.py`, `src/roster_adjust.py` | `outputs/roster_adjustments_2026.json` |
 | 5b. Uncertainty, sensitivity and what-ifs | `src/sensitivity.py` | `outputs/uncertainty.csv`, `outputs/sensitivity.csv`, `outputs/whatif_next_game.csv` |
 | 6. Market comparison | `src/market.py` (prices in `data/market_odds.csv`) | `outputs/market_2026.json` |
-| 7. Report | `report/build.py` | `report/index.html` |
+| 7. Report | `report/build.py` (interactive), `report/build_md.py` (static) | `report/index.html`, `REPORT.md` + `report/figures/` |
 
 Tests: `.venv/bin/python -m unittest discover -s tests -v` (they also run on every push via GitHub Actions).
 

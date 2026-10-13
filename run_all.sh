@@ -15,3 +15,4 @@ $PY src/roster_adjust.py
 $PY src/market.py
 $PY src/sensitivity.py
 $PY report/build.py
+$PY report/build_md.py

@@ -209,3 +209,14 @@ All 8 findings were fixed (see the Resolution table in `REVIEW.md`), and the who
 | Los Angeles Dodgers | 12.5% | 7–20% | 20% |
 
 **Final call unchanged:** Milwaukee Brewers, 57% (90% interval 43–70%).
+
+---
+
+## Step 11 — Static report (`REPORT.md`, `report/build_md.py`)
+
+The interactive page needs a browser, and its claude.ai link is private. So the report now also exists as plain Markdown, which reads as-is on GitHub or in any Markdown viewer.
+
+- `report/build_md.py` reads the same `report/data.json` as the interactive page, so the numbers can't drift apart.
+- Four charts (title odds with 90% intervals, calibration, sensitivity, model vs market) are rendered with matplotlib into `report/figures/`, in light and dark versions. `<picture>` tags show the right one for the reader's GitHub theme.
+- Every table on the interactive page is reproduced as a Markdown table, including the series linescores.
+- Wired into `run_all.sh` and the refresh skill. The two versions link to each other.
