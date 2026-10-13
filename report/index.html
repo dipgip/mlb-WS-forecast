@@ -106,6 +106,7 @@ a { color: var(--accent); }
 .sw-solid { width: 14px; height: 10px; border-radius: 2px; background: var(--ink-2); display: inline-block; }
 .sw-tick { width: 3px; height: 14px; background: var(--ink); display: inline-block; }
 .sw-ring { width: 11px; height: 11px; border-radius: 50%; border: 2px solid var(--ink-2); display: inline-block; }
+.sw-ci { width: 16px; height: 2px; background: var(--ink); display: inline-block; position: relative; }
 .sw-dot { width: 11px; height: 11px; border-radius: 50%; background: var(--ink-2); display: inline-block; }
 [data-tip] { cursor: default; }
 #tip { position: fixed; pointer-events: none; z-index: 10; background: var(--ink); color: var(--bg); font-size: .8rem; line-height: 1.4; padding: 7px 10px; border-radius: 4px; max-width: 260px; opacity: 0; transition: opacity .1s; }
@@ -151,20 +152,19 @@ footer { padding-top: 30px; border-top: 1px solid var(--rule); font-size: .8rem;
 
 <div class="wrap">
   <div class="hero">
-    <div class="eyebrow" id="asof">Forecast as of Oct 13, 2026 · ALCS G2 tonight</div>
-    <h1>The pick <span class="team">Milwaukee Brewers</span></h1>
+    <div class="eyebrow" data-f="asof"></div>
+    <h1>The pick <span class="team" data-f="fav"></span></h1>
     <div class="verdict">
-      <div class="big num" id="hero-pct">57<small>%</small></div>
-      <div class="kv"><b class="num" id="hero-range">51–60%</b><span>range across 9 alternative model setups</span></div>
-      <div class="kv"><b class="num" id="hero-mkt">45%</b><span>betting market, vig removed</span></div>
-      <div class="kv"><b>CLE vs MIL</b><span>most likely World Series (<span id="hero-mu">47%</span>)</span></div>
+      <div class="big num" id="hero-pct"></div>
+      <div class="kv"><b class="num" data-f="fav_ci"></b><span>90% interval, from refitting the model on 1,000 resampled seasons</span></div>
+      <div class="kv"><b class="num" data-f="fav_mkt"></b><span>betting market, margin removed</span></div>
+      <div class="kv"><b data-f="top_mu"></b><span>most likely World Series (<span data-f="top_mu_pct"></span>)</span></div>
     </div>
-    <p class="lede">Milwaukee was the best team in baseball over 162 games, leads the Dodgers 2–0 in the NLCS, and would host Games 1, 2, 6 and 7 of any World Series. Every version of the model makes them the favorite. That still leaves a 43% chance the trophy goes somewhere else. October baseball is mostly noise, and this page shows how much.</p>
+    <p class="lede"><span data-f="lede"></span> October baseball is mostly noise, and this page shows how much.</p>
   </div>
 
-  <div class="board" aria-label="Championship series scoreboard">
-    <div id="board-al"></div>
-    <div id="board-nl"></div>
+  <div class="board" aria-label="Postseason series scoreboard">
+    <div id="boards"></div>
     <div class="src">Source: MLB Stats API · gold = winning side · scheduled starters shown for the next game</div>
   </div>
 
@@ -172,12 +172,12 @@ footer { padding-top: 30px; border-top: 1px solid var(--rule); font-size: .8rem;
     <header>
       <div class="eyebrow">The answer</div>
       <h2>Title odds for the last four teams</h2>
-      <p>Exact probabilities from every remaining path through the bracket, using the real home/away schedule. The tick marks where each team stood before the LCS began. Two wins in Milwaukee moved the Brewers from 36% to 57% and dropped the Dodgers from 32% to 12%.</p>
+      <p>Exact probabilities from every remaining path through the bracket, using the real home/away schedule. The whisker is the 90% interval from refitting the model on 1,000 resampled seasons. The tick marks where each team stood before the LCS began. <span data-f="swing"></span></p>
     </header>
     <div class="chart">
       <div class="cap"><h3>Chance to win the 2026 World Series</h3>
-        <div class="legend"><span><i class="sw-solid"></i>Now</span><span><i class="sw-tick"></i>Before LCS Game 1</span></div></div>
-      <svg id="c-odds" role="img" aria-label="World Series win probability by team"></svg>
+        <div class="legend"><span><i class="sw-solid"></i>Now</span><span><i class="sw-ci"></i>90% interval</span><span><i class="sw-tick"></i>Before LCS Game 1</span></div></div>
+      <svg id="c-odds" role="img" aria-label="World Series win probability by team with 90% intervals"></svg>
     </div>
     <div class="tbl-wrap"><table class="data" id="t-matchups"></table></div>
   </section>
@@ -185,16 +185,16 @@ footer { padding-top: 30px; border-top: 1px solid var(--rule); font-size: .8rem;
   <section id="method">
     <header>
       <div class="eyebrow">How I got here</div>
-      <h2>Six steps, each written down before the next</h2>
-      <p>The full log with every number is in <code>LOG.md</code>. The method was fixed before any 2026 odds were computed, so the answer couldn't steer it.</p>
+      <h2>The method, step by step</h2>
+      <p>The full log with every number is in <code>LOG.md</code>, and a partner review of the weak spots is in <code>REVIEW.md</code>. The core method was fixed before any 2026 odds were computed.</p>
     </header>
     <ol class="steps">
-      <li><b>Pulled every game since 2015</b><p>About 29,000 regular-season and postseason results from the official MLB Stats API, plus the live 2026 bracket, rosters and announced starters. <code>fetch_data.py</code></p></li>
-      <li><b>Rated every team on runs, not wins</b><p>A Poisson model gives each team an offense and a defense rating plus a home-field term, adjusted for opponents. A ridge penalty pulls ratings toward average, because 162 games overstate how far apart teams really are. <code>model.py</code></p></li>
-      <li><b>Tuned it on games it hadn't seen</b><p>Fit through August, predict September, ten seasons over. The best setting was heavy shrinkage with no recency weighting: hot streaks did not predict. <code>tune.py</code></p></li>
-      <li><b>Graded it on 11 real Octobers</b><p>440 playoff games and 113 series from 2015–2025, each predicted using only that year's regular season. <code>backtest.py</code></p></li>
-      <li><b>Ran the live bracket</b><p>Each LCS from its current state, then all four possible World Series, with home field going to the better record. <code>predict.py</code></p></li>
-      <li><b>Tried to break it</b><p>Nine alternative setups, a postseason-roster adjustment built from actual October starters, and a comparison against betting markets. <code>sensitivity.py</code>, <code>roster_adjust.py</code></p></li>
+      <li><b>Pulled every game since 2015</b><p><span data-f="n_games_total"></span> regular-season and postseason results from the official MLB Stats API, plus the live bracket, rosters and announced starters. <code>fetch_data.py</code>, <code>fetch_rosters.py</code></p></li>
+      <li><b>Rated every team on runs, not wins</b><p>A Poisson model gives each team an offense and a defense rating, adjusted for opponents and pulled toward average. Home field is set from actual home win rates (<span data-f="home_rate"></span> between equal teams), because run totals understate it. <code>model.py</code></p></li>
+      <li><b>Tuned it on games it hadn't seen</b><p>Fit through August, predict September, ten seasons over. Heavy shrinkage won, and weighting recent form didn't help. <code>tune.py</code></p></li>
+      <li><b>Graded it on 11 real Octobers</b><p>Every playoff game and series from 2015–2025, each predicted using only that year's regular season. Also tested whether adjusting for each game's starting pitchers helps; it doesn't. <code>backtest.py</code>, <code>sp_backtest.py</code></p></li>
+      <li><b>Ran the live bracket</b><p>Each series from its current state, then all four possible World Series, with home field set by MLB's tiebreak rules. <code>predict.py</code></p></li>
+      <li><b>Measured the uncertainty and tried to break it</b><p>1,000 resampled seasons for the interval, eleven alternative setups, and a comparison against betting markets. <code>sensitivity.py</code>, <code>market.py</code></p></li>
     </ol>
   </section>
 
@@ -202,23 +202,24 @@ footer { padding-top: 30px; border-top: 1px solid var(--rule); font-size: .8rem;
     <header>
       <div class="eyebrow">Can it be trusted?</div>
       <h2>The backtest: a real edge, a small one</h2>
-      <p>The stronger team does not reliably win in October, so the useful question is whether the model's probabilities are <em>honest</em>. They are. When it called a series 55–60% for the favorite, the favorite won about 60% of the time. It beats a coin flip and beats "just use the standings," by modest margins.</p>
+      <p>The stronger team does not reliably win in October, so the useful question is whether the model's probabilities are honest. <span data-f="bt_series"></span></p>
     </header>
     <div class="tiles" id="bt-tiles"></div>
     <div class="chart">
       <div class="cap"><h3>Series calibration, 2015–2025</h3>
         <div class="legend"><span><i class="sw-dot"></i>Actual favorite win rate</span><span><i class="sw-tick" style="height:2px;width:14px"></i>Perfect calibration</span></div></div>
       <svg id="c-calib" role="img" aria-label="Predicted versus actual series win rate for model favorites"></svg>
-      <p class="note">Dots show how often the model's series favorite actually won, grouped by how confident the model was. Dots above the line mean the model was too cautious. The bins hold 15–49 series each, so expect scatter.</p>
+      <p class="note" data-f="calib_note"></p>
     </div>
     <div class="tbl-wrap"><table class="data" id="t-ws"></table></div>
+    <p class="note" data-f="ws_clear"></p>
   </section>
 
   <section id="sensitivity">
     <header>
       <div class="eyebrow">Stress test</div>
-      <h2>Milwaukee leads under every setup</h2>
-      <p>Each row changes one assumption: more or less shrinkage, weighting recent form, counting this October's games, swapping in each club's actual playoff roster and rotation, and making the model more or less confident. The bottom row treats every remaining game as a coin flip. The 2–0 lead alone still makes Milwaukee the most likely champion.</p>
+      <h2 data-f="sens_head"></h2>
+      <p>Each row changes one judgment call: shrinkage, recent form, counting this October's games, the old home-field method, an untested postseason-roster adjustment, and more or less confident probabilities. Across these the favorite's title odds range <span data-f="sens_range"></span>. That range measures sensitivity to choices; the wider interval above measures statistical noise. The bottom row treats every remaining game as a coin flip, and the current series lead alone still gives the favorite <span data-f="coin_pct"></span>.</p>
     </header>
     <div class="multiples" id="c-sens"></div>
   </section>
@@ -227,12 +228,14 @@ footer { padding-top: 30px; border-top: 1px solid var(--rule); font-size: .8rem;
     <header>
       <div class="eyebrow">Second opinion</div>
       <h2>Model vs the betting market</h2>
-      <p>Sportsbooks agree on the favorite and on the order at the top. The real disagreement is the Dodgers: the market has them near 20%, and the model has 12%. My read is that the market prices in October deployment. When Skubal, Snell, Yamamoto and Glasnow start every game and Ohtani is in the mix, the Dodgers' staff projects at a 3.50 FIP instead of their 3.85 season mark. The roster-adjusted model moves to 16% for exactly that reason. I kept the pre-registered model as the headline and show the gap here rather than tuning toward the market.</p>
+      <p data-f="market_text"></p>
+      <p data-f="market_why"></p>
     </header>
     <div class="chart">
       <div class="cap"><h3>Title probability, three ways</h3>
-        <div class="legend"><span><i class="sw-dot"></i>Model</span><span><i class="sw-ring"></i>Roster-adjusted model</span><span><i class="sw-tick" style="width:11px;height:11px;transform:rotate(45deg)"></i>Market (vig-free)</span></div></div>
+        <div class="legend"><span><i class="sw-dot"></i>Model</span><span><i class="sw-ring"></i>Roster-adjusted (untested)</span><span><i class="sw-tick" style="width:11px;height:11px;transform:rotate(45deg)"></i>Market</span></div></div>
       <svg id="c-market" role="img" aria-label="Model, roster-adjusted, and market title odds"></svg>
+      <p class="note" data-f="mkt_note"></p>
     </div>
     <div class="tbl-wrap"><table class="data" id="t-roster"></table></div>
   </section>
@@ -240,8 +243,8 @@ footer { padding-top: 30px; border-top: 1px solid var(--rule); font-size: .8rem;
   <section id="watch">
     <header>
       <div class="eyebrow">What to watch</div>
-      <h2>The next two games swing everything</h2>
-      <p>Title odds after each possible result. If Milwaukee wins Game 3 in Los Angeles, the Dodgers fall below 4%.</p>
+      <h2 data-f="watch_head"></h2>
+      <p data-f="watch_text"></p>
     </header>
     <div class="watch" id="watch"></div>
   </section>
@@ -250,7 +253,7 @@ footer { padding-top: 30px; border-top: 1px solid var(--rule); font-size: .8rem;
     <header>
       <div class="eyebrow">Under the hood</div>
       <h2>2026 team ratings</h2>
-      <p>Expected runs per game against a league-average opponent after shrinkage, and the implied win rate. Cleveland ranks 16th: a .500-quality team on paper that has won with run prevention and timely October results.</p>
+      <p data-f="ratings_text"></p>
     </header>
     <div class="tbl-wrap"><table class="data" id="t-ratings"></table></div>
   </section>
@@ -258,29 +261,35 @@ footer { padding-top: 30px; border-top: 1px solid var(--rule); font-size: .8rem;
   <section id="caveats">
     <header><div class="eyebrow">Limits</div><h2>What this model can't see</h2></header>
     <ul class="caveats">
-      <li>It rates teams on the full season. Injuries are only captured in the roster-adjusted scenario, which is not backtested.</li>
-      <li>It doesn't know tonight's specific matchup (for example, Peralta vs Messick) beyond the team-level rotation adjustment.</li>
+      <li>It rates teams on the full season. Injuries and October roster changes appear only in the roster-adjusted scenario, which is not backtested.</li>
+      <li data-f="next_matchup_caveat"></li>
       <li>Bullpen fatigue, travel and day-to-day lineup choices are not modeled.</li>
-      <li>The backtest covers 113 series. That's enough to show the probabilities are honest, but not enough to fine-tune them.</li>
-      <li>Market odds came from published sportsbook prices on Oct 13 (SI, Fox Sports/DraftKings) and move by the hour.</li>
+      <li data-f="sample_caveat"></li>
+      <li>Market prices are a recorded snapshot from published articles, not a live feed, and they move by the hour.</li>
     </ul>
   </section>
 
   <footer>
-    <div>Data: MLB Stats API (statsapi.mlb.com), games 2015–2026 through Oct 12. Market prices: <a href="https://www.si.com/betting/2026-world-series-odds-brewers-jump-to-favorite-guardians-favored-over-rays-in-al">SI</a>, <a href="https://www.foxsports.com/stories/mlb/2026-world-series-odds">Fox Sports</a>.</div>
-    <div>Rebuild everything with <code>./run_all.sh</code> then <code>report/build.py</code>.</div>
+    <div>Data: MLB Stats API (statsapi.mlb.com), games through <span data-f="data_through"></span>. Market prices: <span id="mkt-src"></span>.</div>
+    <div>Rebuild everything with <code>./run_all.sh</code>. Code: <a href="https://github.com/dipgip/mlb-WS-forecast">github.com/dipgip/mlb-WS-forecast</a></div>
   </footer>
 </div>
 <div id="tip" role="tooltip"></div>
 
 <script>
-const DATA = {"as_of": "2026-10-13", "odds": {"as_of": "2026-10-12", "series_state": {"ALCS": {"Cleveland Guardians": 1, "Tampa Bay Rays": 0}, "NLCS": {"Los Angeles Dodgers": 0, "Milwaukee Brewers": 2}}, "odds_now": {"Cleveland Guardians": {"pennant": 0.5718343740805227, "ws": 0.15570045455246462}, "Tampa Bay Rays": {"pennant": 0.42816562591947727, "ws": 0.15211832912150805}, "Los Angeles Dodgers": {"pennant": 0.1776403264297186, "ws": 0.12023101929991399}, "Milwaukee Brewers": {"pennant": 0.8223596735702814, "ws": 0.5719501970261134}}, "odds_before_lcs": {"Cleveland Guardians": {"pennant": 0.40421527733394247, "ws": 0.1122455485364005}, "Tampa Bay Rays": {"pennant": 0.5957847226660575, "ws": 0.21518718792161995}, "Los Angeles Dodgers": {"pennant": 0.47848300130084537, "ws": 0.31708232608660625}, "Milwaukee Brewers": {"pennant": 0.5215169986991546, "ws": 0.35548493745537324}}, "ws_matchups": {"Cleveland Guardians vs Los Angeles Dodgers": {"p_matchup": 0.10158084487539788, "p_al_wins": 0.2870574222555847}, "Cleveland Guardians vs Milwaukee Brewers": {"p_matchup": 0.47025352920512486, "p_al_wins": 0.26909084400893724}, "Tampa Bay Rays vs Los Angeles Dodgers": {"p_matchup": 0.07605948155432073, "p_al_wins": 0.37141683156429134}, "Tampa Bay Rays vs Milwaukee Brewers": {"p_matchup": 0.3521061443651565, "p_al_wins": 0.3517932289864274}}, "hfa_runs_multiplier": 1.011681034051228}, "series": {"AL Championship Series": [{"g": 1, "date": "2026-10-12", "home": "Tampa Bay Rays", "away": "Cleveland Guardians", "status": "Final", "home_runs": 3, "away_runs": 7, "home_sp": "Drew Rasmussen", "away_sp": "Foster Griffin"}, {"g": 2, "date": "2026-10-13", "home": "Tampa Bay Rays", "away": "Cleveland Guardians", "status": "Scheduled", "home_runs": null, "away_runs": null, "home_sp": "Freddy Peralta", "away_sp": "Parker Messick"}, {"g": 3, "date": "2026-10-15", "home": "Cleveland Guardians", "away": "Tampa Bay Rays", "status": "Scheduled", "home_runs": null, "away_runs": null, "home_sp": null, "away_sp": null}, {"g": 4, "date": "2026-10-16", "home": "Cleveland Guardians", "away": "Tampa Bay Rays", "status": "Scheduled", "home_runs": null, "away_runs": null, "home_sp": null, "away_sp": null}, {"g": 5, "date": "2026-10-17", "home": "Cleveland Guardians", "away": "Tampa Bay Rays", "status": "Scheduled", "home_runs": null, "away_runs": null, "home_sp": null, "away_sp": null}, {"g": 6, "date": "2026-10-19", "home": "Tampa Bay Rays", "away": "Cleveland Guardians", "status": "Scheduled", "home_runs": null, "away_runs": null, "home_sp": null, "away_sp": null}, {"g": 7, "date": "2026-10-20", "home": "Tampa Bay Rays", "away": "Cleveland Guardians", "status": "Scheduled", "home_runs": null, "away_runs": null, "home_sp": null, "away_sp": null}], "NL Championship Series": [{"g": 1, "date": "2026-10-11", "home": "Milwaukee Brewers", "away": "Los Angeles Dodgers", "status": "Final", "home_runs": 2, "away_runs": 1, "home_sp": "Jacob Misiorowski", "away_sp": "Tarik Skubal"}, {"g": 2, "date": "2026-10-12", "home": "Milwaukee Brewers", "away": "Los Angeles Dodgers", "status": "Final", "home_runs": 7, "away_runs": 4, "home_sp": "Logan Henderson", "away_sp": "Yoshinobu Yamamoto"}, {"g": 3, "date": "2026-10-14", "home": "Los Angeles Dodgers", "away": "Milwaukee Brewers", "status": "Scheduled", "home_runs": null, "away_runs": null, "home_sp": "Blake Snell", "away_sp": "Robert Gasser"}, {"g": 4, "date": "2026-10-15", "home": "Los Angeles Dodgers", "away": "Milwaukee Brewers", "status": "Scheduled", "home_runs": null, "away_runs": null, "home_sp": null, "away_sp": null}, {"g": 5, "date": "2026-10-16", "home": "Los Angeles Dodgers", "away": "Milwaukee Brewers", "status": "Scheduled", "home_runs": null, "away_runs": null, "home_sp": null, "away_sp": null}, {"g": 6, "date": "2026-10-18", "home": "Milwaukee Brewers", "away": "Los Angeles Dodgers", "status": "Scheduled", "home_runs": null, "away_runs": null, "home_sp": null, "away_sp": null}, {"g": 7, "date": "2026-10-19", "home": "Milwaukee Brewers", "away": "Los Angeles Dodgers", "status": "Scheduled", "home_runs": null, "away_runs": null, "home_sp": null, "away_sp": null}]}, "sensitivity": [{"scenario": "Baseline (\u03bb=80, full season)", "Milwaukee Brewers": 0.5719501970261134, "Cleveland Guardians": 0.1557004545524646, "Tampa Bay Rays": 0.152118329121508, "Los Angeles Dodgers": 0.1202310192999139}, {"scenario": "Less shrinkage (\u03bb=40)", "Milwaukee Brewers": 0.5874646720422187, "Cleveland Guardians": 0.1410036434199805, "Tampa Bay Rays": 0.1490753054064625, "Los Angeles Dodgers": 0.1224563791313382}, {"scenario": "More shrinkage (\u03bb=160)", "Milwaukee Brewers": 0.5477783292685391, "Cleveland Guardians": 0.1791991777724048, "Tampa Bay Rays": 0.1561906733623966, "Los Angeles Dodgers": 0.1168318195966593}, {"scenario": "Recency-weighted (60-day half-life)", "Milwaukee Brewers": 0.5601916114692161, "Cleveland Guardians": 0.1678612623906079, "Tampa Bay Rays": 0.1693879289690387, "Los Angeles Dodgers": 0.1025591971711372}, {"scenario": "Include 2026 postseason games", "Milwaukee Brewers": 0.5702883891389553, "Cleveland Guardians": 0.1642662857521261, "Tampa Bay Rays": 0.1467582006217961, "Los Angeles Dodgers": 0.1186871244871223}, {"scenario": "Postseason roster adjustment (50%)", "Milwaukee Brewers": 0.5566387925377257, "Cleveland Guardians": 0.1554220385334305, "Tampa Bay Rays": 0.1475502120412845, "Los Angeles Dodgers": 0.1403889568875592}, {"scenario": "Postseason roster adjustment (100%)", "Milwaukee Brewers": 0.5399180661586164, "Cleveland Guardians": 0.1542216658397634, "Tampa Bay Rays": 0.1424704446756051, "Los Angeles Dodgers": 0.1633898233260149}, {"scenario": "Backtest-calibrated spread (k=1.18)", "Milwaukee Brewers": 0.597238793286104, "Cleveland Guardians": 0.1321725089109272, "Tampa Bay Rays": 0.146805560083149, "Los Angeles Dodgers": 0.1237831377198197}, {"scenario": "Flatter probabilities (k=0.6)", "Milwaukee Brewers": 0.5100105190467246, "Cleveland Guardians": 0.216882010077142, "Tampa Bay Rays": 0.1621900029799079, "Los Angeles Dodgers": 0.1109174678962253}, {"scenario": "Every game a coin flip", "Milwaukee Brewers": 0.40625, "Cleveland Guardians": 0.328125, "Tampa Bay Rays": 0.171875, "Los Angeles Dodgers": 0.09375}], "whatif": [{"series": "ALCS", "game": 2, "if_wins": "Cleveland Guardians", "new_state": "Guardians 2 Rays 0", "Cleveland Guardians": 0.2056147667386584, "Tampa Bay Rays": 0.0869892081289841, "Los Angeles Dodgers": 0.1229781578370424, "Milwaukee Brewers": 0.5844178672953151}, {"series": "ALCS", "game": 2, "if_wins": "Tampa Bay Rays", "new_state": "Guardians 1 Rays 1", "Cleveland Guardians": 0.1146364549762958, "Tampa Bay Rays": 0.2056993979511611, "Los Angeles Dodgers": 0.1179709762224193, "Milwaukee Brewers": 0.5616931708501237}, {"series": "NLCS", "game": 3, "if_wins": "Los Angeles Dodgers", "new_state": "Dodgers 1 Brewers 2", "Cleveland Guardians": 0.1569472844684961, "Tampa Bay Rays": 0.1531380049416726, "Los Angeles Dodgers": 0.2023694780080839, "Milwaukee Brewers": 0.4875452325817473}, {"series": "NLCS", "game": 3, "if_wins": "Milwaukee Brewers", "new_state": "Dodgers 0 Brewers 3", "Cleveland Guardians": 0.1544720125381846, "Tampa Bay Rays": 0.151113691197498, "Los Angeles Dodgers": 0.0393039157969219, "Milwaukee Brewers": 0.6551103804673953}], "ratings": [{"team": "Milwaukee Brewers", "off": 0.109479852959297, "def": 0.1320508422205497, "exp_RS_pg": 4.969414885534409, "exp_RA_pg": 3.903101169143072, "net": 0.2415306951798468, "exp_wpct": 0.6110956833905872, "W": 103, "rank": 1}, {"team": "Los Angeles Dodgers", "off": 0.0723686475725756, "def": 0.1495028845425424, "exp_RS_pg": 4.788374009245251, "exp_RA_pg": 3.835575030746974, "net": 0.2218715321151181, "exp_wpct": 0.6015109779576266, "W": 100, "rank": 2}, {"team": "Chicago Cubs", "off": 0.1351125613899773, "def": 0.0284188118081581, "exp_RS_pg": 5.098441028631088, "exp_RA_pg": 4.329289492861015, "net": 0.1635313731981355, "exp_wpct": 0.5772159832455193, "W": 89, "rank": 3}, {"team": "New York Yankees", "off": 0.0233423658297144, "def": 0.1310903525614667, "exp_RS_pg": 4.559279546154809, "exp_RA_pg": 3.906851858415172, "net": 0.1544327183911812, "exp_wpct": 0.5707941319589368, "W": 93, "rank": 4}, {"team": "Atlanta Braves", "off": 0.0182834701727474, "def": 0.1219973681194057, "exp_RS_pg": 4.536272869913493, "exp_RA_pg": 3.9425388061215503, "net": 0.1402808382921531, "exp_wpct": 0.5644096242176361, "W": 94, "rank": 5}, {"team": "Tampa Bay Rays", "off": 0.0180104011190179, "def": 0.0751832798908184, "exp_RS_pg": 4.535034323285521, "exp_RA_pg": 4.13149352966273, "net": 0.0931936810098363, "exp_wpct": 0.5431920932135685, "W": 98, "rank": 6}, {"team": "Boston Red Sox", "off": -0.0378207052899006, "def": 0.1278343404998649, "exp_RS_pg": 4.288776721009105, "exp_RA_pg": 3.919593347152875, "net": 0.0900136352099643, "exp_wpct": 0.5410827818692437, "W": 87, "rank": 7}, {"team": "Detroit Tigers", "off": -0.0097792527148506, "def": 0.0770315942808775, "exp_RS_pg": 4.410742304169752, "exp_RA_pg": 4.1238642835141, "net": 0.0672523415660268, "exp_wpct": 0.5310697076045553, "W": 76, "rank": 8}, {"team": "Chicago White Sox", "off": 0.0544613722777321, "def": -0.0054341221914834, "exp_RS_pg": 4.703390460512711, "exp_RA_pg": 4.478357604810425, "net": 0.0490272500862486, "exp_wpct": 0.5231433745197449, "W": 84, "rank": 9}, {"team": "San Diego Padres", "off": -0.0075531025836036, "def": 0.0554248358788019, "exp_RS_pg": 4.420572216099398, "exp_RA_pg": 4.213937210557559, "net": 0.0478717332951983, "exp_wpct": 0.5222041236823063, "W": 91, "rank": 10}, {"team": "Pittsburgh Pirates", "off": 0.0510471192226322, "def": -0.0066461394148302, "exp_RS_pg": 4.687359278093474, "exp_RA_pg": 4.4837887420108204, "net": 0.044400979807802, "exp_wpct": 0.520955290829497, "W": 82, "rank": 11}, {"team": "Philadelphia Phillies", "off": -0.0108545100839558, "def": 0.0378772684869942, "exp_RS_pg": 4.406002169892829, "exp_RA_pg": 4.288534140946761, "net": 0.0270227584030383, "exp_wpct": 0.5125644063442194, "W": 88, "rank": 12}, {"team": "Cleveland Guardians", "off": -0.0625934140574846, "def": 0.0605208403285917, "exp_RS_pg": 4.183837287946899, "exp_RA_pg": 4.192517591373049, "net": -0.0020725737288929, "exp_wpct": 0.4990463999267892, "W": 85, "rank": 16}], "roster": {"Milwaukee Brewers": {"fip_season": 3.81372857423836, "fip_oct": 3.67881409749278, "dra": -0.1349144767455801, "woba_season": 0.32317773936960603, "woba_oct": 0.3230397195167506, "drs": -0.004370628673755669, "sps": ["Jacob Misiorowski", "Logan Henderson", "Robert Gasser", "Dustin May"]}, "Los Angeles Dodgers": {"fip_season": 3.8510381108107827, "fip_oct": 3.4998008484524643, "dra": -0.3512372623583184, "woba_season": 0.32715051197438655, "woba_oct": 0.3291290115268152, "drs": 0.06265248582690647, "sps": ["Tarik Skubal", "Blake Snell", "Yoshinobu Yamamoto", "Tyler Glasnow"]}, "Tampa Bay Rays": {"fip_season": 3.978355777266039, "fip_oct": 3.857451334666135, "dra": -0.12090444259990418, "woba_season": 0.3181897899070731, "woba_oct": 0.31835230716288127, "drs": 0.005146379767259068, "sps": ["Drew Rasmussen", "Freddy Peralta", "Nick Martinez", "Griffin Jax"]}, "Cleveland Guardians": {"fip_season": 3.9273011357700294, "fip_oct": 3.836167876945263, "dra": -0.0911332588247662, "woba_season": 0.31103797293772373, "woba_oct": 0.31340461141317194, "drs": 0.07494355172252674, "sps": ["Parker Messick", "Gavin Williams", "Daniel Espino", "Foster Griffin"]}}, "backtest": {"n_games": 440, "n_series": 113, "game_ll": {"coin": 0.6931471805599454, "log5": 0.6893009551227561, "model": 0.6850485056161011}, "series_ll": {"coin": 0.6931471805599453, "model": 0.6649451213981367}, "game_fav_won": 0.5454545454545454, "series_fav_won": 0.6017699115044248, "series_fav_pred": 0.5760032584457281, "home_won": 0.5363636363636364, "calibration": [{"n": 49, "predicted": 0.5249091490630767, "actual": 0.5510204081632653}, {"n": 27, "predicted": 0.5697058392654049, "actual": 0.6296296296296297}, {"n": 22, "predicted": 0.62270837121339, "actual": 0.5454545454545454}, {"n": 15, "predicted": 0.6857452048944006, "actual": 0.8}], "ws": [{"season": 2015, "fav": "Kansas City Royals", "dog": "New York Mets", "p_fav": 0.5804602141140314, "winner": "Kansas City Royals", "fav_won": 1}, {"season": 2016, "fav": "Chicago Cubs", "dog": "Cleveland Indians", "p_fav": 0.6590156154715708, "winner": "Chicago Cubs", "fav_won": 1}, {"season": 2017, "fav": "Los Angeles Dodgers", "dog": "Houston Astros", "p_fav": 0.5015138512276699, "winner": "Houston Astros", "fav_won": 0}, {"season": 2018, "fav": "Boston Red Sox", "dog": "Los Angeles Dodgers", "p_fav": 0.5039493291215829, "winner": "Boston Red Sox", "fav_won": 1}, {"season": 2019, "fav": "Houston Astros", "dog": "Washington Nationals", "p_fav": 0.6168154736521005, "winner": "Washington Nationals", "fav_won": 0}, {"season": 2020, "fav": "Los Angeles Dodgers", "dog": "Tampa Bay Rays", "p_fav": 0.6714624930407269, "winner": "Los Angeles Dodgers", "fav_won": 1}, {"season": 2021, "fav": "Houston Astros", "dog": "Atlanta Braves", "p_fav": 0.5845666687732748, "winner": "Atlanta Braves", "fav_won": 0}, {"season": 2022, "fav": "Houston Astros", "dog": "Philadelphia Phillies", "p_fav": 0.6860313738577153, "winner": "Houston Astros", "fav_won": 1}, {"season": 2023, "fav": "Texas Rangers", "dog": "Arizona Diamondbacks", "p_fav": 0.6738488491007464, "winner": "Texas Rangers", "fav_won": 1}, {"season": 2024, "fav": "Los Angeles Dodgers", "dog": "New York Yankees", "p_fav": 0.5130481085474398, "winner": "Los Angeles Dodgers", "fav_won": 1}, {"season": 2025, "fav": "Los Angeles Dodgers", "dog": "Toronto Blue Jays", "p_fav": 0.5391762705273502, "winner": "Los Angeles Dodgers", "fav_won": 1}]}, "tuning": {"best": {"lam": 80, "half_life": 0, "log_loss": 0.6772046021142396, "accuracy": 0.573751178133836}, "home_only": 0.692479291376359, "log5": 0.6791840060572467, "n_games": 4244, "by_lam": [{"lam": 0, "log_loss": 0.6784304473650771}, {"lam": 5, "log_loss": 0.6782579291734246}, {"lam": 10, "log_loss": 0.6781035059211744}, {"lam": 20, "log_loss": 0.6778448732263114}, {"lam": 40, "log_loss": 0.6774848934332302}, {"lam": 80, "log_loss": 0.6772046021142396}, {"lam": 160, "log_loss": 0.6775321000325168}]}, "market": {"Milwaukee Brewers": {"american": "+105", "implied": 0.45002934974020037}, "Los Angeles Dodgers": {"american": "+350", "implied": 0.20501337043720239}, "Cleveland Guardians": {"american": "+400", "implied": 0.18451203339348216}, "Tampa Bay Rays": {"american": "+475", "implied": 0.16044524642911492}}};
-const TEAMS = {
-  "Milwaukee Brewers":   { ab: "MIL", c: "var(--mil)", short: "Brewers" },
-  "Los Angeles Dodgers": { ab: "LAD", c: "var(--lad)", short: "Dodgers" },
-  "Cleveland Guardians": { ab: "CLE", c: "var(--cle)", short: "Guardians" },
-  "Tampa Bay Rays":      { ab: "TB",  c: "var(--tb)",  short: "Rays" },
-};
+const DATA = {"as_of": "2026-10-12", "facts": {"asof": "Forecast as of Oct 12, 2026 games \u00b7 next: ALCS G2 Oct 13, NLCS G3 Oct 14", "fav": "Milwaukee Brewers", "fav_short": "Brewers", "fav_pct": 57, "fav_ci": "43%\u201370%", "fav_mkt": "47%", "top_mu": "CLE vs MIL", "top_mu_pct": "47%", "lede": "The Brewers finished 103\u201359, the best record in baseball. They lead the Dodgers 2\u20130 in the NLCS and would host Games 1, 2, 6 and 7 of any World Series. Every version of the model makes them the favorite. That still leaves a 43% chance the trophy goes somewhere else.", "swing": "Since the LCS began, the Brewers moved from 36% to 57% and the Dodgers went from 32% to 12%.", "n_games_total": "28,089", "bt_series": "When the model's series favorite was predicted to win 59% of the time, favorites actually won 58% across 113 series. With a sample that small, the 95% interval on that win rate is 49%\u201367%: consistent with good calibration, but not proof of it.", "ws_clear": "Of 11 World Series since 2015, the model's favorite won 8. Counting only clear favorites (55% or more), it's 5 of 7; the rest were near coin flips.", "sens_head": "The Brewers lead under every setup", "sens_range": "51%\u201360%", "coin_pct": "41%", "market_text": "Sportsbooks agree on the favorite: the market has the Brewers at 47% after removing the bookmaker margin, against the model's 57%. The biggest disagreement is the Dodgers: market 20%, model 12%.", "market_why": "One natural explanation is October deployment: the Dodgers' playoff rotation (Tarik Skubal, Blake Snell, Yoshinobu Yamamoto, Tyler Glasnow) projects to a 3.50 FIP against 3.85 for the season, and an adjustment for that moves them to 17%. But I tested the closest checkable version, adjusting each past playoff game for its actual starting pitchers (387 games, 2015\u20132025), and it did not improve predictions: it beat the plain model in only 39% of bootstrap resamples. So the gap is unexplained. The rotation story is a hypothesis, not a finding.", "mkt_note": "2 sportsbook sources captured Oct 13, 2026, margin removed with the power method", "watch_head": "What the next game in each series does", "watch_text": "Title odds after each possible result. The largest single swing: if the Brewers win NLCS Game 3, the Dodgers fall from 12% to 4%.", "ratings_text": "Expected runs per game against a league-average opponent after shrinkage, and the implied win rate. The Guardians rank 16th, the lowest of the four teams left.", "next_matchup_caveat": "It ignores the specific pitching matchup in each game (for example Parker Messick vs Freddy Peralta in ALCS Game 2). The backtest found that adding starters by season FIP doesn't help, so a better pitcher metric is open work.", "data_through": "Oct 12, 2026", "calib_note": "Dots show how often the model's series favorite actually won, grouped by how confident the model was. Each bin holds only 19\u201338 series, so expect scatter around the line.", "sample_caveat": "The backtest covers 113 series: enough to show the probabilities aren't badly off, not enough to fine-tune them.", "home_rate": "53%"}, "odds": {"as_of": "2026-10-12", "series_state": {"ALCS": {"Cleveland Guardians": 1, "Tampa Bay Rays": 0}, "NLCS": {"Los Angeles Dodgers": 0, "Milwaukee Brewers": 2}}, "odds_now": {"Cleveland Guardians": {"pennant": 0.5716193543896124, "ws": 0.15168731228543794}, "Tampa Bay Rays": {"pennant": 0.4283806456103876, "ws": 0.14904463155534925}, "Los Angeles Dodgers": {"pennant": 0.1827097842040495, "ws": 0.12498053430822456}, "Milwaukee Brewers": {"pennant": 0.8172902157959505, "ws": 0.5742875218509883}}, "odds_before_lcs": {"Cleveland Guardians": {"pennant": 0.39681968058832073, "ws": 0.10734872204702439}, "Tampa Bay Rays": {"pennant": 0.6031803194116793, "ws": 0.2132799950465696}, "Los Angeles Dodgers": {"pennant": 0.47122335716200103, "ws": 0.3154157786556087}, "Milwaukee Brewers": {"pennant": 0.528776642837999, "ws": 0.3639555042507973}}, "ws_matchups": {"Cleveland Guardians vs Los Angeles Dodgers": {"p_matchup": 0.10444044888738419, "p_al_wins": 0.27997693598457585}, "Cleveland Guardians vs Milwaukee Brewers": {"p_matchup": 0.46717890550222824, "p_al_wins": 0.2620974405543026}, "Tampa Bay Rays vs Los Angeles Dodgers": {"p_matchup": 0.07826933531666533, "p_al_wins": 0.3639782158392192}, "Tampa Bay Rays vs Milwaukee Brewers": {"p_matchup": 0.3501113102937223, "p_al_wins": 0.34433705792231717}}, "ws_home_field": {"Cleveland Guardians vs Los Angeles Dodgers": {"team": "Los Angeles Dodgers", "reason": "better record"}, "Cleveland Guardians vs Milwaukee Brewers": {"team": "Milwaukee Brewers", "reason": "better record"}, "Tampa Bay Rays vs Los Angeles Dodgers": {"team": "Los Angeles Dodgers", "reason": "better record"}, "Tampa Bay Rays vs Milwaukee Brewers": {"team": "Milwaukee Brewers", "reason": "better record"}}, "alive": ["Cleveland Guardians", "Tampa Bay Rays", "Los Angeles Dodgers", "Milwaukee Brewers"], "home_win_rate_equal_teams": 0.5287566013654696}, "uncertainty": [{"team": "Cleveland Guardians", "p05": 0.0787030466212587, "p50": 0.1469006163574809, "p95": 0.2466891383404066, "point": 0.1516873122854379}, {"team": "Tampa Bay Rays", "p05": 0.0773162429897714, "p50": 0.1527008006250863, "p95": 0.258958143556037, "point": 0.1490446315553492}, {"team": "Los Angeles Dodgers", "p05": 0.0701014941746834, "p50": 0.1228107609905473, "p95": 0.2021963680806442, "point": 0.1249805343082245}, {"team": "Milwaukee Brewers", "p05": 0.426770364113245, "p50": 0.5623407711551818, "p95": 0.6961703504621072, "point": 0.5742875218509883}], "series": {"AL Championship Series": [{"g": 1, "date": "2026-10-12", "home": "Tampa Bay Rays", "away": "Cleveland Guardians", "home_runs": 3, "away_runs": 7, "home_sp": "Drew Rasmussen", "away_sp": "Foster Griffin"}, {"g": 2, "date": "2026-10-13", "home": "Tampa Bay Rays", "away": "Cleveland Guardians", "home_runs": null, "away_runs": null, "home_sp": "Freddy Peralta", "away_sp": "Parker Messick"}, {"g": 3, "date": "2026-10-15", "home": "Cleveland Guardians", "away": "Tampa Bay Rays", "home_runs": null, "away_runs": null, "home_sp": null, "away_sp": null}, {"g": 4, "date": "2026-10-16", "home": "Cleveland Guardians", "away": "Tampa Bay Rays", "home_runs": null, "away_runs": null, "home_sp": null, "away_sp": null}, {"g": 5, "date": "2026-10-17", "home": "Cleveland Guardians", "away": "Tampa Bay Rays", "home_runs": null, "away_runs": null, "home_sp": null, "away_sp": null}, {"g": 6, "date": "2026-10-19", "home": "Tampa Bay Rays", "away": "Cleveland Guardians", "home_runs": null, "away_runs": null, "home_sp": null, "away_sp": null}, {"g": 7, "date": "2026-10-20", "home": "Tampa Bay Rays", "away": "Cleveland Guardians", "home_runs": null, "away_runs": null, "home_sp": null, "away_sp": null}], "NL Championship Series": [{"g": 1, "date": "2026-10-11", "home": "Milwaukee Brewers", "away": "Los Angeles Dodgers", "home_runs": 2, "away_runs": 1, "home_sp": "Jacob Misiorowski", "away_sp": "Tarik Skubal"}, {"g": 2, "date": "2026-10-12", "home": "Milwaukee Brewers", "away": "Los Angeles Dodgers", "home_runs": 7, "away_runs": 4, "home_sp": "Logan Henderson", "away_sp": "Yoshinobu Yamamoto"}, {"g": 3, "date": "2026-10-14", "home": "Los Angeles Dodgers", "away": "Milwaukee Brewers", "home_runs": null, "away_runs": null, "home_sp": "Blake Snell", "away_sp": "Robert Gasser"}, {"g": 4, "date": "2026-10-15", "home": "Los Angeles Dodgers", "away": "Milwaukee Brewers", "home_runs": null, "away_runs": null, "home_sp": null, "away_sp": null}, {"g": 5, "date": "2026-10-16", "home": "Los Angeles Dodgers", "away": "Milwaukee Brewers", "home_runs": null, "away_runs": null, "home_sp": null, "away_sp": null}, {"g": 6, "date": "2026-10-18", "home": "Milwaukee Brewers", "away": "Los Angeles Dodgers", "home_runs": null, "away_runs": null, "home_sp": null, "away_sp": null}, {"g": 7, "date": "2026-10-19", "home": "Milwaukee Brewers", "away": "Los Angeles Dodgers", "home_runs": null, "away_runs": null, "home_sp": null, "away_sp": null}]}, "sensitivity": [{"scenario": "Baseline (\u03bb=80, full season)", "Milwaukee Brewers": 0.5742875218509883, "Cleveland Guardians": 0.1516873122854379, "Tampa Bay Rays": 0.1490446315553492, "Los Angeles Dodgers": 0.1249805343082245}, {"scenario": "Less shrinkage (\u03bb=40)", "Milwaukee Brewers": 0.5896323058287745, "Cleveland Guardians": 0.1371597367016638, "Tampa Bay Rays": 0.1459707808325634, "Los Angeles Dodgers": 0.1272371766369982}, {"scenario": "More shrinkage (\u03bb=160)", "Milwaukee Brewers": 0.5503422386916239, "Cleveland Guardians": 0.1749608300307939, "Tampa Bay Rays": 0.1531698480015232, "Los Angeles Dodgers": 0.1215270832760589}, {"scenario": "Recency-weighted (60-day half-life)", "Milwaukee Brewers": 0.562977638815255, "Cleveland Guardians": 0.1639901554922469, "Tampa Bay Rays": 0.1664545945897258, "Los Angeles Dodgers": 0.1065776111027721}, {"scenario": "Include 2026 postseason games", "Milwaukee Brewers": 0.5726587161333161, "Cleveland Guardians": 0.1602354593955662, "Tampa Bay Rays": 0.143813020063129, "Los Angeles Dodgers": 0.1232928044079884}, {"scenario": "Home field from runs (old method)", "Milwaukee Brewers": 0.5719501970261134, "Cleveland Guardians": 0.1557004545524646, "Tampa Bay Rays": 0.152118329121508, "Los Angeles Dodgers": 0.1202310192999139}, {"scenario": "Roster adjustment, untested (50%)", "Milwaukee Brewers": 0.5584236307100405, "Cleveland Guardians": 0.1513143806112216, "Tampa Bay Rays": 0.144416267226071, "Los Angeles Dodgers": 0.1458457214526667}, {"scenario": "Roster adjustment, untested (100%)", "Milwaukee Brewers": 0.5411069669699551, "Cleveland Guardians": 0.1500084082100278, "Tampa Bay Rays": 0.1392668165471918, "Los Angeles Dodgers": 0.1696178082728252}, {"scenario": "More confident (k=1.18)", "Milwaukee Brewers": 0.5994482876524053, "Cleveland Guardians": 0.1280195299823949, "Tampa Bay Rays": 0.1431585141263641, "Los Angeles Dodgers": 0.1293736682388355}, {"scenario": "Less confident (k=0.6)", "Milwaukee Brewers": 0.5119923373420565, "Cleveland Guardians": 0.2138424860292816, "Tampa Bay Rays": 0.1604241388467151, "Los Angeles Dodgers": 0.1137410377819468}, {"scenario": "Every game a coin flip", "Milwaukee Brewers": 0.40625, "Cleveland Guardians": 0.328125, "Tampa Bay Rays": 0.171875, "Los Angeles Dodgers": 0.09375}], "whatif": [{"series": "ALCS", "game": 2, "home": "Tampa Bay Rays", "if_wins": "Cleveland Guardians", "Cleveland Guardians": 0.2021587145719199, "Tampa Bay Rays": 0.0828703039938736, "Los Angeles Dodgers": 0.1278996462383859, "Milwaukee Brewers": 0.5870713351958206}, {"series": "ALCS", "game": 2, "home": "Tampa Bay Rays", "if_wins": "Tampa Bay Rays", "Cleveland Guardians": 0.1138083873036316, "Tampa Bay Rays": 0.1987086447562262, "Los Angeles Dodgers": 0.1227897328482521, "Milwaukee Brewers": 0.56469323509189}, {"series": "NLCS", "game": 3, "home": "Los Angeles Dodgers", "if_wins": "Los Angeles Dodgers", "Cleveland Guardians": 0.1528711501333504, "Tampa Bay Rays": 0.1500192328080122, "Los Angeles Dodgers": 0.2042143569727409, "Milwaukee Brewers": 0.4928952600858963}, {"series": "NLCS", "game": 3, "home": "Los Angeles Dodgers", "if_wins": "Milwaukee Brewers", "Cleveland Guardians": 0.1504095126320384, "Tampa Bay Rays": 0.147992675711015, "Los Angeles Dodgers": 0.0394578832823545, "Milwaukee Brewers": 0.6621399283745919}], "ratings": [{"team": "Milwaukee Brewers", "off": 0.109479852959297, "def": 0.1320508422205497, "exp_RS_pg": 5.092959580948733, "exp_RA_pg": 4.000136223816559, "net": 0.2415306951798468, "exp_wpct": 0.6118550436211768, "W": 103, "rank": 1}, {"team": "Los Angeles Dodgers", "off": 0.0723686475725756, "def": 0.1495028845425424, "exp_RS_pg": 4.907417844813118, "exp_RA_pg": 3.9309313171161815, "net": 0.2218715321151181, "exp_wpct": 0.602208839335466, "W": 100, "rank": 2}, {"team": "Chicago Cubs", "off": 0.1351125613899773, "def": 0.0284188118081581, "exp_RS_pg": 5.225193444856924, "exp_RA_pg": 4.436920021620626, "net": 0.1635313731981355, "exp_wpct": 0.5777532964301756, "W": 89, "rank": 3}, {"team": "New York Yankees", "off": 0.0233423658297144, "def": 0.1310903525614667, "exp_RS_pg": 4.672627860959054, "exp_RA_pg": 4.003980159028954, "net": 0.1544327183911812, "exp_wpct": 0.571288051936603, "W": 93, "rank": 4}, {"team": "Atlanta Braves", "off": 0.0182834701727474, "def": 0.1219973681194057, "exp_RS_pg": 4.649049215406621, "exp_RA_pg": 4.040554320458921, "net": 0.1402808382921531, "exp_wpct": 0.564860067870585, "W": 94, "rank": 5}, {"team": "Tampa Bay Rays", "off": 0.0180104011190179, "def": 0.0751832798908184, "exp_RS_pg": 4.647779877253, "exp_RA_pg": 4.234206650117663, "net": 0.0931936810098363, "exp_wpct": 0.5434960422051406, "W": 98, "rank": 6}, {"team": "Boston Red Sox", "off": -0.0378207052899006, "def": 0.1278343404998649, "exp_RS_pg": 4.39540006116118, "exp_RA_pg": 4.017038414102631, "net": 0.0900136352099643, "exp_wpct": 0.5413720269222576, "W": 87, "rank": 7}, {"team": "Detroit Tigers", "off": -0.0097792527148506, "def": 0.0770315942808775, "exp_RS_pg": 4.520397832450548, "exp_RA_pg": 4.226387733170079, "net": 0.0672523415660268, "exp_wpct": 0.5312888839381975, "W": 76, "rank": 8}, {"team": "Chicago White Sox", "off": 0.0544613722777321, "def": -0.0054341221914834, "exp_RS_pg": 4.820321518845184, "exp_RA_pg": 4.589694118059353, "net": 0.0490272500862486, "exp_wpct": 0.5233068255764461, "W": 84, "rank": 9}, {"team": "San Diego Padres", "off": -0.0075531025836036, "def": 0.0554248358788019, "exp_RS_pg": 4.530472125962991, "exp_RA_pg": 4.318699964556802, "net": 0.0478717332951983, "exp_wpct": 0.5223609592817189, "W": 91, "rank": 10}, {"team": "Pittsburgh Pirates", "off": 0.0510471192226322, "def": -0.0066461394148302, "exp_RS_pg": 4.803891784967729, "exp_RA_pg": 4.595260278840319, "net": 0.044400979807802, "exp_wpct": 0.5211033270242893, "W": 82, "rank": 11}, {"team": "Philadelphia Phillies", "off": -0.0108545100839558, "def": 0.0378772684869942, "exp_RS_pg": 4.51553985362674, "exp_RA_pg": 4.395151450312393, "net": 0.0270227584030383, "exp_wpct": 0.5126532335106446, "W": 88, "rank": 12}, {"team": "Cleveland Guardians", "off": -0.0625934140574846, "def": 0.0605208403285917, "exp_RS_pg": 4.2878517273343455, "exp_RA_pg": 4.296747831909642, "net": -0.0020725737288929, "exp_wpct": 0.4990396553628194, "W": 85, "rank": 16}], "roster": {"Cleveland Guardians": {"fip_season": 3.9273011357700294, "fip_oct": 3.836167876945263, "dra": -0.0911332588247662, "woba_season": 0.31103797293772373, "woba_oct": 0.31340461141317194, "sps": ["Parker Messick", "Gavin Williams", "Daniel Espino", "Foster Griffin"]}, "Tampa Bay Rays": {"fip_season": 3.978355777266039, "fip_oct": 3.857451334666135, "dra": -0.12090444259990418, "woba_season": 0.3181897899070731, "woba_oct": 0.31835230716288127, "sps": ["Drew Rasmussen", "Freddy Peralta", "Nick Martinez", "Griffin Jax"]}, "Los Angeles Dodgers": {"fip_season": 3.8510381108107827, "fip_oct": 3.4998008484524643, "dra": -0.3512372623583184, "woba_season": 0.32715051197438655, "woba_oct": 0.3291290115268152, "sps": ["Tarik Skubal", "Blake Snell", "Yoshinobu Yamamoto", "Tyler Glasnow"]}, "Milwaukee Brewers": {"fip_season": 3.81372857423836, "fip_oct": 3.67881409749278, "dra": -0.1349144767455801, "woba_season": 0.32317773936960603, "woba_oct": 0.3230397195167506, "sps": ["Jacob Misiorowski", "Logan Henderson", "Robert Gasser", "Dustin May"]}}, "backtest": {"n_games": 440, "n_series": 113, "game_ll": {"coin": 0.6931471805599454, "log5": 0.6893009551227561, "model": 0.6848151586251465}, "game_fav_won": 0.5454545454545454, "series_fav_won": 0.584070796460177, "series_fav_pred": 0.5882869955502084, "series_fav_ci": [0.4918922725047336, 0.6707210433005959], "calibration": [{"n": 33, "predicted": 0.5216157309762569, "actual": 0.5454545454545454}, {"n": 38, "predicted": 0.5704482459829573, "actual": 0.5}, {"n": 19, "predicted": 0.6232584596815641, "actual": 0.5789473684210527}, {"n": 23, "predicted": 0.6845290127676074, "actual": 0.782608695652174}], "ws": [{"season": 2015, "fav": "Kansas City Royals", "p_fav": 0.5871486172306764, "winner": "Kansas City Royals", "fav_won": 1}, {"season": 2016, "fav": "Chicago Cubs", "p_fav": 0.6543696796256058, "winner": "Chicago Cubs", "fav_won": 1}, {"season": 2017, "fav": "Los Angeles Dodgers", "p_fav": 0.5069754891049918, "winner": "Houston Astros", "fav_won": 0}, {"season": 2018, "fav": "Boston Red Sox", "p_fav": 0.5076022080860056, "winner": "Boston Red Sox", "fav_won": 1}, {"season": 2019, "fav": "Houston Astros", "p_fav": 0.6268379687406369, "winner": "Washington Nationals", "fav_won": 0}, {"season": 2020, "fav": "Los Angeles Dodgers", "p_fav": 0.6808101344451772, "winner": "Los Angeles Dodgers", "fav_won": 1}, {"season": 2021, "fav": "Houston Astros", "p_fav": 0.592089966088513, "winner": "Atlanta Braves", "fav_won": 0}, {"season": 2022, "fav": "Houston Astros", "p_fav": 0.6942749840392047, "winner": "Houston Astros", "fav_won": 1}, {"season": 2023, "fav": "Texas Rangers", "p_fav": 0.6821182338149455, "winner": "Texas Rangers", "fav_won": 1}, {"season": 2024, "fav": "Los Angeles Dodgers", "p_fav": 0.5212382824322864, "winner": "Los Angeles Dodgers", "fav_won": 1}, {"season": 2025, "fav": "Los Angeles Dodgers", "p_fav": 0.5286653852871336, "winner": "Los Angeles Dodgers", "fav_won": 1}]}, "market": {"Cleveland Guardians": {"american": "+400 / +400", "implied": 0.1797837892587278}, "Los Angeles Dodgers": {"american": "+350 / +340", "implied": 0.2035983421625468}, "Milwaukee Brewers": {"american": "+105 / +105", "implied": 0.4651623157202801}, "Tampa Bay Rays": {"american": "+475 / +500", "implied": 0.1514555528584472}}, "market_sources": [{"source": "SI (sportsbook consensus)", "url": "https://www.si.com/betting/2026-world-series-odds-brewers-jump-to-favorite-guardians-favored-over-rays-in-al"}, {"source": "Fox Sports (DraftKings)", "url": "https://www.foxsports.com/stories/mlb/2026-world-series-odds"}]};
+const PALETTE = ["var(--mil)", "var(--lad)", "var(--cle)", "var(--tb)"];
+const KNOWN = { "Milwaukee Brewers": "var(--mil)", "Los Angeles Dodgers": "var(--lad)",
+                "Cleveland Guardians": "var(--cle)", "Tampa Bay Rays": "var(--tb)" };
+const ABBR = { "Milwaukee Brewers": "MIL", "Los Angeles Dodgers": "LAD", "Cleveland Guardians": "CLE", "Tampa Bay Rays": "TB" };
+const now = DATA.odds.odds_now;
+const order = Object.keys(now).sort((a, b) => now[b].ws - now[a].ws);
+const TEAMS = {};
+order.forEach((t, i) => {
+  const w = t.split(" ");
+  TEAMS[t] = { c: KNOWN[t] || PALETTE[i % 4], ab: ABBR[t] || w[w.length - 1].slice(0, 3).toUpperCase(),
+               short: w[w.length - 1] === "Sox" ? w.slice(-2).join(" ") : w[w.length - 1] };
+});
 const pct = (x, d = 1) => (x * 100).toFixed(d) + "%";
 const NS = "http://www.w3.org/2000/svg";
 function el(tag, attrs = {}, parent, text) {
@@ -290,7 +299,12 @@ function el(tag, attrs = {}, parent, text) {
   if (parent) parent.appendChild(e);
   return e;
 }
-const order = Object.keys(DATA.odds.odds_now).sort((a, b) => DATA.odds.odds_now[b].ws - DATA.odds.odds_now[a].ws);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+/* ---------- facts: every number-bearing sentence comes from data */
+document.querySelectorAll("[data-f]").forEach(n => { const v = DATA.facts[n.dataset.f]; if (v != null) n.textContent = v; });
+document.getElementById("hero-pct").innerHTML = DATA.facts.fav_pct + "<small>%</small>";
+document.getElementById("mkt-src").innerHTML = DATA.market_sources.map(s => `<a href="${esc(s.url)}">${esc(s.source)}</a>`).join(", ");
 
 /* ---------- tooltip */
 const tip = document.getElementById("tip");
@@ -303,64 +317,65 @@ document.addEventListener("mousemove", e => {
   tip.style.left = x + "px"; tip.style.top = (e.clientY + 14) + "px";
 });
 
-/* ---------- hero */
-const now = DATA.odds.odds_now;
-const fav = order[0];
-const sensVals = DATA.sensitivity.filter(r => !r.scenario.startsWith("Every game")).map(r => r[fav]);
-document.getElementById("hero-pct").innerHTML = Math.round(now[fav].ws * 100) + "<small>%</small>";
-document.getElementById("hero-range").textContent = Math.round(Math.min(...sensVals) * 100) + "–" + Math.round(Math.max(...sensVals) * 100) + "%";
-document.getElementById("hero-mkt").textContent = Math.round(DATA.market[fav].implied * 100) + "%";
-const topMu = Object.entries(DATA.odds.ws_matchups).sort((a, b) => b[1].p_matchup - a[1].p_matchup)[0];
-document.getElementById("hero-mu").textContent = pct(topMu[1].p_matchup, 0);
-
-/* ---------- scoreboard */
-function board(id, desc, label) {
-  const games = DATA.series[desc];
-  const teams = [games[0].away, games[0].home];
-  const wins = { [teams[0]]: 0, [teams[1]]: 0 };
-  games.forEach(g => { if (g.home_runs != null) wins[g.home_runs > g.away_runs ? g.home : g.away]++; });
-  const leader = wins[teams[0]] === wins[teams[1]] ? null : (wins[teams[0]] > wins[teams[1]] ? teams[0] : teams[1]);
-  const status = leader ? `${TEAMS[leader].ab} leads ${Math.max(...Object.values(wins))}–${Math.min(...Object.values(wins))}` : "Tied";
-  const next = games.find(g => g.home_runs == null);
-  let h = `<h3>${label}<em>${status}</em></h3><div class="scroll"><table class="line"><thead><tr><th style="text-align:left">Best of 7</th>`;
-  games.forEach(g => h += `<th>G${g.g}</th>`);
-  h += `<th>W</th></tr></thead><tbody>`;
-  teams.forEach(t => {
-    h += `<tr><td class="tm"><i style="background:${TEAMS[t].c}"></i>${TEAMS[t].ab}</td>`;
-    games.forEach(g => {
-      if (g.home_runs == null) { h += `<td class="cell tbd">·</td>`; return; }
-      const r = g.home === t ? g.home_runs : g.away_runs, o = g.home === t ? g.away_runs : g.home_runs;
-      h += `<td class="cell ${r > o ? "w" : "l"}" data-tip="G${g.g} · ${g.date}<br>${g.away} ${g.away_runs}, ${g.home} ${g.home_runs}">${r}</td>`;
+/* ---------- scoreboards: one per live series */
+(function () {
+  const labels = { "AL Championship Series": "ALCS", "NL Championship Series": "NLCS", "World Series": "World Series" };
+  let html = "";
+  Object.entries(DATA.series).forEach(([desc, games]) => {
+    const teams = [games[0].away, games[0].home];
+    const wins = { [teams[0]]: 0, [teams[1]]: 0 };
+    games.forEach(g => { if (g.home_runs != null) wins[g.home_runs > g.away_runs ? g.home : g.away]++; });
+    const [a, b] = teams;
+    const status = wins[a] === wins[b] ? `Tied ${wins[a]}–${wins[b]}`
+      : `${TEAMS[wins[a] > wins[b] ? a : b].ab} ${Math.max(wins[a], wins[b]) === 4 ? "wins" : "leads"} ${Math.max(wins[a], wins[b])}–${Math.min(wins[a], wins[b])}`;
+    const next = games.find(g => g.home_runs == null);
+    let h = `<div><h3>${labels[desc] || desc} · ${TEAMS[a].short} vs ${TEAMS[b].short}<em>${status}</em></h3><div class="scroll"><table class="line"><thead><tr><th style="text-align:left">Best of ${games.length}</th>`;
+    games.forEach(g => h += `<th>G${g.g}</th>`);
+    h += `<th>W</th></tr></thead><tbody>`;
+    teams.forEach(t => {
+      h += `<tr><td class="tm"><i style="background:${TEAMS[t].c}"></i>${TEAMS[t].ab}</td>`;
+      games.forEach(g => {
+        if (g.home_runs == null) { h += `<td class="cell tbd">·</td>`; return; }
+        const r = g.home === t ? g.home_runs : g.away_runs, o = g.home === t ? g.away_runs : g.home_runs;
+        h += `<td class="cell ${r > o ? "w" : "l"}" data-tip="G${g.g} · ${g.date}<br>${esc(g.away)} ${g.away_runs}, ${esc(g.home)} ${g.home_runs}">${r}</td>`;
+      });
+      h += `<td class="sw">${wins[t]}</td></tr>`;
     });
-    h += `<td class="sw">${wins[t]}</td></tr>`;
+    h += `<tr class="where"><td style="text-align:left">Home</td>`;
+    games.forEach(g => h += `<td>${TEAMS[g.home].ab}</td>`);
+    h += `<td></td></tr></tbody></table></div>`;
+    if (next && Math.max(wins[a], wins[b]) < 4)
+      h += `<div class="src">Next: G${next.g}, ${next.date}, ${TEAMS[next.away].ab} @ ${TEAMS[next.home].ab}${next.away_sp && next.home_sp ? ` · ${esc(next.away_sp)} vs ${esc(next.home_sp)}` : ""}</div>`;
+    html += h + "</div>";
   });
-  h += `<tr class="where"><td style="text-align:left">Home</td>`;
-  games.forEach(g => h += `<td>${TEAMS[g.home].ab}</td>`);
-  h += `<td></td></tr></tbody></table></div>`;
-  if (next) h += `<div class="src">Next: G${next.g}, ${next.date}, ${TEAMS[next.away].ab} @ ${TEAMS[next.home].ab}${next.away_sp ? ` · ${next.away_sp} vs ${next.home_sp}` : ""}</div>`;
-  document.getElementById(id).innerHTML = h;
-}
-board("board-al", "AL Championship Series", "ALCS · Guardians vs Rays");
-board("board-nl", "NL Championship Series", "NLCS · Brewers vs Dodgers");
+  const boards = document.getElementById("boards");
+  boards.innerHTML = html;
+  boards.style.display = "grid"; boards.style.gap = "26px";
+})();
 
-/* ---------- odds bars */
+/* ---------- odds bars with 90% interval */
 (function () {
   const svg = document.getElementById("c-odds");
-  const W = 860, rowH = 52, top = 8, left = 150, right = 70, H = top + rowH * order.length + 26;
+  const unc = Object.fromEntries(DATA.uncertainty.map(u => [u.team, u]));
+  const max = Math.max(0.6, Math.ceil(Math.max(...DATA.uncertainty.map(u => u.p95)) * 10) / 10);
+  const W = 860, rowH = 56, top = 8, left = 150, right = 70, H = top + rowH * order.length + 26;
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-  const max = 0.6, x = v => left + (W - left - right) * v / max;
-  [0, .1, .2, .3, .4, .5, .6].forEach(t => {
+  const x = v => left + (W - left - right) * v / max;
+  for (let t = 0; t <= max + 1e-9; t += 0.1) {
     el("line", { x1: x(t), x2: x(t), y1: top, y2: H - 22, class: "grid" }, svg);
-    el("text", { x: x(t), y: H - 6, "text-anchor": "middle", class: "tick" }, svg, (t * 100) + "%");
-  });
+    el("text", { x: x(t), y: H - 6, "text-anchor": "middle", class: "tick" }, svg, Math.round(t * 100) + "%");
+  }
   order.forEach((t, i) => {
-    const y = top + i * rowH + 10, bh = 26, o = now[t], pre = DATA.odds.odds_before_lcs[t];
-    el("text", { x: 0, y: y + 18, class: "lbl" }, svg, t.replace(" ", " ").split(" ").pop() === t ? t : t);
-    const g = el("g", { "data-tip": `<b>${t}</b><br>Now: ${pct(o.ws)} title · ${pct(o.pennant)} pennant<br>Before LCS: ${pct(pre.ws)} title · ${pct(pre.pennant)} pennant` }, svg);
+    const y = top + i * rowH + 10, bh = 26, o = now[t], pre = DATA.odds.odds_before_lcs[t], u = unc[t];
+    el("text", { x: 0, y: y + 18, class: "lbl" }, svg, t);
+    const g = el("g", { "data-tip": `<b>${esc(t)}</b><br>Now: ${pct(o.ws)} title (90% interval ${pct(u.p05, 0)}–${pct(u.p95, 0)})<br>${pct(o.pennant)} pennant · before LCS: ${pct(pre.ws)} title` }, svg);
     el("rect", { x: left, y: y - 8, width: W - left, height: bh + 16, fill: "transparent" }, g);
     el("path", { d: `M${left},${y} H${x(o.ws) - 4} a4,4 0 0 1 4,4 V${y + bh - 4} a4,4 0 0 1 -4,4 H${left} Z`, fill: TEAMS[t].c }, g);
+    const cy = y + bh / 2;
+    el("line", { x1: x(u.p05), x2: x(u.p95), y1: cy, y2: cy, stroke: "var(--ink)", "stroke-width": 1.5 }, g);
+    [u.p05, u.p95].forEach(v => el("line", { x1: x(v), x2: x(v), y1: cy - 5, y2: cy + 5, stroke: "var(--ink)", "stroke-width": 1.5 }, g));
     el("line", { x1: x(pre.ws), x2: x(pre.ws), y1: y - 5, y2: y + bh + 5, stroke: "var(--ink)", "stroke-width": 3 }, g);
-    el("text", { x: x(Math.max(o.ws, pre.ws)) + 10, y: y + 20, class: "val" }, g, pct(o.ws));
+    el("text", { x: x(Math.max(o.ws, pre.ws, u.p95)) + 10, y: y + 20, class: "val" }, g, pct(o.ws));
   });
   el("line", { x1: left, x2: left, y1: top, y2: H - 22, class: "base" }, svg);
 })();
@@ -370,27 +385,27 @@ board("board-nl", "NL Championship Series", "NLCS · Brewers vs Dodgers");
   const rows = Object.entries(DATA.odds.ws_matchups).sort((a, b) => b[1].p_matchup - a[1].p_matchup);
   let h = `<thead><tr><th>Possible World Series</th><th>Chance it happens</th><th>AL team wins</th><th>NL team wins</th><th>Home field</th></tr></thead><tbody>`;
   rows.forEach(([k, v]) => {
-    const [al, nl] = k.split(" vs ");
-    h += `<tr><td><span class="chip" style="background:${TEAMS[al].c}"></span>${TEAMS[al].short} vs <span class="chip" style="background:${TEAMS[nl].c}"></span>${TEAMS[nl].short}</td><td>${pct(v.p_matchup)}</td><td>${pct(v.p_al_wins)}</td><td>${pct(1 - v.p_al_wins)}</td><td>${TEAMS[nl].ab}</td></tr>`;
+    const [al, nl] = k.split(" vs "), hf = DATA.odds.ws_home_field[k];
+    h += `<tr><td><span class="chip" style="background:${TEAMS[al].c}"></span>${TEAMS[al].short} vs <span class="chip" style="background:${TEAMS[nl].c}"></span>${TEAMS[nl].short}</td><td>${pct(v.p_matchup)}</td><td>${pct(v.p_al_wins)}</td><td>${pct(1 - v.p_al_wins)}</td><td data-tip="${esc(hf.reason)}">${TEAMS[hf.team].ab}</td></tr>`;
   });
   document.getElementById("t-matchups").innerHTML = h + "</tbody>";
 })();
 
 /* ---------- backtest tiles + calibration */
 (function () {
-  const b = DATA.backtest, t = DATA.tuning;
+  const b = DATA.backtest;
   const tiles = [
-    [pct(b.series_fav_won, 0), `Series favorites won (${b.n_series} series, predicted ${pct(b.series_fav_pred, 0)})`],
+    [pct(b.series_fav_won, 0), `Series favorites won (${b.n_series} series, predicted ${pct(b.series_fav_pred, 0)}; 95% interval ${pct(b.series_fav_ci[0], 0)}–${pct(b.series_fav_ci[1], 0)})`],
     [pct(b.game_fav_won, 1), `Game favorites won (${b.n_games} playoff games)`],
-    [b.ws.filter(r => r.fav_won).length + " of " + b.ws.length, "World Series favorites who won"],
-    [b.game_ll.model.toFixed(4), `Playoff log loss (coin flip ${b.game_ll.coin.toFixed(4)}, standings ${b.game_ll.log5.toFixed(4)})`],
+    [b.ws.filter(r => r.fav_won).length + " of " + b.ws.length, "World Series favorites who won (several were near coin flips)"],
+    [b.game_ll.model.toFixed(4), `Playoff log loss (coin flip ${b.game_ll.coin.toFixed(4)}, standings ${b.game_ll.log5.toFixed(4)}; lower is better)`],
   ];
   document.getElementById("bt-tiles").innerHTML = tiles.map(([v, l]) => `<div class="tile"><b class="num">${v}</b><span>${l}</span></div>`).join("");
 
   const svg = document.getElementById("c-calib");
   const W = 860, H = 300, L = 56, R = 20, T = 14, B = 40;
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-  const lo = .5, hi = .85;
+  const lo = .45, hi = .85;
   const x = v => L + (W - L - R) * (v - lo) / (hi - lo), y = v => T + (H - T - B) * (1 - (v - lo) / (hi - lo));
   [.5, .6, .7, .8].forEach(v => {
     el("line", { x1: L, x2: W - R, y1: y(v), y2: y(v), class: "grid" }, svg);
@@ -398,7 +413,7 @@ board("board-nl", "NL Championship Series", "NLCS · Brewers vs Dodgers");
     el("text", { x: x(v), y: H - 18, "text-anchor": "middle", class: "tick" }, svg, pct(v, 0));
   });
   el("text", { x: (L + W - R) / 2, y: H - 2, "text-anchor": "middle", class: "tick" }, svg, "Model's predicted series win probability for the favorite");
-  el("line", { x1: x(lo), y1: y(lo), x2: x(hi), y2: y(hi), stroke: "var(--muted)", "stroke-width": 2, "stroke-dasharray": "5 5" }, svg);
+  el("line", { x1: x(.5), y1: y(.5), x2: x(hi), y2: y(hi), stroke: "var(--muted)", "stroke-width": 2, "stroke-dasharray": "5 5" }, svg);
   b.calibration.forEach(c => {
     const g = el("g", { "data-tip": `${c.n} series · predicted ${pct(c.predicted)} · favorite actually won ${pct(c.actual)}` }, svg);
     el("circle", { cx: x(c.predicted), cy: y(c.actual), r: 16, fill: "transparent" }, g);
@@ -407,7 +422,7 @@ board("board-nl", "NL Championship Series", "NLCS · Brewers vs Dodgers");
   });
 
   let h = `<thead><tr><th>World Series</th><th>Model favorite</th><th>Fav. chance</th><th>Winner</th><th></th></tr></thead><tbody>`;
-  b.ws.forEach(r => h += `<tr><td>${r.season}</td><td>${r.fav}</td><td>${pct(r.p_fav)}</td><td>${r.winner}</td><td class="${r.fav_won ? "up" : "down"}">${r.fav_won ? "✓ called" : "✗ upset"}</td></tr>`);
+  b.ws.forEach(r => h += `<tr><td>${r.season}</td><td>${esc(r.fav)}</td><td>${pct(r.p_fav)}</td><td>${esc(r.winner)}</td><td class="${r.fav_won ? "up" : "down"}">${r.fav_won ? "✓ called" : "✗ upset"}</td></tr>`);
   document.getElementById("t-ws").innerHTML = h + "</tbody>";
 })();
 
@@ -421,56 +436,62 @@ board("board-nl", "NL Championship Series", "NLCS · Brewers vs Dodgers");
     "More shrinkage (λ=160)": "More shrinkage",
     "Recency-weighted (60-day half-life)": "Recent form weighted",
     "Include 2026 postseason games": "+ this October's games",
-    "Postseason roster adjustment (50%)": "Roster adj. 50%",
-    "Postseason roster adjustment (100%)": "Roster adj. 100%",
-    "Backtest-calibrated spread (k=1.18)": "More confident",
-    "Flatter probabilities (k=0.6)": "Less confident",
+    "Home field from runs (old method)": "Old home-field method",
+    "Roster adjustment, untested (50%)": "Roster adj. 50%*",
+    "Roster adjustment, untested (100%)": "Roster adj. 100%*",
+    "More confident (k=1.18)": "More confident",
+    "Less confident (k=0.6)": "Less confident",
     "Every game a coin flip": "Coin flips",
   };
+  const max = Math.max(0.6, Math.ceil(Math.max(...rows.map(r => Math.max(...order.map(t => r[t])))) * 10) / 10);
   order.forEach(t => {
     const card = document.createElement("div");
     card.className = "chart";
     card.innerHTML = `<div class="cap"><h3><span class="chip" style="background:${TEAMS[t].c}"></span>${TEAMS[t].short}</h3></div>`;
-    const W = 300, rowH = 22, L = 118, R = 40, H = rowH * rows.length + 24;
+    const W = 300, rowH = 22, L = 124, R = 34, H = rowH * rows.length + 24;
     const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": `${t} title odds by scenario` });
-    const x = v => L + (W - L - R) * v / .6;
-    [0, .3, .6].forEach(v => {
+    const x = v => L + (W - L - R) * v / max;
+    [0, max / 2, max].forEach(v => {
       el("line", { x1: x(v), x2: x(v), y1: 0, y2: H - 20, class: "grid" }, svg);
-      el("text", { x: x(v), y: H - 6, "text-anchor": "middle", class: "tick" }, svg, (v * 100) + "%");
+      el("text", { x: x(v), y: H - 6, "text-anchor": "middle", class: "tick" }, svg, Math.round(v * 100) + "%");
     });
     rows.forEach((r, i) => {
-      const y = i * rowH + 4, v = r[t], isBase = i === 0, coin = r.scenario.startsWith("Every");
-      const g = el("g", { "data-tip": `<b>${TEAMS[t].short}</b> · ${r.scenario}<br>${pct(v)} to win the title` }, svg);
+      const y = i * rowH + 4, v = r[t], isBase = i === 0, faint = r.scenario.startsWith("Every") || r.scenario.includes("untested");
+      const g = el("g", { "data-tip": `<b>${TEAMS[t].short}</b> · ${esc(r.scenario)}<br>${pct(v)} to win the title` }, svg);
       el("rect", { x: 0, y: y - 2, width: W, height: rowH, fill: "transparent" }, g);
       el("text", { x: 0, y: y + 12, class: "tick", style: `fill:${isBase ? "var(--ink)" : "var(--ink-2)"};font-family:var(--f-body);font-size:11px;font-weight:${isBase ? 600 : 400}` }, g, short[r.scenario] || r.scenario);
       const w = Math.max(x(v) - L, 2);
-      el("path", { d: `M${L},${y + 2} H${L + w - 3} a3,3 0 0 1 3,3 V${y + 13} a3,3 0 0 1 -3,3 H${L} Z`, fill: TEAMS[t].c, opacity: coin ? .45 : 1 }, g);
+      el("path", { d: `M${L},${y + 2} H${L + w - 3} a3,3 0 0 1 3,3 V${y + 13} a3,3 0 0 1 -3,3 H${L} Z`, fill: TEAMS[t].c, opacity: faint ? .45 : 1 }, g);
       el("text", { x: L + w + 5, y: y + 13, class: "tick", style: "fill:var(--ink)" }, g, Math.round(v * 100));
     });
     el("line", { x1: L, x2: L, y1: 0, y2: H - 20, class: "base" }, svg);
     card.appendChild(svg);
     wrap.appendChild(card);
   });
+  const note = document.createElement("p");
+  note.className = "note";
+  note.style.gridColumn = "1 / -1";
+  note.textContent = "* Untested: the roster adjustment has not been backtested. Faded bars mark untested or deliberately extreme rows.";
+  wrap.appendChild(note);
 })();
 
 /* ---------- model vs market */
 (function () {
   const svg = document.getElementById("c-market");
-  const adj = DATA.sensitivity.find(r => r.scenario.startsWith("Postseason roster adjustment (100%)"));
-  const W = 860, rowH = 48, L = 150, R = 30, T = 8, H = T + rowH * order.length + 26;
+  const adj = DATA.sensitivity.find(r => r.scenario.includes("(100%)"));
+  const W = 860, rowH = 48, L = 150, R = 30, T = 8, H = T + rowH * order.length + 26, max = 0.6;
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-  const x = v => L + (W - L - R) * v / .6;
+  const x = v => L + (W - L - R) * Math.min(v, max) / max;
   [0, .1, .2, .3, .4, .5, .6].forEach(t => {
     el("line", { x1: x(t), x2: x(t), y1: T, y2: H - 22, class: "grid" }, svg);
-    el("text", { x: x(t), y: H - 6, "text-anchor": "middle", class: "tick" }, svg, (t * 100) + "%");
+    el("text", { x: x(t), y: H - 6, "text-anchor": "middle", class: "tick" }, svg, Math.round(t * 100) + "%");
   });
   order.forEach((t, i) => {
     const y = T + i * rowH + 22, m = now[t].ws, a = adj[t], k = DATA.market[t].implied;
     el("text", { x: 0, y: y + 5, class: "lbl" }, svg, t);
-    const g = el("g", { "data-tip": `<b>${t}</b><br>Model ${pct(m)} · roster-adjusted ${pct(a)}<br>Market ${pct(k)} (${DATA.market[t].american})` }, svg);
+    const g = el("g", { "data-tip": `<b>${esc(t)}</b><br>Model ${pct(m)} · roster-adjusted (untested) ${pct(a)}<br>Market ${pct(k)} (${esc(DATA.market[t].american)})` }, svg);
     el("rect", { x: L, y: y - 20, width: W - L, height: 40, fill: "transparent" }, g);
-    const lo = Math.min(m, a, k), hi = Math.max(m, a, k);
-    el("line", { x1: x(lo), x2: x(hi), y1: y, y2: y, stroke: "var(--axis)", "stroke-width": 2 }, g);
+    el("line", { x1: x(Math.min(m, a, k)), x2: x(Math.max(m, a, k)), y1: y, y2: y, stroke: "var(--axis)", "stroke-width": 2 }, g);
     const s = 7;
     el("rect", { x: x(k) - s, y: y - s, width: 2 * s, height: 2 * s, transform: `rotate(45 ${x(k)} ${y})`, fill: "var(--surface)", stroke: "var(--ink)", "stroke-width": 2 }, g);
     el("circle", { cx: x(a), cy: y, r: 7, fill: "var(--surface)", stroke: TEAMS[t].c, "stroke-width": 3 }, g);
@@ -478,41 +499,35 @@ board("board-nl", "NL Championship Series", "NLCS · Brewers vs Dodgers");
   });
   el("line", { x1: L, x2: L, y1: T, y2: H - 22, class: "base" }, svg);
 
-  let h = `<thead><tr><th>October roster check</th><th>Starters used</th><th>Staff FIP: season → Oct</th><th>Runs allowed / G</th><th>Lineup wOBA: season → Oct</th><th>Market price</th></tr></thead><tbody>`;
+  let h = `<thead><tr><th>October roster check (untested)</th><th>Starters used</th><th>Staff FIP: season → Oct</th><th>Runs allowed / G</th><th>Lineup wOBA: season → Oct</th><th>Market price</th></tr></thead><tbody>`;
   order.forEach(t => {
     const r = DATA.roster[t];
-    h += `<tr><td><span class="chip" style="background:${TEAMS[t].c}"></span>${TEAMS[t].short}</td><td style="text-align:left;white-space:normal;min-width:220px">${r.sps.join(", ")}</td><td>${r.fip_season.toFixed(2)} → ${r.fip_oct.toFixed(2)}</td><td class="${r.dra < 0 ? "up" : "down"}">${r.dra >= 0 ? "+" : "−"}${Math.abs(r.dra).toFixed(2)}</td><td>${r.woba_season.toFixed(3)} → ${r.woba_oct.toFixed(3)}</td><td>${DATA.market[t].american}</td></tr>`;
+    if (!r) return;
+    h += `<tr><td><span class="chip" style="background:${TEAMS[t].c}"></span>${TEAMS[t].short}</td><td style="text-align:left;white-space:normal;min-width:220px">${r.sps.map(esc).join(", ")}</td><td>${r.fip_season.toFixed(2)} → ${r.fip_oct.toFixed(2)}</td><td class="${r.dra < 0 ? "up" : "down"}">${r.dra >= 0 ? "+" : "−"}${Math.abs(r.dra).toFixed(2)}</td><td>${r.woba_season.toFixed(3)} → ${r.woba_oct.toFixed(3)}</td><td>${esc(DATA.market[t].american)}</td></tr>`;
   });
   document.getElementById("t-roster").innerHTML = h + "</tbody>";
 })();
 
 /* ---------- what-ifs */
 (function () {
-  const groups = {};
-  DATA.whatif.forEach(r => (groups[r.series] = groups[r.series] || []).push(r));
-  const nextOf = d => DATA.series[d].find(g => g.home_runs == null);
   let h = "";
-  [["ALCS", "AL Championship Series"], ["NLCS", "NL Championship Series"]].forEach(([s, d]) => {
-    const g = nextOf(d);
-    groups[s].forEach(r => {
-      h += `<div class="card"><div class="eyebrow">${s} Game ${r.game} · ${g ? g.date : ""}</div><h3>If the ${TEAMS[r.if_wins].short} win</h3><div class="row">`;
-      order.forEach(t => {
-        const d0 = now[t].ws, d1 = r[t], diff = d1 - d0;
-        h += `<span class="k"><span class="chip" style="background:${TEAMS[t].c}"></span>${TEAMS[t].short}</span><span class="num"><b>${pct(d1)}</b> <span class="${diff >= 0 ? "up" : "down"}">${diff >= 0 ? "▲" : "▼"} ${Math.abs(diff * 100).toFixed(1)}</span></span>`;
-      });
-      h += `</div></div>`;
+  DATA.whatif.forEach(r => {
+    h += `<div class="card"><div class="eyebrow">${esc(r.series)} Game ${r.game} · at ${TEAMS[r.home] ? TEAMS[r.home].ab : esc(r.home)}</div><h3>If the ${TEAMS[r.if_wins].short} win</h3><div class="row">`;
+    order.forEach(t => {
+      const d0 = now[t].ws, d1 = r[t], diff = d1 - d0;
+      h += `<span class="k"><span class="chip" style="background:${TEAMS[t].c}"></span>${TEAMS[t].short}</span><span class="num"><b>${pct(d1)}</b> <span class="${diff >= 0 ? "up" : "down"}">${diff >= 0 ? "▲" : "▼"} ${Math.abs(diff * 100).toFixed(1)}</span></span>`;
     });
+    h += `</div></div>`;
   });
   document.getElementById("watch").innerHTML = h;
 })();
 
 /* ---------- ratings */
 (function () {
-  const four = Object.keys(TEAMS);
   let h = `<thead><tr><th>Rank</th><th>Team</th><th>Wins</th><th>Exp. runs scored / G</th><th>Exp. runs allowed / G</th><th>Win % vs avg</th></tr></thead><tbody>`;
   DATA.ratings.forEach(r => {
-    const isFour = four.includes(r.team);
-    h += `<tr class="${isFour ? "hl" : ""}"><td>${r.rank}</td><td style="text-align:left">${isFour ? `<span class="chip" style="background:${TEAMS[r.team].c}"></span>` : ""}${r.team}</td><td>${r.W}</td><td>${r.exp_RS_pg.toFixed(2)}</td><td>${r.exp_RA_pg.toFixed(2)}</td><td>${r.exp_wpct.toFixed(3).replace(/^0/, "")}</td></tr>`;
+    const isFour = r.team in TEAMS;
+    h += `<tr class="${isFour ? "hl" : ""}"><td>${r.rank}</td><td style="text-align:left">${isFour ? `<span class="chip" style="background:${TEAMS[r.team].c}"></span>` : ""}${esc(r.team)}</td><td>${r.W}</td><td>${r.exp_RS_pg.toFixed(2)}</td><td>${r.exp_RA_pg.toFixed(2)}</td><td>${r.exp_wpct.toFixed(3).replace(/^0/, "")}</td></tr>`;
   });
   document.getElementById("t-ratings").innerHTML = h + "</tbody>";
 })();

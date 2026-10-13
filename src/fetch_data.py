@@ -97,6 +97,13 @@ def main():
     done = done[done.home_runs != done.away_runs]  # drop the rare official tie
     done.to_csv(PROC / "games.csv", index=False)
 
+    # Team metadata (league/division), needed for the World Series home-field tiebreak
+    teams = get_json(f"{API}/teams", {"sportId": 1, "season": SEASONS[-1]},
+                     f"teams_{SEASONS[-1]}.json", refresh=True)
+    pd.DataFrame([{"id": t["id"], "team": t["name"], "abbrev": t.get("abbreviation"),
+                   "league": t["league"]["name"], "division": t["division"]["name"]}
+                  for t in teams["teams"]]).to_csv(PROC / "teams.csv", index=False)
+
     summary = done.groupby(["season", "game_type"]).size().unstack(fill_value=0)
     print("\nCompleted games by season/type:\n", summary)
 

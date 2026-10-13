@@ -12,57 +12,81 @@
   },
   "odds_now": {
     "Cleveland Guardians": {
-      "pennant": 0.5718343740805227,
-      "ws": 0.15570045455246462
+      "pennant": 0.5716193543896124,
+      "ws": 0.15168731228543794
     },
     "Tampa Bay Rays": {
-      "pennant": 0.42816562591947727,
-      "ws": 0.15211832912150805
+      "pennant": 0.4283806456103876,
+      "ws": 0.14904463155534925
     },
     "Los Angeles Dodgers": {
-      "pennant": 0.1776403264297186,
-      "ws": 0.12023101929991399
+      "pennant": 0.1827097842040495,
+      "ws": 0.12498053430822456
     },
     "Milwaukee Brewers": {
-      "pennant": 0.8223596735702814,
-      "ws": 0.5719501970261134
+      "pennant": 0.8172902157959505,
+      "ws": 0.5742875218509883
     }
   },
   "odds_before_lcs": {
     "Cleveland Guardians": {
-      "pennant": 0.40421527733394247,
-      "ws": 0.1122455485364005
+      "pennant": 0.39681968058832073,
+      "ws": 0.10734872204702439
     },
     "Tampa Bay Rays": {
-      "pennant": 0.5957847226660575,
-      "ws": 0.21518718792161995
+      "pennant": 0.6031803194116793,
+      "ws": 0.2132799950465696
     },
     "Los Angeles Dodgers": {
-      "pennant": 0.47848300130084537,
-      "ws": 0.31708232608660625
+      "pennant": 0.47122335716200103,
+      "ws": 0.3154157786556087
     },
     "Milwaukee Brewers": {
-      "pennant": 0.5215169986991546,
-      "ws": 0.35548493745537324
+      "pennant": 0.528776642837999,
+      "ws": 0.3639555042507973
     }
   },
   "ws_matchups": {
     "Cleveland Guardians vs Los Angeles Dodgers": {
-      "p_matchup": 0.10158084487539788,
-      "p_al_wins": 0.2870574222555847
+      "p_matchup": 0.10444044888738419,
+      "p_al_wins": 0.27997693598457585
     },
     "Cleveland Guardians vs Milwaukee Brewers": {
-      "p_matchup": 0.47025352920512486,
-      "p_al_wins": 0.26909084400893724
+      "p_matchup": 0.46717890550222824,
+      "p_al_wins": 0.2620974405543026
     },
     "Tampa Bay Rays vs Los Angeles Dodgers": {
-      "p_matchup": 0.07605948155432073,
-      "p_al_wins": 0.37141683156429134
+      "p_matchup": 0.07826933531666533,
+      "p_al_wins": 0.3639782158392192
     },
     "Tampa Bay Rays vs Milwaukee Brewers": {
-      "p_matchup": 0.3521061443651565,
-      "p_al_wins": 0.3517932289864274
+      "p_matchup": 0.3501113102937223,
+      "p_al_wins": 0.34433705792231717
     }
   },
-  "hfa_runs_multiplier": 1.011681034051228
+  "ws_home_field": {
+    "Cleveland Guardians vs Los Angeles Dodgers": {
+      "team": "Los Angeles Dodgers",
+      "reason": "better record"
+    },
+    "Cleveland Guardians vs Milwaukee Brewers": {
+      "team": "Milwaukee Brewers",
+      "reason": "better record"
+    },
+    "Tampa Bay Rays vs Los Angeles Dodgers": {
+      "team": "Los Angeles Dodgers",
+      "reason": "better record"
+    },
+    "Tampa Bay Rays vs Milwaukee Brewers": {
+      "team": "Milwaukee Brewers",
+      "reason": "better record"
+    }
+  },
+  "alive": [
+    "Cleveland Guardians",
+    "Tampa Bay Rays",
+    "Los Angeles Dodgers",
+    "Milwaukee Brewers"
+  ],
+  "home_win_rate_equal_teams": 0.5287566013654696
 }

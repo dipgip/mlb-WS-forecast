@@ -5,16 +5,22 @@ description: Refresh the 2026 World Series forecast after new postseason games a
 
 # Refresh the World Series forecast
 
-The model and its hyperparameters are frozen (λ=80, no recency weighting; see LOG.md Step 2).
-Only the live bracket state and rosters change, so an update only needs fresh data.
+The model is frozen at v2 (λ=80, no recency weighting, home field calibrated from wins; see LOG.md Steps 2 and 10). A refresh only brings in new games, rosters and prices.
 
-1. Re-pull the current season. Past seasons are cached, and 2026 always refreshes:
-   `.venv/bin/python src/fetch_data.py`
-2. Re-pull rosters and stats: set `ROSTER_DATE` (and drop eliminated teams from `TEAM_IDS`) in `src/fetch_rosters.py`, then run `.venv/bin/python src/fetch_rosters.py`.
-3. `.venv/bin/python src/predict.py`, then `.venv/bin/python src/roster_adjust.py`, then `.venv/bin/python src/sensitivity.py`.
-4. Do NOT re-run tune.py or backtest.py, and do not change λ after seeing results. That would be fitting to the answer.
-5. Append a dated "Update" entry to LOG.md with the new series state, the title odds for each team, and the change since the previous entry.
-6. Update the report page (`report/index.html`) numbers and republish it to the same artifact URL.
-
-Once a series ends, `bracket_odds` handles it automatically: a 4-win state gives that team P=1.
-For the World Series itself, predict.py would need the WS state read from game_type "W". Add that the first time a WS game is final.
+1. If there are new sportsbook futures prices, append rows to `data/market_odds.csv` (capture date, source, URL, team, American odds). Never overwrite old rows.
+2. Pull new data and recompute, without re-tuning:
+   ```
+   .venv/bin/python -m unittest discover -s tests
+   .venv/bin/python src/fetch_data.py
+   .venv/bin/python src/predict.py
+   .venv/bin/python src/fetch_rosters.py
+   .venv/bin/python src/roster_adjust.py
+   .venv/bin/python src/market.py
+   .venv/bin/python src/sensitivity.py
+   .venv/bin/python report/build.py
+   ```
+   Teams and roster date come from the live bracket and today's date. A World Series in progress is picked up automatically from game type "W".
+3. Do NOT re-run tune.py and change λ, and do not change the model after seeing results. That would be fitting to the answer.
+4. Append a dated "Update" entry to LOG.md: the new series state, title odds with 90% intervals for each team, and the change since the previous entry.
+5. Republish `report/index.html` to the same artifact URL (recorded in LOG.md Step 7).
+6. Commit and push with the repo's no-reply identity. Never commit `data/raw/`; it's git-ignored because it's MLB's copyrighted content.

@@ -1,0 +1,11 @@
+{
+  "n_games": 387,
+  "starter_match_rate": 1.0,
+  "log_loss_none": 0.6878072953629438,
+  "log_loss_w055": 0.6887269367907856,
+  "share_boot_better": 0.3935,
+  "improvement_ci90": [
+    -0.006486222409318274,
+    0.004045516399143405
+  ]
+}

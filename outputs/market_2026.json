@@ -1,0 +1,39 @@
+{
+  "captured": "2026-10-13",
+  "sources": [
+    {
+      "source": "SI (sportsbook consensus)",
+      "url": "https://www.si.com/betting/2026-world-series-odds-brewers-jump-to-favorite-guardians-favored-over-rays-in-al"
+    },
+    {
+      "source": "Fox Sports (DraftKings)",
+      "url": "https://www.foxsports.com/stories/mlb/2026-world-series-odds"
+    }
+  ],
+  "overround": {
+    "Fox Sports (DraftKings)": 0.08174427198817447,
+    "SI (sportsbook consensus)": 0.08394014374926373
+  },
+  "teams": {
+    "Cleveland Guardians": {
+      "fair_power": 0.1797837892587278,
+      "fair_proportional": 0.18469930721327565,
+      "american": "+400 / +400"
+    },
+    "Los Angeles Dodgers": {
+      "fair_power": 0.2035983421625468,
+      "fair_proportional": 0.20755587898739047,
+      "american": "+350 / +340"
+    },
+    "Milwaukee Brewers": {
+      "fair_power": 0.4651623157202801,
+      "fair_proportional": 0.45048611515433085,
+      "american": "+105 / +105"
+    },
+    "Tampa Bay Rays": {
+      "fair_power": 0.1514555528584472,
+      "fair_proportional": 0.15725869864500291,
+      "american": "+475 / +500"
+    }
+  }
+}

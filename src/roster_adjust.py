@@ -29,8 +29,8 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data/raw"
 SCHED = pd.read_csv(ROOT / "data/processed/schedule_all.csv")
-TEAMS = {158: "Milwaukee Brewers", 119: "Los Angeles Dodgers",
-         139: "Tampa Bay Rays", 114: "Cleveland Guardians"}
+META = json.loads((RAW / "roster_meta.json").read_text())  # written by fetch_rosters.py
+TEAMS = {tid: name for name, tid in META["teams"].items()}
 IP0, PA0 = 60.0, 220.0
 WOBA_SCALE, PA_PER_GAME = 1.2, 38.0
 
@@ -175,7 +175,7 @@ def adjust(team_id):
 
 
 def main():
-    out = {"league": {"FIP": LG_FIP, "wOBA": LG_WOBA}}
+    out = {"league": {"FIP": LG_FIP, "wOBA": LG_WOBA, "roster_date": META["date"]}}
     print(f"League FIP {LG_FIP:.2f}, wOBA {LG_WOBA:.3f}\n")
     for tid, name in TEAMS.items():
         a = adjust(tid)

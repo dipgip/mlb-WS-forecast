@@ -13,12 +13,19 @@ For every game we get two observations:
   a team's late-season form counts more than April.
 
 Expected runs then become a win probability via the Pythagenpat formula.
+
+Home field: the run model underestimates it, because a home team that leads
+after 8.5 innings never bats in the 9th, so its run totals are truncated.
+(Runs implied a 50.5% home win rate between equal teams; the actual rate is
+~53%.) So by default the home-field term is re-set after fitting, so that two
+average teams produce the home win rate actually observed in the training
+games (`hfa_from_wins=True`).
 """
 from dataclasses import dataclass
 
 import numpy as np
 import pandas as pd
-from scipy.optimize import minimize
+from scipy.optimize import brentq, minimize
 
 
 @dataclass
@@ -59,7 +66,7 @@ def pythagenpat(rs, ra):
     return rs ** x / (rs ** x + ra ** x)
 
 
-def fit(games, lam=30.0, half_life=None, ref_date=None):
+def fit(games, lam=80.0, half_life=None, ref_date=None, hfa_from_wins=True):
     """Fit ratings on a games DataFrame (home, away, home_runs, away_runs, date)."""
     teams = sorted(set(games.home) | set(games.away))
     t_ix = {t: k for k, t in enumerate(teams)}
@@ -102,7 +109,15 @@ def fit(games, lam=30.0, half_life=None, ref_date=None):
     mu, hfa, off, dfn = unpack(res.x)
     # Center ratings so 0 = league average (mu absorbs the shift)
     mu = mu + off.mean() - dfn.mean()
+    if hfa_from_wins:
+        hfa = hfa_matching_win_rate(mu, (games.home_runs > games.away_runs).mean())
     return Ratings(teams, off - off.mean(), dfn - dfn.mean(), mu, hfa)
+
+
+def hfa_matching_win_rate(mu, home_win_rate):
+    """Home-field log-run term at which two average teams give `home_win_rate`."""
+    base = np.exp(mu)
+    return brentq(lambda h: pythagenpat(base * np.exp(h), base) - home_win_rate, -0.5, 0.5)
 
 
 def log_loss(p, outcome):

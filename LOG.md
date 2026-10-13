@@ -172,3 +172,40 @@ Scanned everything pushed to GitHub before treating the repo as shareable.
 - **Fixed: personal email in commit metadata.** The commit author email is now the GitHub no-reply address, and this repo's git config uses it for all future commits.
 - **Fixed: verbatim MLB data republished.** The 25 raw JSON responses in `data/raw/` carry MLB Advanced Media's copyright notice and player birthdates and birthplaces. They are now git-ignored and removed from history. The new `src/fetch_rosters.py` rebuilds them; it replaces the ad-hoc curl pulls and closes a gap where `run_all.sh` couldn't rebuild the roster inputs. A re-fetch matched the original snapshot exactly: same values, with only the order of stat groups differing. The roster-adjustment output was unchanged.
 - **Kept:** `data/processed/` (game facts only) and `outputs/` (my own analysis).
+
+---
+
+## Step 9 — Partner review (`REVIEW.md`)
+
+I re-read the project as a skeptical partner and tested each suspected weak link. The full write-up with evidence and fixes is in `REVIEW.md`.
+
+- **The pick holds up under every fix.** The weak links are in confidence and presentation.
+- **Uncertainty:** the bootstrap 90% interval for Milwaukee is 43–70%. That's far wider than the 51–60% scenario range shown on the page.
+- **Pitcher adjustments:** a game-level starting-pitcher adjustment did *not* improve the postseason backtest (log loss 0.6882 → 0.6890). That undercuts the FIP-based roster adjustment behind the Dodgers explanation.
+- **Home field:** it is underestimated (50.5% implied vs 53.3% actual), but fixing it barely moves the answer (57.2% → 57.5%).
+- **Report brittleness:** the prose contains 17 hardcoded facts that will go stale on the next update.
+- **Held up:** the λ choice is robust, and the series math was verified against a 400,000-run simulation.
+
+---
+
+## Step 10 — Fixes from the review (model v2)
+
+All 8 findings were fixed (see the Resolution table in `REVIEW.md`), and the whole pipeline was re-run.
+
+| | Model v1 | **Model v2** |
+|---|---|---|
+| Home win % between equal teams | 50.5% | 52.9% (observed rate) |
+| Postseason game log loss | 0.6850 | 0.6848 |
+| Postseason series log loss | 0.6649 | 0.6663 |
+| Series favorites won / predicted | 60.2% / 57.6% | 58.4% / 58.8% |
+
+**2026 title odds (Oct 13), v2:**
+
+| Team | Point | 90% interval | Market (power de-vig) |
+|---|---|---|---|
+| **Milwaukee Brewers** | **57.4%** | 43–70% | 47% |
+| Cleveland Guardians | 15.2% | 8–25% | 18% |
+| Tampa Bay Rays | 14.9% | 8–26% | 15% |
+| Los Angeles Dodgers | 12.5% | 7–20% | 20% |
+
+**Final call unchanged:** Milwaukee Brewers, 57% (90% interval 43–70%).
