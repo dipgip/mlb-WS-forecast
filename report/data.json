@@ -1,0 +1,736 @@
+{
+ "as_of": "2026-10-13",
+ "odds": {
+  "as_of": "2026-10-12",
+  "series_state": {
+   "ALCS": {
+    "Cleveland Guardians": 1,
+    "Tampa Bay Rays": 0
+   },
+   "NLCS": {
+    "Los Angeles Dodgers": 0,
+    "Milwaukee Brewers": 2
+   }
+  },
+  "odds_now": {
+   "Cleveland Guardians": {
+    "pennant": 0.5718343740805227,
+    "ws": 0.15570045455246462
+   },
+   "Tampa Bay Rays": {
+    "pennant": 0.42816562591947727,
+    "ws": 0.15211832912150805
+   },
+   "Los Angeles Dodgers": {
+    "pennant": 0.1776403264297186,
+    "ws": 0.12023101929991399
+   },
+   "Milwaukee Brewers": {
+    "pennant": 0.8223596735702814,
+    "ws": 0.5719501970261134
+   }
+  },
+  "odds_before_lcs": {
+   "Cleveland Guardians": {
+    "pennant": 0.40421527733394247,
+    "ws": 0.1122455485364005
+   },
+   "Tampa Bay Rays": {
+    "pennant": 0.5957847226660575,
+    "ws": 0.21518718792161995
+   },
+   "Los Angeles Dodgers": {
+    "pennant": 0.47848300130084537,
+    "ws": 0.31708232608660625
+   },
+   "Milwaukee Brewers": {
+    "pennant": 0.5215169986991546,
+    "ws": 0.35548493745537324
+   }
+  },
+  "ws_matchups": {
+   "Cleveland Guardians vs Los Angeles Dodgers": {
+    "p_matchup": 0.10158084487539788,
+    "p_al_wins": 0.2870574222555847
+   },
+   "Cleveland Guardians vs Milwaukee Brewers": {
+    "p_matchup": 0.47025352920512486,
+    "p_al_wins": 0.26909084400893724
+   },
+   "Tampa Bay Rays vs Los Angeles Dodgers": {
+    "p_matchup": 0.07605948155432073,
+    "p_al_wins": 0.37141683156429134
+   },
+   "Tampa Bay Rays vs Milwaukee Brewers": {
+    "p_matchup": 0.3521061443651565,
+    "p_al_wins": 0.3517932289864274
+   }
+  },
+  "hfa_runs_multiplier": 1.011681034051228
+ },
+ "series": {
+  "AL Championship Series": [
+   {
+    "g": 1,
+    "date": "2026-10-12",
+    "home": "Tampa Bay Rays",
+    "away": "Cleveland Guardians",
+    "status": "Final",
+    "home_runs": 3,
+    "away_runs": 7,
+    "home_sp": "Drew Rasmussen",
+    "away_sp": "Foster Griffin"
+   },
+   {
+    "g": 2,
+    "date": "2026-10-13",
+    "home": "Tampa Bay Rays",
+    "away": "Cleveland Guardians",
+    "status": "Scheduled",
+    "home_runs": null,
+    "away_runs": null,
+    "home_sp": "Freddy Peralta",
+    "away_sp": "Parker Messick"
+   },
+   {
+    "g": 3,
+    "date": "2026-10-15",
+    "home": "Cleveland Guardians",
+    "away": "Tampa Bay Rays",
+    "status": "Scheduled",
+    "home_runs": null,
+    "away_runs": null,
+    "home_sp": null,
+    "away_sp": null
+   },
+   {
+    "g": 4,
+    "date": "2026-10-16",
+    "home": "Cleveland Guardians",
+    "away": "Tampa Bay Rays",
+    "status": "Scheduled",
+    "home_runs": null,
+    "away_runs": null,
+    "home_sp": null,
+    "away_sp": null
+   },
+   {
+    "g": 5,
+    "date": "2026-10-17",
+    "home": "Cleveland Guardians",
+    "away": "Tampa Bay Rays",
+    "status": "Scheduled",
+    "home_runs": null,
+    "away_runs": null,
+    "home_sp": null,
+    "away_sp": null
+   },
+   {
+    "g": 6,
+    "date": "2026-10-19",
+    "home": "Tampa Bay Rays",
+    "away": "Cleveland Guardians",
+    "status": "Scheduled",
+    "home_runs": null,
+    "away_runs": null,
+    "home_sp": null,
+    "away_sp": null
+   },
+   {
+    "g": 7,
+    "date": "2026-10-20",
+    "home": "Tampa Bay Rays",
+    "away": "Cleveland Guardians",
+    "status": "Scheduled",
+    "home_runs": null,
+    "away_runs": null,
+    "home_sp": null,
+    "away_sp": null
+   }
+  ],
+  "NL Championship Series": [
+   {
+    "g": 1,
+    "date": "2026-10-11",
+    "home": "Milwaukee Brewers",
+    "away": "Los Angeles Dodgers",
+    "status": "Final",
+    "home_runs": 2,
+    "away_runs": 1,
+    "home_sp": "Jacob Misiorowski",
+    "away_sp": "Tarik Skubal"
+   },
+   {
+    "g": 2,
+    "date": "2026-10-12",
+    "home": "Milwaukee Brewers",
+    "away": "Los Angeles Dodgers",
+    "status": "Final",
+    "home_runs": 7,
+    "away_runs": 4,
+    "home_sp": "Logan Henderson",
+    "away_sp": "Yoshinobu Yamamoto"
+   },
+   {
+    "g": 3,
+    "date": "2026-10-14",
+    "home": "Los Angeles Dodgers",
+    "away": "Milwaukee Brewers",
+    "status": "Scheduled",
+    "home_runs": null,
+    "away_runs": null,
+    "home_sp": "Blake Snell",
+    "away_sp": "Robert Gasser"
+   },
+   {
+    "g": 4,
+    "date": "2026-10-15",
+    "home": "Los Angeles Dodgers",
+    "away": "Milwaukee Brewers",
+    "status": "Scheduled",
+    "home_runs": null,
+    "away_runs": null,
+    "home_sp": null,
+    "away_sp": null
+   },
+   {
+    "g": 5,
+    "date": "2026-10-16",
+    "home": "Los Angeles Dodgers",
+    "away": "Milwaukee Brewers",
+    "status": "Scheduled",
+    "home_runs": null,
+    "away_runs": null,
+    "home_sp": null,
+    "away_sp": null
+   },
+   {
+    "g": 6,
+    "date": "2026-10-18",
+    "home": "Milwaukee Brewers",
+    "away": "Los Angeles Dodgers",
+    "status": "Scheduled",
+    "home_runs": null,
+    "away_runs": null,
+    "home_sp": null,
+    "away_sp": null
+   },
+   {
+    "g": 7,
+    "date": "2026-10-19",
+    "home": "Milwaukee Brewers",
+    "away": "Los Angeles Dodgers",
+    "status": "Scheduled",
+    "home_runs": null,
+    "away_runs": null,
+    "home_sp": null,
+    "away_sp": null
+   }
+  ]
+ },
+ "sensitivity": [
+  {
+   "scenario": "Baseline (\u03bb=80, full season)",
+   "Milwaukee Brewers": 0.5719501970261134,
+   "Cleveland Guardians": 0.1557004545524646,
+   "Tampa Bay Rays": 0.152118329121508,
+   "Los Angeles Dodgers": 0.1202310192999139
+  },
+  {
+   "scenario": "Less shrinkage (\u03bb=40)",
+   "Milwaukee Brewers": 0.5874646720422187,
+   "Cleveland Guardians": 0.1410036434199805,
+   "Tampa Bay Rays": 0.1490753054064625,
+   "Los Angeles Dodgers": 0.1224563791313382
+  },
+  {
+   "scenario": "More shrinkage (\u03bb=160)",
+   "Milwaukee Brewers": 0.5477783292685391,
+   "Cleveland Guardians": 0.1791991777724048,
+   "Tampa Bay Rays": 0.1561906733623966,
+   "Los Angeles Dodgers": 0.1168318195966593
+  },
+  {
+   "scenario": "Recency-weighted (60-day half-life)",
+   "Milwaukee Brewers": 0.5601916114692161,
+   "Cleveland Guardians": 0.1678612623906079,
+   "Tampa Bay Rays": 0.1693879289690387,
+   "Los Angeles Dodgers": 0.1025591971711372
+  },
+  {
+   "scenario": "Include 2026 postseason games",
+   "Milwaukee Brewers": 0.5702883891389553,
+   "Cleveland Guardians": 0.1642662857521261,
+   "Tampa Bay Rays": 0.1467582006217961,
+   "Los Angeles Dodgers": 0.1186871244871223
+  },
+  {
+   "scenario": "Postseason roster adjustment (50%)",
+   "Milwaukee Brewers": 0.5566387925377257,
+   "Cleveland Guardians": 0.1554220385334305,
+   "Tampa Bay Rays": 0.1475502120412845,
+   "Los Angeles Dodgers": 0.1403889568875592
+  },
+  {
+   "scenario": "Postseason roster adjustment (100%)",
+   "Milwaukee Brewers": 0.5399180661586164,
+   "Cleveland Guardians": 0.1542216658397634,
+   "Tampa Bay Rays": 0.1424704446756051,
+   "Los Angeles Dodgers": 0.1633898233260149
+  },
+  {
+   "scenario": "Backtest-calibrated spread (k=1.18)",
+   "Milwaukee Brewers": 0.597238793286104,
+   "Cleveland Guardians": 0.1321725089109272,
+   "Tampa Bay Rays": 0.146805560083149,
+   "Los Angeles Dodgers": 0.1237831377198197
+  },
+  {
+   "scenario": "Flatter probabilities (k=0.6)",
+   "Milwaukee Brewers": 0.5100105190467246,
+   "Cleveland Guardians": 0.216882010077142,
+   "Tampa Bay Rays": 0.1621900029799079,
+   "Los Angeles Dodgers": 0.1109174678962253
+  },
+  {
+   "scenario": "Every game a coin flip",
+   "Milwaukee Brewers": 0.40625,
+   "Cleveland Guardians": 0.328125,
+   "Tampa Bay Rays": 0.171875,
+   "Los Angeles Dodgers": 0.09375
+  }
+ ],
+ "whatif": [
+  {
+   "series": "ALCS",
+   "game": 2,
+   "if_wins": "Cleveland Guardians",
+   "new_state": "Guardians 2 Rays 0",
+   "Cleveland Guardians": 0.2056147667386584,
+   "Tampa Bay Rays": 0.0869892081289841,
+   "Los Angeles Dodgers": 0.1229781578370424,
+   "Milwaukee Brewers": 0.5844178672953151
+  },
+  {
+   "series": "ALCS",
+   "game": 2,
+   "if_wins": "Tampa Bay Rays",
+   "new_state": "Guardians 1 Rays 1",
+   "Cleveland Guardians": 0.1146364549762958,
+   "Tampa Bay Rays": 0.2056993979511611,
+   "Los Angeles Dodgers": 0.1179709762224193,
+   "Milwaukee Brewers": 0.5616931708501237
+  },
+  {
+   "series": "NLCS",
+   "game": 3,
+   "if_wins": "Los Angeles Dodgers",
+   "new_state": "Dodgers 1 Brewers 2",
+   "Cleveland Guardians": 0.1569472844684961,
+   "Tampa Bay Rays": 0.1531380049416726,
+   "Los Angeles Dodgers": 0.2023694780080839,
+   "Milwaukee Brewers": 0.4875452325817473
+  },
+  {
+   "series": "NLCS",
+   "game": 3,
+   "if_wins": "Milwaukee Brewers",
+   "new_state": "Dodgers 0 Brewers 3",
+   "Cleveland Guardians": 0.1544720125381846,
+   "Tampa Bay Rays": 0.151113691197498,
+   "Los Angeles Dodgers": 0.0393039157969219,
+   "Milwaukee Brewers": 0.6551103804673953
+  }
+ ],
+ "ratings": [
+  {
+   "team": "Milwaukee Brewers",
+   "off": 0.109479852959297,
+   "def": 0.1320508422205497,
+   "exp_RS_pg": 4.969414885534409,
+   "exp_RA_pg": 3.903101169143072,
+   "net": 0.2415306951798468,
+   "exp_wpct": 0.6110956833905872,
+   "W": 103,
+   "rank": 1
+  },
+  {
+   "team": "Los Angeles Dodgers",
+   "off": 0.0723686475725756,
+   "def": 0.1495028845425424,
+   "exp_RS_pg": 4.788374009245251,
+   "exp_RA_pg": 3.835575030746974,
+   "net": 0.2218715321151181,
+   "exp_wpct": 0.6015109779576266,
+   "W": 100,
+   "rank": 2
+  },
+  {
+   "team": "Chicago Cubs",
+   "off": 0.1351125613899773,
+   "def": 0.0284188118081581,
+   "exp_RS_pg": 5.098441028631088,
+   "exp_RA_pg": 4.329289492861015,
+   "net": 0.1635313731981355,
+   "exp_wpct": 0.5772159832455193,
+   "W": 89,
+   "rank": 3
+  },
+  {
+   "team": "New York Yankees",
+   "off": 0.0233423658297144,
+   "def": 0.1310903525614667,
+   "exp_RS_pg": 4.559279546154809,
+   "exp_RA_pg": 3.906851858415172,
+   "net": 0.1544327183911812,
+   "exp_wpct": 0.5707941319589368,
+   "W": 93,
+   "rank": 4
+  },
+  {
+   "team": "Atlanta Braves",
+   "off": 0.0182834701727474,
+   "def": 0.1219973681194057,
+   "exp_RS_pg": 4.536272869913493,
+   "exp_RA_pg": 3.9425388061215503,
+   "net": 0.1402808382921531,
+   "exp_wpct": 0.5644096242176361,
+   "W": 94,
+   "rank": 5
+  },
+  {
+   "team": "Tampa Bay Rays",
+   "off": 0.0180104011190179,
+   "def": 0.0751832798908184,
+   "exp_RS_pg": 4.535034323285521,
+   "exp_RA_pg": 4.13149352966273,
+   "net": 0.0931936810098363,
+   "exp_wpct": 0.5431920932135685,
+   "W": 98,
+   "rank": 6
+  },
+  {
+   "team": "Boston Red Sox",
+   "off": -0.0378207052899006,
+   "def": 0.1278343404998649,
+   "exp_RS_pg": 4.288776721009105,
+   "exp_RA_pg": 3.919593347152875,
+   "net": 0.0900136352099643,
+   "exp_wpct": 0.5410827818692437,
+   "W": 87,
+   "rank": 7
+  },
+  {
+   "team": "Detroit Tigers",
+   "off": -0.0097792527148506,
+   "def": 0.0770315942808775,
+   "exp_RS_pg": 4.410742304169752,
+   "exp_RA_pg": 4.1238642835141,
+   "net": 0.0672523415660268,
+   "exp_wpct": 0.5310697076045553,
+   "W": 76,
+   "rank": 8
+  },
+  {
+   "team": "Chicago White Sox",
+   "off": 0.0544613722777321,
+   "def": -0.0054341221914834,
+   "exp_RS_pg": 4.703390460512711,
+   "exp_RA_pg": 4.478357604810425,
+   "net": 0.0490272500862486,
+   "exp_wpct": 0.5231433745197449,
+   "W": 84,
+   "rank": 9
+  },
+  {
+   "team": "San Diego Padres",
+   "off": -0.0075531025836036,
+   "def": 0.0554248358788019,
+   "exp_RS_pg": 4.420572216099398,
+   "exp_RA_pg": 4.213937210557559,
+   "net": 0.0478717332951983,
+   "exp_wpct": 0.5222041236823063,
+   "W": 91,
+   "rank": 10
+  },
+  {
+   "team": "Pittsburgh Pirates",
+   "off": 0.0510471192226322,
+   "def": -0.0066461394148302,
+   "exp_RS_pg": 4.687359278093474,
+   "exp_RA_pg": 4.4837887420108204,
+   "net": 0.044400979807802,
+   "exp_wpct": 0.520955290829497,
+   "W": 82,
+   "rank": 11
+  },
+  {
+   "team": "Philadelphia Phillies",
+   "off": -0.0108545100839558,
+   "def": 0.0378772684869942,
+   "exp_RS_pg": 4.406002169892829,
+   "exp_RA_pg": 4.288534140946761,
+   "net": 0.0270227584030383,
+   "exp_wpct": 0.5125644063442194,
+   "W": 88,
+   "rank": 12
+  },
+  {
+   "team": "Cleveland Guardians",
+   "off": -0.0625934140574846,
+   "def": 0.0605208403285917,
+   "exp_RS_pg": 4.183837287946899,
+   "exp_RA_pg": 4.192517591373049,
+   "net": -0.0020725737288929,
+   "exp_wpct": 0.4990463999267892,
+   "W": 85,
+   "rank": 16
+  }
+ ],
+ "roster": {
+  "Milwaukee Brewers": {
+   "fip_season": 3.81372857423836,
+   "fip_oct": 3.67881409749278,
+   "dra": -0.1349144767455801,
+   "woba_season": 0.32317773936960603,
+   "woba_oct": 0.3230397195167506,
+   "drs": -0.004370628673755669,
+   "sps": [
+    "Jacob Misiorowski",
+    "Logan Henderson",
+    "Robert Gasser",
+    "Dustin May"
+   ]
+  },
+  "Los Angeles Dodgers": {
+   "fip_season": 3.8510381108107827,
+   "fip_oct": 3.4998008484524643,
+   "dra": -0.3512372623583184,
+   "woba_season": 0.32715051197438655,
+   "woba_oct": 0.3291290115268152,
+   "drs": 0.06265248582690647,
+   "sps": [
+    "Tarik Skubal",
+    "Blake Snell",
+    "Yoshinobu Yamamoto",
+    "Tyler Glasnow"
+   ]
+  },
+  "Tampa Bay Rays": {
+   "fip_season": 3.978355777266039,
+   "fip_oct": 3.857451334666135,
+   "dra": -0.12090444259990418,
+   "woba_season": 0.3181897899070731,
+   "woba_oct": 0.31835230716288127,
+   "drs": 0.005146379767259068,
+   "sps": [
+    "Drew Rasmussen",
+    "Freddy Peralta",
+    "Nick Martinez",
+    "Griffin Jax"
+   ]
+  },
+  "Cleveland Guardians": {
+   "fip_season": 3.9273011357700294,
+   "fip_oct": 3.836167876945263,
+   "dra": -0.0911332588247662,
+   "woba_season": 0.31103797293772373,
+   "woba_oct": 0.31340461141317194,
+   "drs": 0.07494355172252674,
+   "sps": [
+    "Parker Messick",
+    "Gavin Williams",
+    "Daniel Espino",
+    "Foster Griffin"
+   ]
+  }
+ },
+ "backtest": {
+  "n_games": 440,
+  "n_series": 113,
+  "game_ll": {
+   "coin": 0.6931471805599454,
+   "log5": 0.6893009551227561,
+   "model": 0.6850485056161011
+  },
+  "series_ll": {
+   "coin": 0.6931471805599453,
+   "model": 0.6649451213981367
+  },
+  "game_fav_won": 0.5454545454545454,
+  "series_fav_won": 0.6017699115044248,
+  "series_fav_pred": 0.5760032584457281,
+  "home_won": 0.5363636363636364,
+  "calibration": [
+   {
+    "n": 49,
+    "predicted": 0.5249091490630767,
+    "actual": 0.5510204081632653
+   },
+   {
+    "n": 27,
+    "predicted": 0.5697058392654049,
+    "actual": 0.6296296296296297
+   },
+   {
+    "n": 22,
+    "predicted": 0.62270837121339,
+    "actual": 0.5454545454545454
+   },
+   {
+    "n": 15,
+    "predicted": 0.6857452048944006,
+    "actual": 0.8
+   }
+  ],
+  "ws": [
+   {
+    "season": 2015,
+    "fav": "Kansas City Royals",
+    "dog": "New York Mets",
+    "p_fav": 0.5804602141140314,
+    "winner": "Kansas City Royals",
+    "fav_won": 1
+   },
+   {
+    "season": 2016,
+    "fav": "Chicago Cubs",
+    "dog": "Cleveland Indians",
+    "p_fav": 0.6590156154715708,
+    "winner": "Chicago Cubs",
+    "fav_won": 1
+   },
+   {
+    "season": 2017,
+    "fav": "Los Angeles Dodgers",
+    "dog": "Houston Astros",
+    "p_fav": 0.5015138512276699,
+    "winner": "Houston Astros",
+    "fav_won": 0
+   },
+   {
+    "season": 2018,
+    "fav": "Boston Red Sox",
+    "dog": "Los Angeles Dodgers",
+    "p_fav": 0.5039493291215829,
+    "winner": "Boston Red Sox",
+    "fav_won": 1
+   },
+   {
+    "season": 2019,
+    "fav": "Houston Astros",
+    "dog": "Washington Nationals",
+    "p_fav": 0.6168154736521005,
+    "winner": "Washington Nationals",
+    "fav_won": 0
+   },
+   {
+    "season": 2020,
+    "fav": "Los Angeles Dodgers",
+    "dog": "Tampa Bay Rays",
+    "p_fav": 0.6714624930407269,
+    "winner": "Los Angeles Dodgers",
+    "fav_won": 1
+   },
+   {
+    "season": 2021,
+    "fav": "Houston Astros",
+    "dog": "Atlanta Braves",
+    "p_fav": 0.5845666687732748,
+    "winner": "Atlanta Braves",
+    "fav_won": 0
+   },
+   {
+    "season": 2022,
+    "fav": "Houston Astros",
+    "dog": "Philadelphia Phillies",
+    "p_fav": 0.6860313738577153,
+    "winner": "Houston Astros",
+    "fav_won": 1
+   },
+   {
+    "season": 2023,
+    "fav": "Texas Rangers",
+    "dog": "Arizona Diamondbacks",
+    "p_fav": 0.6738488491007464,
+    "winner": "Texas Rangers",
+    "fav_won": 1
+   },
+   {
+    "season": 2024,
+    "fav": "Los Angeles Dodgers",
+    "dog": "New York Yankees",
+    "p_fav": 0.5130481085474398,
+    "winner": "Los Angeles Dodgers",
+    "fav_won": 1
+   },
+   {
+    "season": 2025,
+    "fav": "Los Angeles Dodgers",
+    "dog": "Toronto Blue Jays",
+    "p_fav": 0.5391762705273502,
+    "winner": "Los Angeles Dodgers",
+    "fav_won": 1
+   }
+  ]
+ },
+ "tuning": {
+  "best": {
+   "lam": 80,
+   "half_life": 0,
+   "log_loss": 0.6772046021142396,
+   "accuracy": 0.573751178133836
+  },
+  "home_only": 0.692479291376359,
+  "log5": 0.6791840060572467,
+  "n_games": 4244,
+  "by_lam": [
+   {
+    "lam": 0,
+    "log_loss": 0.6784304473650771
+   },
+   {
+    "lam": 5,
+    "log_loss": 0.6782579291734246
+   },
+   {
+    "lam": 10,
+    "log_loss": 0.6781035059211744
+   },
+   {
+    "lam": 20,
+    "log_loss": 0.6778448732263114
+   },
+   {
+    "lam": 40,
+    "log_loss": 0.6774848934332302
+   },
+   {
+    "lam": 80,
+    "log_loss": 0.6772046021142396
+   },
+   {
+    "lam": 160,
+    "log_loss": 0.6775321000325168
+   }
+  ]
+ },
+ "market": {
+  "Milwaukee Brewers": {
+   "american": "+105",
+   "implied": 0.45002934974020037
+  },
+  "Los Angeles Dodgers": {
+   "american": "+350",
+   "implied": 0.20501337043720239
+  },
+  "Cleveland Guardians": {
+   "american": "+400",
+   "implied": 0.18451203339348216
+  },
+  "Tampa Bay Rays": {
+   "american": "+475",
+   "implied": 0.16044524642911492
+  }
+ }
+}

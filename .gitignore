@@ -1,0 +1,13 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Raw MLB Stats API responses: verbatim MLB Advanced Media content (copyrighted,
+# not ours to redistribute). Rebuilt by src/fetch_data.py and src/fetch_rosters.py.
+data/raw/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
