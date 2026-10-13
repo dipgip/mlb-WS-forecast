@@ -256,3 +256,28 @@ Deployed to Streamlit Community Cloud from `main` / `dashboard/app.py`: https://
 - **Rendering:** checked the headline, metrics, odds chart, matchup table and scoreboards, and they match the local version.
 - **Updates:** it redeploys on every push, so each refresh reaches the dashboard automatically.
 - **Links:** the README, the interactive report and `report/REPORT.md` all link to it.
+
+---
+
+## Step 14 — Forecast record and scheduled refresh
+
+**What new games are for.** The model is frozen (v2), and team ratings come from the regular season only. New games don't make it smarter; they only change the bracket state. Each refresh records new forecasts *before* the games they predict. That gives the model many graded predictions instead of one, shows how the uncertainty resolves, and lets it be compared with the market as both update.
+
+**The record (`forecasts/`)** is append-only:
+- **Title-odds snapshots** (`forecasts/*.json`). Each holds its UTC creation time, model version, code commit, the games it knew about, and the next first pitch. A snapshot counts as pregame only if it was created before that first pitch.
+- **Per-game forecasts** (`forecasts/games/`). The model's win probability for the next game of each live series, written only before first pitch.
+- **Fingerprints** in `forecasts/MANIFEST.sha256`, checked in CI by `tests/test_forecast_record.py`. GitHub commit and tag times serve as the external clock.
+- **Retrospective snapshots** are labeled as such and never scored.
+
+**On record before ALCS Game 2** (first pitch 2026-10-14 00:00 UTC; tags `forecast-2026-10-13-pre-ALCS-G2` and `forecast-2026-10-13-games`):
+
+| Record | Forecast | Created (UTC) |
+|---|---|---|
+| Original call (v1, from commit 5455bc2) | MIL 57.2% | 18:58 |
+| Current forecast (v2) | MIL 57.4% (90% interval 42.7–69.6%) | 22:32 |
+| ALCS G2: CLE @ TB | TB 57.1% | 22:34 |
+| NLCS G3: MIL @ LAD | LAD 51.9% | 22:34 |
+
+`outputs/forecast_history.csv` was removed, because it could be silently overwritten.
+
+**Scheduled refresh.** A local scheduled task (`ws-forecast-refresh`) runs at 09:00 and 13:00 local time daily and follows `.claude/skills/ws-forecast-update/SKILL.md`. That's after the previous night's games and before the earliest first pitch (15:00 local). The 13:00 run is a backup in case the app was closed in the morning. A game whose first pitch has passed is skipped rather than recorded late. After the World Series, the task writes the final grade and turns itself off.

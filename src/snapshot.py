@@ -183,6 +183,10 @@ def game_forecasts():
         path = gdir / f"{gid}.json"
         if path.exists():
             continue
+        if not isinstance(row.game_time_utc, str) or created >= row.game_time_utc:
+            print(f"skipped {gid}: first pitch ({row.game_time_utc}) has passed or is unknown; "
+                  "a forecast now would not be pregame")
+            continue
         p_home = float(r.p_home_win(home, away))
         rec = {"game_id": gid, "game_pk": int(row.game_pk), "series": row.series_desc, "game": n + 1,
                "home": home, "away": away, "first_pitch_utc": row.game_time_utc,
