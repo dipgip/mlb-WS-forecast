@@ -244,3 +244,15 @@ A Streamlit dashboard that mirrors the report and runs locally (`./run_dashboard
 **Tests:** `tests/test_dashboard.py` (Streamlit AppTest) checks that the app renders with no errors and that the simulator recomputes odds. The suite is now 14 tests.
 
 **Also:** `REPORT.md` moved into `report/`, next to the other report files.
+
+---
+
+## Step 13 — Dashboard deployed
+
+Deployed to Streamlit Community Cloud from `main` / `dashboard/app.py`: https://mlb-ws-forecast-w3huajspduv8ae2mctsydr.streamlit.app/
+
+- **Access:** granted only for the personal account; no organization access was given.
+- **Public:** an anonymous visitor reaches the app (HTTP 200 after Streamlit's cookie redirects), not a login page.
+- **Rendering:** checked the headline, metrics, odds chart, matchup table and scoreboards, and they match the local version.
+- **Updates:** it redeploys on every push, so each refresh reaches the dashboard automatically.
+- **Links:** the README, the interactive report and `report/REPORT.md` all link to it.

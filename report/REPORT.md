@@ -1,6 +1,6 @@
 # 2026 World Series Forecast
 
-*Forecast as of Oct 12, 2026 games · next: ALCS G2 Oct 13, NLCS G3 Oct 14. Static version of the report; the interactive page has the same numbers with hover detail.*
+*Forecast as of Oct 12, 2026 games · next: ALCS G2 Oct 13, NLCS G3 Oct 14. Static version of the report. The [live dashboard](https://mlb-ws-forecast-w3huajspduv8ae2mctsydr.streamlit.app/) has the same numbers plus a what-if simulator.*
 
 ## The pick: Milwaukee Brewers, 57%
 

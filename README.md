@@ -6,6 +6,7 @@
 
 - `LOG.md` — the step-by-step record of every decision and result. Start here.
 - `REVIEW.md` — a partner review of the weak links, with evidence and the fixes made.
+- **[Live dashboard](https://mlb-ws-forecast-w3huajspduv8ae2mctsydr.streamlit.app/)** — the interactive Streamlit dashboard with the what-if simulator, hosted on Streamlit Community Cloud.
 - **[report/REPORT.md](report/REPORT.md) — the full report, readable right here on GitHub.**
 - **Dashboard** — an interactive Streamlit app with a live what-if simulator. It runs locally; nothing is hosted:
   ```bash
@@ -13,7 +14,7 @@
   ```
   Then open http://localhost:8501. It's bound to this machine only.
 
-  **To view it online:** deploy it free on [Streamlit Community Cloud](https://share.streamlit.io). Choose this repo, branch `main`, main file `dashboard/app.py`. It runs entirely on the committed files and redeploys on every push.
+  **Online:** https://mlb-ws-forecast-w3huajspduv8ae2mctsydr.streamlit.app/ (Streamlit Community Cloud, deployed from `main` / `dashboard/app.py`; it redeploys on every push).
 - `report/index.html` — the same report as an interactive web page (open it in a browser for hover detail).
 - `run_all.sh` — rebuilds everything from the MLB Stats API.
 

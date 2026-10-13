@@ -247,7 +247,7 @@ def build_markdown():
     hf = DATA["odds"]["ws_home_field"]
     L = []
     L += ["# 2026 World Series Forecast", "",
-          f"*{F['asof']}. Static version of the report; the interactive page has the same numbers with hover detail.*", "",
+          f"*{F['asof']}. Static version of the report. The [live dashboard](https://mlb-ws-forecast-w3huajspduv8ae2mctsydr.streamlit.app/) has the same numbers plus a what-if simulator.*", "",
           f"## The pick: {F['fav']}, {F['fav_pct']}%", "",
           table(["", ""], [["Model", f"**{F['fav_pct']}%**"],
                            ["90% interval (1,000 resampled seasons)", F["fav_ci"]],
