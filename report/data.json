@@ -761,5 +761,89 @@
    "source": "Fox Sports (DraftKings)",
    "url": "https://www.foxsports.com/stories/mlb/2026-world-series-odds"
   }
- ]
+ ],
+ "record": {
+  "snapshots": [
+   {
+    "label": "Before LCS (retro)",
+    "kind": "retrospective",
+    "model": "v2",
+    "created": "2026-10-13 22:32:03",
+    "state": "ALCS 0\u20130 \u00b7 NLCS 0\u20130",
+    "pregame": false,
+    "commit": "17d0d6b",
+    "Cleveland Guardians": 0.10734872204702439,
+    "Tampa Bay Rays": 0.2132799950465696,
+    "Los Angeles Dodgers": 0.3154157786556087,
+    "Milwaukee Brewers": 0.3639555042507973
+   },
+   {
+    "label": "Oct 13 \u00b7 v1",
+    "kind": "live",
+    "model": "v1",
+    "created": "2026-10-13 18:58:10",
+    "state": "ALCS CLE 1\u20130 \u00b7 NLCS MIL 2\u20130",
+    "pregame": true,
+    "commit": "5455bc2",
+    "Cleveland Guardians": 0.15570045455246462,
+    "Tampa Bay Rays": 0.15211832912150805,
+    "Los Angeles Dodgers": 0.12023101929991399,
+    "Milwaukee Brewers": 0.5719501970261134
+   },
+   {
+    "label": "Oct 13 \u00b7 v2",
+    "kind": "live",
+    "model": "v2",
+    "created": "2026-10-13 22:32:03",
+    "state": "ALCS CLE 1\u20130 \u00b7 NLCS MIL 2\u20130",
+    "pregame": true,
+    "commit": "17d0d6b",
+    "Cleveland Guardians": 0.15168731228543794,
+    "Tampa Bay Rays": 0.14904463155534925,
+    "Los Angeles Dodgers": 0.12498053430822456,
+    "Milwaukee Brewers": 0.5742875218509883
+   }
+  ],
+  "changes": [
+   {
+    "from": "Oct 13 \u00b7 v1",
+    "to": "Oct 13 \u00b7 v2",
+    "what": "no new games; model v1 \u2192 v2",
+    "moves": {
+     "Cleveland Guardians": -0.004013142267026676,
+     "Tampa Bay Rays": -0.0030736975661588006,
+     "Los Angeles Dodgers": 0.00474951500831057,
+     "Milwaukee Brewers": 0.00233732482487492
+    }
+   }
+  ],
+  "games": [
+   {
+    "game": "ALCS G2",
+    "matchup": "Cleveland Guardians @ Tampa Bay Rays",
+    "first_pitch": "2026-10-14T00:00:00Z",
+    "made": "2026-10-13T22:34:05Z",
+    "fav": "Tampa Bay Rays",
+    "p_fav": 0.5712644632681254,
+    "winner": null,
+    "called": null
+   },
+   {
+    "game": "NLCS G3",
+    "matchup": "Milwaukee Brewers @ Los Angeles Dodgers",
+    "first_pitch": "2026-10-15T00:00:00Z",
+    "made": "2026-10-13T22:34:05Z",
+    "fav": "Los Angeles Dodgers",
+    "p_fav": 0.519085223847324,
+    "winner": null,
+    "called": null
+   }
+  ],
+  "game_summary": {
+   "n_forecast": 2,
+   "n_graded": 0
+  },
+  "score": null,
+  "repo": "https://github.com/dipgip/mlb-WS-forecast"
+ }
 }

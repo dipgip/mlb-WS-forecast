@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 import bracket as B  # noqa: E402
+import record as R  # noqa: E402
 import predict as P  # noqa: E402
 from model import fit  # noqa: E402
 from sensitivity import Scaled  # noqa: E402
@@ -38,7 +39,6 @@ def load_report():
         "ratings_all": pd.read_csv(out / "ratings_2026.csv"),
         "sp": pd.read_csv(out / "sp_backtest.csv"),
         "sp_summary": json.loads((out / "sp_backtest_summary.json").read_text()),
-        "history": pd.read_csv(out / "forecast_history.csv") if (out / "forecast_history.csv").exists() else None,
         "tuning": pd.read_csv(out / "tuning_grid.csv"),
     }
     return d, extra
@@ -94,7 +94,8 @@ c3.metric("Betting market", F["fav_mkt"], help=F["mkt_note"])
 c4.metric("Most likely World Series", F["top_mu"], help=f"Chance this matchup happens: {F['top_mu_pct']}")
 st.write(F["lede"])
 
-tabs = st.tabs(["Overview", "What-if simulator", "Backtest", "Stress test", "Market", "Team ratings", "Method & limits"])
+(t_over, t_record, t_sim, t_bt, t_stress, t_mkt, t_rat, t_meth) = st.tabs(
+    ["Overview", "Forecast record", "What-if simulator", "Backtest", "Stress test", "Market", "Team ratings", "Method & limits"])
 
 
 # ---------------------------------------------------------------- shared charts
@@ -168,7 +169,7 @@ def current_odds_frame():
 
 
 # ---------------------------------------------------------------- Overview
-with tabs[0]:
+with t_over:
     left, right = st.columns([3, 2], gap="large")
     with left:
         st.subheader("Title odds for the last four teams")
@@ -198,16 +199,79 @@ with tabs[0]:
                     v = wf.loc[r.Index, t]
                     col.metric(short(t), pct(v), delta=f"{(v - now[t]['ws']) * 100:+.1f}", delta_color="normal")
 
-    hist = EXTRA["history"]
-    if hist is not None and hist.as_of.nunique() > 1:
-        st.subheader("How the forecast has moved")
-        st.altair_chart(alt.Chart(hist).mark_line(point=True).encode(
-            x=alt.X("as_of:T", title="Forecast date"), y=alt.Y("p_title:Q", axis=alt.Axis(format="%"), title="Title odds"),
-            color=alt.Color("team:N", scale=COLOR_SCALE), tooltip=["as_of", "state", "team", alt.Tooltip("p_title", format=".1%")]),
-            width="stretch")
+
+# ---------------------------------------------------------------- Forecast record
+with t_record:
+    st.subheader("Forecast record: what the model said, and when")
+    st.write("Every forecast is saved before the games it predicts and never changed afterward. Each file is fingerprinted, "
+             "checked by the test suite, and pushed to GitHub with a timestamped tag, so anyone can confirm what the model "
+             "said before each result. The model itself is frozen; new games only change the bracket situation. Each "
+             "refresh adds forecasts the model can be graded on.")
+    tl = R.timeline()
+    if not tl.empty:
+        order_lbl = list(dict.fromkeys(tl.sort_values("seq").label))
+        line = alt.Chart(tl).mark_line(strokeWidth=2.5).encode(
+            x=alt.X("label:N", sort=order_lbl, title=None, axis=alt.Axis(labelAngle=0, labelLimit=180)),
+            y=alt.Y("title:Q", axis=alt.Axis(format="%"), title="Chance to win the World Series"),
+            color=alt.Color("team:N", scale=COLOR_SCALE, legend=alt.Legend(orient="top", title=None)),
+            detail="team:N")
+        pts = alt.Chart(tl).mark_point(size=110, filled=True).encode(
+            x=alt.X("label:N", sort=order_lbl), y="title:Q",
+            color=alt.Color("team:N", scale=COLOR_SCALE, legend=None),
+            shape=alt.Shape("kind:N", scale=alt.Scale(domain=["live", "retrospective"], range=["circle", "triangle-down"]),
+                            legend=alt.Legend(orient="top", title=None)),
+            tooltip=["label", "kind", "model_version", "created_at_utc", "state", "team",
+                     alt.Tooltip("title:Q", format=".1%", title="Title odds"),
+                     alt.Tooltip("p05:Q", format=".1%", title="90% low"), alt.Tooltip("p95:Q", format=".1%", title="90% high"),
+                     alt.Tooltip("market:Q", format=".1%", title="Market"), "commit"])
+        st.altair_chart((line + pts).properties(height=340), width="stretch")
+        st.caption("Triangles are retrospective (computed afterward for context, never scored). Circles are live forecasts made before the next game.")
+
+    st.markdown("**Every forecast on record**")
+    st.dataframe(R.table(), hide_index=True, width="stretch", column_config={
+        "Code link": st.column_config.LinkColumn("Code", display_text="view commit"),
+        "File": st.column_config.LinkColumn("Record", display_text="view file"),
+        "Code": None, "Note": st.column_config.TextColumn("Note", width="large")})
+
+    ch = R.changes()
+    if ch:
+        st.markdown("**What moved the odds**")
+        for c in ch:
+            big = sorted(c["moves"].items(), key=lambda kv: -abs(kv[1]))[:2]
+            st.markdown(f"- **{c['from']} → {c['to']}:** {c['what_happened']}. "
+                        + ", ".join(f"{short(t)} {v * 100:+.1f} pts" for t, v in big))
+
+    st.markdown("**Game-by-game forecasts**")
+    gs = R.game_summary()
+    gf = R.game_forecasts()
+    g1, g2, g3 = st.columns(3)
+    g1.metric("Games forecast before first pitch", gs["n_forecast"])
+    if gs["n_graded"]:
+        g2.metric("Favorite won", f"{gs['called']} of {gs['n_graded']}")
+        g3.metric("Log loss (lower is better)", f"{gs['log_loss']:.3f}",
+                  delta=f"{gs['log_loss'] - gs['log_loss_coin']:+.3f} vs coin flip", delta_color="inverse")
+    else:
+        g2.metric("Favorite won", "pending")
+        g3.metric("Log loss", "pending", help="Graded as results come in.")
+    if len(gf):
+        show = gf.drop(columns=[c for c in gf.columns if c.startswith("_")])
+        show["Called it"] = show["Called it"].map({True: "✓", False: "✗"}).fillna("pending")
+        show["Winner"] = show["Winner"].fillna("not played yet")
+        st.dataframe(show, hide_index=True, width="stretch", column_config={
+            "Favorite's chance": st.column_config.NumberColumn(format="percent"),
+            "File": st.column_config.LinkColumn("Record", display_text="view file")})
+
+    sc = R.score()
+    st.markdown("**Final grade**")
+    if sc is None:
+        st.info("Pending. When the World Series ends, every live forecast above is scored against the champion, "
+                "next to the market's prices from the same day and an equal-odds baseline.")
+    else:
+        st.success(f"Champion: {sc['champion']}")
+        st.dataframe(pd.DataFrame(sc["rows"]), hide_index=True, width="stretch")
 
 # ---------------------------------------------------------------- What-if simulator
-with tabs[1]:
+with t_sim:
     st.subheader("What-if simulator")
     st.write("Set any series score and modeling choice, and the real model recomputes every team's title odds. "
              "Nothing here changes the saved forecast.")
@@ -263,7 +327,7 @@ with tabs[1]:
                              for c in ("Chance it happens", "AL team wins")})
 
 # ---------------------------------------------------------------- Backtest
-with tabs[2]:
+with t_bt:
     bt = DATA["backtest"]
     st.subheader("Can it be trusted? 11 real Octobers")
     st.write(F["bt_series"])
@@ -312,7 +376,7 @@ with tabs[2]:
         width="stretch")
 
 # ---------------------------------------------------------------- Stress test
-with tabs[3]:
+with t_stress:
     st.subheader(F["sens_head"])
     st.write(f"Each row changes one judgment call. Across these the favorite's title odds range {F['sens_range']}. "
              f"That range measures sensitivity to choices; the 90% interval measures statistical noise. With every remaining "
@@ -335,7 +399,7 @@ with tabs[3]:
                                 for t in ORDER})
 
 # ---------------------------------------------------------------- Market
-with tabs[4]:
+with t_mkt:
     st.subheader("Model vs the betting market")
     st.write(F["market_text"])
     st.info(F["market_why"])
@@ -364,7 +428,7 @@ with tabs[4]:
         for c in ro.columns if "FIP" in c or "wOBA" in c})
 
 # ---------------------------------------------------------------- Ratings
-with tabs[5]:
+with t_rat:
     st.subheader("2026 team ratings, all 30 clubs")
     st.write(F["ratings_text"])
     ra = EXTRA["ratings_all"].copy()
@@ -395,7 +459,7 @@ with tabs[5]:
                            "Win % vs avg": st.column_config.NumberColumn(format="%.3f")})
 
 # ---------------------------------------------------------------- Method
-with tabs[6]:
+with t_meth:
     st.subheader("How I got here")
     st.markdown(f"""
 1. **Pulled every game since 2015.** {F['n_games_total']} regular-season and postseason results from the official MLB Stats API, plus the live bracket, rosters and announced starters.

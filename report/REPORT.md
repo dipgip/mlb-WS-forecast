@@ -58,6 +58,25 @@ Exact probabilities from every remaining path through the bracket, using the rea
 | Guardians vs Dodgers | 10.4% | 28.0% | 72.0% | Dodgers (better record) |
 | Rays vs Dodgers | 7.8% | 36.4% | 63.6% | Dodgers (better record) |
 
+## The forecast record
+
+Every forecast is saved before the games it predicts and never changed afterward. Each one is fingerprinted, checked by the test suite and pushed to GitHub with a timestamped tag. The model is frozen; new games only change the bracket situation, and each refresh adds forecasts it can be graded on. Retrospective rows were computed afterward for context and are never scored.
+
+| Forecast | Kind | Made (UTC) | Series state | Before first pitch | Brewers | Guardians | Rays | Dodgers | Code |
+| --- | --- | --- | --- | :---: | ---: | ---: | ---: | ---: | --- |
+| Before LCS (retro) | retrospective | 2026-10-13 22:32:03 | ALCS 0–0 · NLCS 0–0 | n/a | 36.4% | 10.7% | 21.3% | 31.5% | [17d0d6b](https://github.com/dipgip/mlb-WS-forecast/commit/17d0d6b) |
+| Oct 13 · v1 | live | 2026-10-13 18:58:10 | ALCS CLE 1–0 · NLCS MIL 2–0 | ✓ | 57.2% | 15.6% | 15.2% | 12.0% | [5455bc2](https://github.com/dipgip/mlb-WS-forecast/commit/5455bc2) |
+| Oct 13 · v2 | live | 2026-10-13 22:32:03 | ALCS CLE 1–0 · NLCS MIL 2–0 | ✓ | 57.4% | 15.2% | 14.9% | 12.5% | [17d0d6b](https://github.com/dipgip/mlb-WS-forecast/commit/17d0d6b) |
+
+- **Oct 13 · v1 → Oct 13 · v2:** no new games; model v1 → v2.
+
+**Game-by-game forecasts**
+
+| Game | Matchup | First pitch (UTC) | Forecast made (UTC) | Model favorite | Chance | Result |
+| --- | --- | --- | --- | --- | ---: | --- |
+| ALCS G2 | Cleveland Guardians @ Tampa Bay Rays | 2026-10-14 00:00:00 | 2026-10-13 22:34:05 | Tampa Bay Rays | 57.1% | not played yet |
+| NLCS G3 | Milwaukee Brewers @ Los Angeles Dodgers | 2026-10-15 00:00:00 | 2026-10-13 22:34:05 | Los Angeles Dodgers | 51.9% | not played yet |
+
 ## How I got here
 
 The full log with every number is in [LOG.md](../LOG.md), and a partner review of the weak spots is in [REVIEW.md](../REVIEW.md). The core method was fixed before any 2026 odds were computed.

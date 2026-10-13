@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 import bracket as B  # noqa: E402
 import predict as P  # noqa: E402
+import record as R  # noqa: E402
 
 OUT = ROOT / "outputs"
 REP = ROOT / "report"
@@ -256,6 +257,28 @@ data = {
     "backtest": backtest,
     "market": {t: {"american": v["american"], "implied": v["fair_power"]} for t, v in market["teams"].items()},
     "market_sources": market["sources"],
+}
+tl = R.timeline()
+wide = []
+for seq, g in tl.groupby("seq"):
+    first = g.iloc[0]
+    wide.append({"label": first.label, "kind": first.kind, "model": first.model_version,
+                 "created": first.created_at_utc.replace("T", " ").rstrip("Z"), "state": first.state,
+                 "pregame": bool(first.pregame_verified), "commit": first.commit,
+                 **{t: float(v) for t, v in zip(g.team, g.title)}})
+gf = R.game_forecasts()
+data["record"] = {
+    "snapshots": wide,
+    "changes": [{"from": c["from"], "to": c["to"], "what": c["what_happened"],
+                 "moves": {t: float(v) for t, v in c["moves"].items()}} for c in R.changes()],
+    "games": [] if gf.empty else [
+        {"game": r["Game"], "matchup": r["Matchup"], "first_pitch": r["First pitch (UTC)"],
+         "made": r["Forecast made (UTC)"], "fav": r["Model favorite"], "p_fav": float(r["Favorite's chance"]),
+         "winner": r["Winner"], "called": None if r["Called it"] is None or pd.isna(r["Called it"]) else bool(r["Called it"])}
+        for _, r in gf.iterrows()],
+    "game_summary": R.game_summary(),
+    "score": R.score(),
+    "repo": R.REPO,
 }
 (REP / "data.json").write_text(json.dumps(data, indent=1, default=float))
 html = (REP / "template.html").read_text()

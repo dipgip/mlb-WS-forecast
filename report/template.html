@@ -182,6 +182,19 @@ footer { padding-top: 30px; border-top: 1px solid var(--rule); font-size: .8rem;
     <div class="tbl-wrap"><table class="data" id="t-matchups"></table></div>
   </section>
 
+  <section id="record">
+    <header>
+      <div class="eyebrow">On the record</div>
+      <h2>What the model said, and when</h2>
+      <p>Every forecast is saved before the games it predicts and never changed afterward. Each one is fingerprinted, checked by the test suite and pushed to GitHub with a timestamped tag. The model is frozen; new games only change the bracket situation, and each refresh adds forecasts it can be graded on. Retrospective rows were computed afterward for context and are never scored.</p>
+    </header>
+    <div class="tbl-wrap"><table class="data" id="t-record"></table></div>
+    <ul class="caveats" id="record-changes"></ul>
+    <h3>Game-by-game forecasts</h3>
+    <p class="note" id="record-games-note"></p>
+    <div class="tbl-wrap"><table class="data" id="t-games"></table></div>
+  </section>
+
   <section id="method">
     <header>
       <div class="eyebrow">How I got here</div>
@@ -521,6 +534,29 @@ document.addEventListener("mousemove", e => {
     h += `</div></div>`;
   });
   document.getElementById("watch").innerHTML = h;
+})();
+
+/* ---------- forecast record */
+(function () {
+  const rec = DATA.record;
+  let h = `<thead><tr><th>Forecast</th><th>Kind</th><th>Made (UTC)</th><th>Series state</th><th>Before first pitch</th>${order.map(t => `<th>${TEAMS[t].short}</th>`).join("")}<th>Code</th></tr></thead><tbody>`;
+  rec.snapshots.forEach(s => {
+    h += `<tr><td>${esc(s.label)}</td><td>${s.kind}</td><td>${esc(s.created)}</td><td>${esc(s.state)}</td><td>${s.kind === "retrospective" ? "n/a" : (s.pregame ? "✓" : "✗")}</td>${order.map(t => `<td>${pct(s[t])}</td>`).join("")}<td><a href="${rec.repo}/commit/${esc(s.commit)}">${esc(s.commit)}</a></td></tr>`;
+  });
+  document.getElementById("t-record").innerHTML = h + "</tbody>";
+  document.getElementById("record-changes").innerHTML = rec.changes.map(c => {
+    const big = Object.entries(c.moves).sort((a, b) => Math.abs(b[1]) - Math.abs(a[1])).slice(0, 2);
+    return `<li><b>${esc(c.from)} → ${esc(c.to)}:</b> ${esc(c.what)}. ${big.map(([t, v]) => `${TEAMS[t] ? TEAMS[t].short : esc(t)} ${(v * 100 >= 0 ? "+" : "")}${(v * 100).toFixed(1)} pts`).join(", ")}</li>`;
+  }).join("");
+  const gs = rec.game_summary;
+  document.getElementById("record-games-note").textContent = gs.n_graded
+    ? `${gs.n_forecast} games forecast before first pitch; the favorite won ${gs.called} of ${gs.n_graded} graded so far (log loss ${gs.log_loss.toFixed(3)} vs ${gs.log_loss_coin.toFixed(3)} for a coin flip).`
+    : `${gs.n_forecast} games forecast before first pitch so far; each is graded once it's played.`;
+  let g = `<thead><tr><th>Game</th><th>Matchup</th><th>First pitch (UTC)</th><th>Forecast made (UTC)</th><th>Model favorite</th><th>Chance</th><th>Result</th></tr></thead><tbody>`;
+  rec.games.forEach(r => {
+    g += `<tr><td>${esc(r.game)}</td><td style="text-align:left">${esc(r.matchup)}</td><td>${esc(r.first_pitch.replace("T", " ").replace("Z", ""))}</td><td>${esc(r.made.replace("T", " ").replace("Z", ""))}</td><td style="text-align:left">${esc(r.fav)}</td><td>${pct(r.p_fav)}</td><td class="${r.called === true ? "up" : r.called === false ? "down" : ""}">${r.winner ? (r.called ? "✓ " : "✗ ") + esc(r.winner) : "not played yet"}</td></tr>`;
+  });
+  document.getElementById("t-games").innerHTML = g + "</tbody>";
 })();
 
 /* ---------- ratings */

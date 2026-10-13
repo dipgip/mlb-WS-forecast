@@ -269,6 +269,25 @@ def build_markdown():
                 [[f"{short(k.split(' vs ')[0])} vs {short(k.split(' vs ')[1])}", pct(v["p_matchup"]),
                   pct(v["p_al_wins"]), pct(1 - v["p_al_wins"]), f"{short(hf[k]['team'])} ({hf[k]['reason']})"]
                  for k, v in sorted(DATA["odds"]["ws_matchups"].items(), key=lambda kv: -kv[1]["p_matchup"])]), "",
+          "## The forecast record", "",
+          "Every forecast is saved before the games it predicts and never changed afterward. Each one is fingerprinted, "
+          "checked by the test suite and pushed to GitHub with a timestamped tag. The model is frozen; new games only "
+          "change the bracket situation, and each refresh adds forecasts it can be graded on. Retrospective rows were "
+          "computed afterward for context and are never scored.", "",
+          table(["Forecast", "Kind", "Made (UTC)", "Series state", "Before first pitch", *[short(t) for t in order], "Code"],
+                [[s["label"], s["kind"], s["created"], s["state"],
+                  "n/a" if s["kind"] == "retrospective" else ("✓" if s["pregame"] else "✗"),
+                  *[pct(s[t]) for t in order], f"[{s['commit']}]({DATA['record']['repo']}/commit/{s['commit']})"]
+                 for s in DATA["record"]["snapshots"]],
+                ["---", "---", "---", "---", ":---:", *["---:"] * len(order), "---"]), "",
+          *[f"- **{c['from']} → {c['to']}:** {c['what']}." for c in DATA["record"]["changes"]], "",
+          "**Game-by-game forecasts**", "",
+          table(["Game", "Matchup", "First pitch (UTC)", "Forecast made (UTC)", "Model favorite", "Chance", "Result"],
+                [[g["game"], g["matchup"], g["first_pitch"].replace("T", " ").rstrip("Z"), g["made"].replace("T", " ").rstrip("Z"),
+                  g["fav"], pct(g["p_fav"]),
+                  ("✓ " if g["called"] else "✗ ") + g["winner"] if g["winner"] else "not played yet"]
+                 for g in DATA["record"]["games"]],
+                ["---", "---", "---", "---", "---", "---:", "---"]), "",
           "## How I got here", "",
           "The full log with every number is in [LOG.md](../LOG.md), and a partner review of the weak spots is in "
           "[REVIEW.md](../REVIEW.md). The core method was fixed before any 2026 odds were computed.", "",

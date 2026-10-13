@@ -131,3 +131,40 @@ def score():
         row["Equal-odds Brier"] = float(((u - o) ** 2).sum())
         rows.append(row)
     return {"champion": champ, "rows": rows}
+
+
+def game_forecasts():
+    """Every per-game forecast on record, joined to its result once played."""
+    games = pd.read_csv(ROOT / "data/processed/games.csv")
+    done = games.set_index("game_pk")
+    rows = []
+    for p in sorted((FC / "games").glob("*.json")):
+        g = json.loads(p.read_text())
+        fav = g["home"] if g["p_home_win"] >= 0.5 else g["away"]
+        p_fav = max(g["p_home_win"], g["p_away_win"])
+        row = {"Game": f"{g['series'].replace(' Championship Series', 'CS')} G{g['game']}",
+               "Matchup": f"{g['away']} @ {g['home']}", "First pitch (UTC)": g["first_pitch_utc"],
+               "Forecast made (UTC)": g["created_at_utc"], "Model favorite": fav, "Favorite's chance": p_fav,
+               "Winner": None, "Called it": None, "_p_home": g["p_home_win"], "_home": g["home"],
+               "File": f"{REPO}/blob/main/forecasts/games/{p.name}"}
+        if g["game_pk"] in done.index:
+            r = done.loc[g["game_pk"]]
+            winner = r.home if r.home_runs > r.away_runs else r.away
+            row.update({"Winner": f"{winner} ({max(r.home_runs, r.away_runs)}–{min(r.home_runs, r.away_runs)})",
+                        "Called it": winner == fav, "_home_won": winner == g["home"]})
+        rows.append(row)
+    return pd.DataFrame(rows)
+
+
+def game_summary():
+    gf = game_forecasts()
+    graded = gf[gf["Called it"].notna()] if len(gf) else gf
+    if graded.empty:
+        return {"n_forecast": int(len(gf)), "n_graded": 0}
+    y = graded["_home_won"].astype(float).to_numpy()
+    p = np.clip(graded["_p_home"].to_numpy(), 1e-6, 1 - 1e-6)
+    return {"n_forecast": int(len(gf)), "n_graded": int(len(graded)),
+            "called": int(graded["Called it"].sum()),
+            "log_loss": float(-np.mean(y * np.log(p) + (1 - y) * np.log(1 - p))),
+            "log_loss_coin": float(np.log(2)),
+            "brier": float(np.mean((p - y) ** 2))}

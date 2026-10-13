@@ -4,6 +4,7 @@
 
 ![tests](https://github.com/dipgip/mlb-WS-forecast/actions/workflows/tests.yml/badge.svg)
 
+- **[forecasts/](forecasts/) — the forecast record.** Every forecast, saved before the games it predicts and never changed afterward: title odds per refresh, plus a win probability for each upcoming game. Files are fingerprinted (`MANIFEST.sha256`, checked by the tests) and pushed with timestamped `forecast-*` tags. A scheduled refresh adds new entries twice daily through the World Series, and the record is graded when the Series ends.
 - `LOG.md` — the step-by-step record of every decision and result. Start here.
 - `REVIEW.md` — a partner review of the weak links, with evidence and the fixes made.
 - **[Live dashboard](https://mlb-ws-forecast-w3huajspduv8ae2mctsydr.streamlit.app/)** — the interactive Streamlit dashboard with the what-if simulator, hosted on Streamlit Community Cloud.
