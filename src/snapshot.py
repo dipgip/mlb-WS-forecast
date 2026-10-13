@@ -94,7 +94,7 @@ def write(snapshot):
     if idx.exists():
         new = pd.concat([pd.read_csv(idx), new])
     new.to_csv(idx, index=False)
-    print(f"wrote forecasts/{path.name}  sha256 {digest[:16]}…")
+    print(f"wrote {path}  sha256 {digest[:16]}…")
     return path
 
 
@@ -149,5 +149,55 @@ def live_from_outputs():
     return write(snap)
 
 
+
+
+# ---------------------------------------------------------------- per-game forecasts
+def game_forecasts():
+    """Record the model's win probability for the next game of every live series.
+
+    Title odds get graded once, when the World Series ends. These single-game
+    calls get graded every night, so by the end there are dozens of scored,
+    pre-registered predictions. Written to forecasts/games/, append-only and
+    hashed into the same MANIFEST. A game already on record is never rewritten.
+    """
+    import predict as P
+    from model import fit
+    d = P.load()
+    r = fit(d["reg"], lam=P.LAM)
+    created = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    sched = d["sched"]
+    gdir = FC / "games"
+    gdir.mkdir(parents=True, exist_ok=True)
+    written = []
+    for key in ("alcs", "nlcs", "ws"):
+        st = d.get(key)
+        if not st or max(st[2].values()) == 4:
+            continue
+        teams, home_order, wins = st
+        n = sum(wins.values())
+        home = home_order[n]
+        away = teams[0] if teams[1] == home else teams[1]
+        row = sched[(sched.home == home) & (sched.away == away) & (sched.series_game == n + 1)
+                    & (sched.game_type != "R")].iloc[0]
+        gid = f"{row.series_desc.replace(' ', '')}_G{n + 1}"
+        path = gdir / f"{gid}.json"
+        if path.exists():
+            continue
+        p_home = float(r.p_home_win(home, away))
+        rec = {"game_id": gid, "game_pk": int(row.game_pk), "series": row.series_desc, "game": n + 1,
+               "home": home, "away": away, "first_pitch_utc": row.game_time_utc,
+               "created_at_utc": created, "pregame_verified": bool(created < row.game_time_utc),
+               "model_version": MODEL_VERSION, "code_commit": code_commit(),
+               "series_state_before": wins, "p_home_win": p_home, "p_away_win": 1 - p_home}
+        body = json.dumps(rec, indent=2) + "\n"
+        path.write_text(body)
+        with open(FC / "MANIFEST.sha256", "a") as f:
+            f.write(f"{hashlib.sha256(body.encode()).hexdigest()}  games/{path.name}\n")
+        written.append(rec)
+        print(f"wrote forecasts/games/{path.name}: {away} @ {home}  P(home)={p_home:.3f}  first pitch {row.game_time_utc}")
+    return written
+
+
 if __name__ == "__main__":
     live_from_outputs()
+    game_forecasts()

@@ -5,8 +5,8 @@ Carlo noise. Home-field order for each series comes from the real MLB
 schedule. World Series home field follows MLB rules (better record, then
 head-to-head, then intradivision record); see bracket.ws_home_team.
 
-Outputs: outputs/ratings_2026.csv, outputs/odds_2026.json, and one row per
-refresh in outputs/forecast_history.csv (so the forecast can be graded).
+Outputs: outputs/ratings_2026.csv, outputs/odds_2026.json. The permanent,
+timestamped record of each forecast is written separately by snapshot.py.
 """
 import json
 from pathlib import Path
@@ -55,21 +55,6 @@ def odds(r, d, **kw):
     return B.bracket_odds(r, d["alcs"], d["nlcs"], d["reg"], d["divisions"], ws_state=d["ws"], **kw)
 
 
-def append_history(result):
-    """One row per (as_of, series state): the forecast trail, for grading later."""
-    path = ROOT / "outputs/forecast_history.csv"
-    state = " ".join(f"{s}:{'-'.join(str(v) for v in w.values())}" for s, w in result["series_state"].items())
-    rows = [{"as_of": result["as_of"], "state": state, "team": t,
-             "p_pennant": round(v["pennant"], 4), "p_title": round(v["ws"], 4)}
-            for t, v in result["odds_now"].items()]
-    new = pd.DataFrame(rows)
-    if path.exists():
-        old = pd.read_csv(path)
-        old = old[~((old.as_of == result["as_of"]) & (old.state == state))]
-        new = pd.concat([old, new])
-    new.to_csv(path, index=False)
-
-
 def main(verbose=True):
     d = load()
     r = fit(d["reg"], lam=LAM)
@@ -99,7 +84,6 @@ def main(verbose=True):
         "home_win_rate_equal_teams": r.p_home_win(r.teams[0], r.teams[0]),
     }
     (ROOT / "outputs/odds_2026.json").write_text(json.dumps(result, indent=2))
-    append_history(result)
 
     if verbose:
         four = list(zero)

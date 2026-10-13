@@ -1,0 +1,22 @@
+{
+  "game_id": "ALChampionshipSeries_G2",
+  "game_pk": 849813,
+  "series": "AL Championship Series",
+  "game": 2,
+  "home": "Tampa Bay Rays",
+  "away": "Cleveland Guardians",
+  "first_pitch_utc": "2026-10-14T00:00:00Z",
+  "created_at_utc": "2026-10-13T22:34:05Z",
+  "pregame_verified": true,
+  "model_version": "v2",
+  "code_commit": {
+    "sha": "854a843",
+    "src_has_uncommitted_changes": true
+  },
+  "series_state_before": {
+    "Cleveland Guardians": 1,
+    "Tampa Bay Rays": 0
+  },
+  "p_home_win": 0.5712644632681254,
+  "p_away_win": 0.4287355367318746
+}
