@@ -1,0 +1,16 @@
+# Accent colors are set per mode ([theme.light] / [theme.dark]) rather than
+# with a top-level [theme] key: a top-level key forces a custom light theme,
+# while the app picks chart colors from the viewer's actual light/dark mode.
+
+[theme.light]
+primaryColor = "#0f5c3c"
+
+[theme.dark]
+primaryColor = "#5cc493"
+
+[server]
+headless = true
+address = "localhost"
+
+[browser]
+gatherUsageStats = false

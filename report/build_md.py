@@ -1,4 +1,4 @@
-"""Step 7b — The static report: REPORT.md plus chart images.
+"""Step 7b — The static report: report/REPORT.md plus chart images.
 
 Readable as-is on GitHub or in any Markdown viewer, with no JavaScript and no
 claude.ai link. It reads the same report/data.json as the interactive page
@@ -199,8 +199,8 @@ def chart_market(th, name):
 
 
 def picture(name, alt):
-    return (f'<picture>\n  <source media="(prefers-color-scheme: dark)" srcset="report/figures/{name}-dark.png">\n'
-            f'  <img alt="{alt}" src="report/figures/{name}-light.png" width="100%">\n</picture>')
+    return (f'<picture>\n  <source media="(prefers-color-scheme: dark)" srcset="figures/{name}-dark.png">\n'
+            f'  <img alt="{alt}" src="figures/{name}-light.png" width="100%">\n</picture>')
 
 
 def table(headers, rows, align=None):
@@ -270,8 +270,8 @@ def build_markdown():
                   pct(v["p_al_wins"]), pct(1 - v["p_al_wins"]), f"{short(hf[k]['team'])} ({hf[k]['reason']})"]
                  for k, v in sorted(DATA["odds"]["ws_matchups"].items(), key=lambda kv: -kv[1]["p_matchup"])]), "",
           "## How I got here", "",
-          "The full log with every number is in [LOG.md](LOG.md), and a partner review of the weak spots is in "
-          "[REVIEW.md](REVIEW.md). The core method was fixed before any 2026 odds were computed.", "",
+          "The full log with every number is in [LOG.md](../LOG.md), and a partner review of the weak spots is in "
+          "[REVIEW.md](../REVIEW.md). The core method was fixed before any 2026 odds were computed.", "",
           f"1. **Pulled every game since 2015.** {F['n_games_total']} regular-season and postseason results from the "
           "official MLB Stats API, plus the live bracket, rosters and announced starters.",
           "2. **Rated every team on runs, not wins.** A Poisson model gives each team an offense and a defense rating, "
@@ -338,7 +338,7 @@ def build_markdown():
           f"Data: MLB Stats API (statsapi.mlb.com), games through {F['data_through']}. Market prices: "
           + ", ".join(f"[{s['source']}]({s['url']})" for s in DATA["market_sources"]) + ". "
           f"Generated {date.today().isoformat()} by `report/build_md.py`; rebuild everything with `./run_all.sh`.", ""]
-    (ROOT / "REPORT.md").write_text("\n".join(L))
+    (REP / "REPORT.md").write_text("\n".join(L))
 
 
 def main():
@@ -349,7 +349,7 @@ def main():
         chart_sensitivity(th, "sensitivity")
         chart_market(th, "market")
     build_markdown()
-    print(f"wrote REPORT.md and {len(list(FIG.glob('*.png')))} figures")
+    print(f"wrote report/REPORT.md and {len(list(FIG.glob('*.png')))} figures")
 
 
 if __name__ == "__main__":

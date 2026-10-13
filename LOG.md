@@ -212,7 +212,7 @@ All 8 findings were fixed (see the Resolution table in `REVIEW.md`), and the who
 
 ---
 
-## Step 11 — Static report (`REPORT.md`, `report/build_md.py`)
+## Step 11 — Static report (`report/REPORT.md`, `report/build_md.py`)
 
 The interactive page needs a browser, and its claude.ai link is private. So the report now also exists as plain Markdown, which reads as-is on GitHub or in any Markdown viewer.
 
@@ -220,3 +220,27 @@ The interactive page needs a browser, and its claude.ai link is private. So the 
 - Four charts (title odds with 90% intervals, calibration, sensitivity, model vs market) are rendered with matplotlib into `report/figures/`, in light and dark versions. `<picture>` tags show the right one for the reader's GitHub theme.
 - Every table on the interactive page is reproduced as a Markdown table, including the series linescores.
 - Wired into `run_all.sh` and the refresh skill. The two versions link to each other.
+
+---
+
+## Step 12 — Local dashboard (`dashboard/app.py`)
+
+A Streamlit dashboard that mirrors the report and runs locally (`./run_dashboard.sh`, http://localhost:8501). Nothing is hosted.
+
+**Why Streamlit:** it's Python, so the dashboard calls the real model code instead of a reimplementation. Power BI's desktop app is Windows-only and would need its own copy of the model.
+
+**Tabs:** Overview (headline metrics, odds with 90% intervals, scoreboards, next-game what-ifs, forecast history), **What-if simulator**, Backtest (with the pitcher test), Stress test, Market, Team ratings (all 30 teams, with a scatter plot and a filter), and Method & limits.
+
+**What-if simulator:** set any LCS score, shrinkage λ and confidence k, and the model recomputes title odds live with `bracket.bracket_odds`. Checked:
+- Dodgers rally to 3–2: Dodgers 48.7%.
+- Dodgers win the NLCS: Brewers 0%, Dodgers 68.4%.
+- Both ALCS teams set to 4 wins: the app shows a clear error instead of crashing.
+
+**Problems found and fixed while testing:**
+- Streamlit listens on the whole network by default. It's now bound to localhost only.
+- Any top-level `[theme]` setting forced a light page while the charts followed the OS dark mode, which made labels invisible. Accent colors now go in `[theme.light]` / `[theme.dark]`.
+- Team names were truncated on chart axes, and Streamlit's deprecated `use_container_width` was replaced.
+
+**Tests:** `tests/test_dashboard.py` (Streamlit AppTest) checks that the app renders with no errors and that the simulator recomputes odds. The suite is now 14 tests.
+
+**Also:** `REPORT.md` moved into `report/`, next to the other report files.

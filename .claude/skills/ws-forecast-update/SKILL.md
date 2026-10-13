@@ -23,5 +23,5 @@ The model is frozen at v2 (λ=80, no recency weighting, home field calibrated fr
    Teams and roster date come from the live bracket and today's date. A World Series in progress is picked up automatically from game type "W".
 3. Do NOT re-run tune.py and change λ, and do not change the model after seeing results. That would be fitting to the answer.
 4. Append a dated "Update" entry to LOG.md: the new series state, title odds with 90% intervals for each team, and the change since the previous entry.
-5. Republish `report/index.html` to the same artifact URL (recorded in LOG.md Step 7). `REPORT.md` and `report/figures/` update through the commit.
+5. Republish `report/index.html` to the same artifact URL (recorded in LOG.md Step 7). `report/REPORT.md` and `report/figures/` update through the commit.
 6. Commit and push with the repo's no-reply identity. Never commit `data/raw/`; it's git-ignored because it's MLB's copyrighted content.

@@ -6,7 +6,12 @@
 
 - `LOG.md` — the step-by-step record of every decision and result. Start here.
 - `REVIEW.md` — a partner review of the weak links, with evidence and the fixes made.
-- **[REPORT.md](REPORT.md) — the full report, readable right here on GitHub.**
+- **[report/REPORT.md](report/REPORT.md) — the full report, readable right here on GitHub.**
+- **Dashboard** — an interactive Streamlit app with a live what-if simulator. It runs locally; nothing is hosted:
+  ```bash
+  ./run_dashboard.sh
+  ```
+  Then open http://localhost:8501. It's bound to this machine only.
 - `report/index.html` — the same report as an interactive web page (open it in a browser for hover detail).
 - `run_all.sh` — rebuilds everything from the MLB Stats API.
 
@@ -22,7 +27,7 @@
 | 5a. Postseason roster adjustment | `src/fetch_rosters.py`, `src/roster_adjust.py` | `outputs/roster_adjustments_2026.json` |
 | 5b. Uncertainty, sensitivity and what-ifs | `src/sensitivity.py` | `outputs/uncertainty.csv`, `outputs/sensitivity.csv`, `outputs/whatif_next_game.csv` |
 | 6. Market comparison | `src/market.py` (prices in `data/market_odds.csv`) | `outputs/market_2026.json` |
-| 7. Report | `report/build.py` (interactive), `report/build_md.py` (static) | `report/index.html`, `REPORT.md` + `report/figures/` |
+| 7. Report | `report/build.py` (interactive), `report/build_md.py` (static) | `report/index.html`, `report/REPORT.md` + `report/figures/` |
 
 Tests: `.venv/bin/python -m unittest discover -s tests -v` (they also run on every push via GitHub Actions).
 

@@ -40,8 +40,8 @@ Next: Game 3, 2026-10-14, Brewers at Dodgers, Robert Gasser vs Blake Snell.
 Exact probabilities from every remaining path through the bracket, using the real home/away schedule. Since the LCS began, the Brewers moved from 36% to 57% and the Dodgers went from 32% to 12%.
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="report/figures/odds-dark.png">
-  <img alt="Chance to win the 2026 World Series by team, with 90% intervals" src="report/figures/odds-light.png" width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="figures/odds-dark.png">
+  <img alt="Chance to win the 2026 World Series by team, with 90% intervals" src="figures/odds-light.png" width="100%">
 </picture>
 
 | Team | Title now | 90% interval | Pennant now | Title before LCS | Market |
@@ -60,7 +60,7 @@ Exact probabilities from every remaining path through the bracket, using the rea
 
 ## How I got here
 
-The full log with every number is in [LOG.md](LOG.md), and a partner review of the weak spots is in [REVIEW.md](REVIEW.md). The core method was fixed before any 2026 odds were computed.
+The full log with every number is in [LOG.md](../LOG.md), and a partner review of the weak spots is in [REVIEW.md](../REVIEW.md). The core method was fixed before any 2026 odds were computed.
 
 1. **Pulled every game since 2015.** 28,089 regular-season and postseason results from the official MLB Stats API, plus the live bracket, rosters and announced starters.
 2. **Rated every team on runs, not wins.** A Poisson model gives each team an offense and a defense rating, adjusted for opponents and pulled toward average. Home field is set from actual home win rates (53% between equal teams), because run totals understate it.
@@ -80,8 +80,8 @@ The stronger team does not reliably win in October, so the useful question is wh
 | Playoff log loss: model / standings / coin flip (lower is better) | 0.6848 / 0.6893 / 0.6931 |
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="report/figures/calibration-dark.png">
-  <img alt="Predicted versus actual series win rate for model favorites" src="report/figures/calibration-light.png" width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="figures/calibration-dark.png">
+  <img alt="Predicted versus actual series win rate for model favorites" src="figures/calibration-light.png" width="100%">
 </picture>
 
 Dots show how often the model's series favorite actually won, grouped by how confident the model was. Each bin holds only 19–38 series, so expect scatter around the line.
@@ -107,8 +107,8 @@ Of 11 World Series since 2015, the model's favorite won 8. Counting only clear f
 Each row changes one judgment call. Across these the favorite's title odds range 51%–60%. That range measures sensitivity to choices; the wider interval above measures statistical noise. With every remaining game a coin flip, the current series lead alone still gives the favorite 41%.
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="report/figures/sensitivity-dark.png">
-  <img alt="Title odds for each team under each modeling scenario" src="report/figures/sensitivity-light.png" width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="figures/sensitivity-dark.png">
+  <img alt="Title odds for each team under each modeling scenario" src="figures/sensitivity-light.png" width="100%">
 </picture>
 
 ## Model vs the betting market
@@ -118,8 +118,8 @@ Sportsbooks agree on the favorite: the market has the Brewers at 47% after remov
 One natural explanation is October deployment: the Dodgers' playoff rotation (Tarik Skubal, Blake Snell, Yoshinobu Yamamoto, Tyler Glasnow) projects to a 3.50 FIP against 3.85 for the season, and an adjustment for that moves them to 17%. But I tested the closest checkable version, adjusting each past playoff game for its actual starting pitchers (387 games, 2015–2025), and it did not improve predictions: it beat the plain model in only 39% of bootstrap resamples. So the gap is unexplained. The rotation story is a hypothesis, not a finding.
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="report/figures/market-dark.png">
-  <img alt="Model, roster-adjusted, and market title odds by team" src="report/figures/market-light.png" width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="figures/market-dark.png">
+  <img alt="Model, roster-adjusted, and market title odds by team" src="figures/market-light.png" width="100%">
 </picture>
 
 | Team | Model | Roster-adjusted (untested) | Market | Sportsbook prices |
