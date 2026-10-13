@@ -12,6 +12,8 @@
   ./run_dashboard.sh
   ```
   Then open http://localhost:8501. It's bound to this machine only.
+
+  **To view it online:** deploy it free on [Streamlit Community Cloud](https://share.streamlit.io). Choose this repo, branch `main`, main file `dashboard/app.py`. It runs entirely on the committed files and redeploys on every push.
 - `report/index.html` — the same report as an interactive web page (open it in a browser for hover detail).
 - `run_all.sh` — rebuilds everything from the MLB Stats API.
 

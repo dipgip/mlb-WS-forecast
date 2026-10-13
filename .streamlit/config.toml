@@ -1,6 +1,9 @@
 # Accent colors are set per mode ([theme.light] / [theme.dark]) rather than
 # with a top-level [theme] key: a top-level key forces a custom light theme,
 # while the app picks chart colors from the viewer's actual light/dark mode.
+#
+# No server.address here: run_dashboard.sh binds to localhost for local use,
+# and a hosted deploy (Streamlit Community Cloud) must listen normally.
 
 [theme.light]
 primaryColor = "#0f5c3c"
@@ -10,7 +13,6 @@ primaryColor = "#5cc493"
 
 [server]
 headless = true
-address = "localhost"
 
 [browser]
 gatherUsageStats = false
