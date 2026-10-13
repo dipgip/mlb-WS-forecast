@@ -11,3 +11,6 @@ data/raw/
 .DS_Store
 .idea/
 .vscode/
+
+# Machine-specific editor/preview config (contains absolute local paths)
+.claude/launch.json
