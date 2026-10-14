@@ -10,6 +10,7 @@ GitHub shows the one matching the reader's theme.
 Usage: .venv/bin/python report/build_md.py   (run after report/build.py)
 """
 import json
+import os
 from datetime import date
 from pathlib import Path
 
@@ -20,8 +21,10 @@ import matplotlib.pyplot as plt  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 REP = ROOT / "report"
-FIG = REP / "figures"
-DATA = json.loads((REP / "data.json").read_text())
+# REPORT_OUT lets the tests build into a temp folder without touching report/
+DEST = Path(os.environ.get("REPORT_OUT", REP))
+FIG = DEST / "figures"
+DATA = json.loads((DEST / "data.json").read_text())
 F = DATA["facts"]
 
 THEMES = {
@@ -357,7 +360,7 @@ def build_markdown():
           f"Data: MLB Stats API (statsapi.mlb.com), games through {F['data_through']}. Market prices: "
           + ", ".join(f"[{s['source']}]({s['url']})" for s in DATA["market_sources"]) + ". "
           f"Generated {date.today().isoformat()} by `report/build_md.py`; rebuild everything with `./run_all.sh`.", ""]
-    (REP / "REPORT.md").write_text("\n".join(L))
+    (DEST / "REPORT.md").write_text("\n".join(L))
 
 
 def main():

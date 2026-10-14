@@ -7,6 +7,8 @@ refresh can't leave stale prose behind.
 Usage: .venv/bin/python report/build.py
 """
 import json
+import math
+import os
 import sys
 from datetime import date
 from pathlib import Path
@@ -22,6 +24,8 @@ import record as R  # noqa: E402
 
 OUT = ROOT / "outputs"
 REP = ROOT / "report"
+# REPORT_OUT lets the tests build into a temp folder without touching report/
+DEST = Path(os.environ.get("REPORT_OUT", REP))
 
 
 def ll(p, y):
@@ -274,14 +278,33 @@ data["record"] = {
     "games": [] if gf.empty else [
         {"game": r["Game"], "matchup": r["Matchup"], "first_pitch": r["First pitch (UTC)"],
          "made": r["Forecast made (UTC)"], "fav": r["Model favorite"], "p_fav": float(r["Favorite's chance"]),
-         "winner": r["Winner"], "called": None if r["Called it"] is None or pd.isna(r["Called it"]) else bool(r["Called it"])}
+         "winner": r["Winner"] if isinstance(r["Winner"], str) else None,
+         "called": bool(r["Called it"]) if isinstance(r["Called it"], (bool, np.bool_)) else None}
         for _, r in gf.iterrows()],
     "game_summary": R.game_summary(),
     "score": R.score(),
     "repo": R.REPO,
 }
-(REP / "data.json").write_text(json.dumps(data, indent=1, default=float))
+def clean(x):
+    """Strict JSON: missing values (NaN) become null, so the page and REPORT.md
+    never mistake "not played yet" for a value."""
+    if isinstance(x, dict):
+        return {k: clean(v) for k, v in x.items()}
+    if isinstance(x, (list, tuple)):
+        return [clean(v) for v in x]
+    if isinstance(x, (np.bool_,)):
+        return bool(x)
+    if isinstance(x, (np.integer,)):
+        return int(x)
+    if isinstance(x, (float, np.floating)):
+        return None if math.isnan(x) or math.isinf(x) else float(x)
+    return x
+
+
+data = clean(data)
+DEST.mkdir(parents=True, exist_ok=True)
+(DEST / "data.json").write_text(json.dumps(data, indent=1, allow_nan=False))
 html = (REP / "template.html").read_text()
 assert "/*__DATA__*/null" in html
-(REP / "index.html").write_text(html.replace("/*__DATA__*/null", json.dumps(data, default=float)))
+(DEST / "index.html").write_text(html.replace("/*__DATA__*/null", json.dumps(data, allow_nan=False)))
 print("wrote report/index.html")

@@ -281,3 +281,34 @@ Deployed to Streamlit Community Cloud from `main` / `dashboard/app.py`: https://
 `outputs/forecast_history.csv` was removed, because it could be silently overwritten.
 
 **Scheduled refresh.** A local scheduled task (`ws-forecast-refresh`) runs at 09:00 and 13:00 local time daily and follows `.claude/skills/ws-forecast-update/SKILL.md`. That's after the previous night's games and before the earliest first pitch (15:00 local). The 13:00 run is a backup in case the app was closed in the morning. A game whose first pitch has passed is skipped rather than recorded late. After the World Series, the task writes the final grade and turns itself off.
+
+---
+
+## Update — 2026-10-14 (ALCS tied 1–1)
+
+**Result:** the Rays beat the Guardians 3–1 in ALCS Game 2. The model had the Rays at 57.1% before first pitch, so **1 of 1 graded game forecasts was correct**. Log loss is 0.560, against 0.693 for a coin flip.
+
+**State:** ALCS tied 1–1 · NLCS Brewers lead 2–0.
+
+| Team | Title odds | 90% interval | Change | Market (SI, today) |
+|---|---|---|---|---|
+| Milwaukee Brewers | 56.5% | 41–69% | −1.0 | 46% |
+| Tampa Bay Rays | 19.9% | 11–32% | +5.0 | 20% |
+| Los Angeles Dodgers | 12.3% | 7–20% | −0.2 | 20% |
+| Cleveland Guardians | 11.4% | 6–19% | −3.8 | 13% |
+
+**Newly forecast:** ALCS Game 3 (Rays @ Guardians, first pitch 2026-10-15 17:00 UTC; MLB moved it to a day game): Rays 51.6%. NLCS Game 3 (tonight, 00:00 UTC) was already on record from Oct 13: Dodgers 51.9%.
+
+Tag `forecast-2026-10-14-ALCS1-1-NLCS2-0` was pushed at 18:29 UTC, before both games.
+
+## Step 15 — Fixing the crashed refresh
+
+**What happened:** the 09:00 scheduled run computed everything correctly. It wrote the snapshot and the ALCS Game 3 forecast at 16:10 UTC, then crashed in `report/build_md.py`. It correctly pushed nothing, which left valid forecasts stuck on this machine.
+
+**Cause:** the first unplayed game in the record had its result stored as NaN, not empty. NaN counts as "true" in Python, so the builder tried to print it as text and crashed. The model tests couldn't catch it, because no test ran the report builders.
+
+**Fixes:**
+1. **The record went out first.** The pending forecasts were pushed and tagged at 18:29 UTC, before any affected first pitch.
+2. **The bug, at its source.** `report/build.py` now turns missing values into `null`. It also writes strict JSON (`allow_nan=False`), so any future NaN fails loudly in the builder instead of downstream.
+3. **A test that would have caught it.** `tests/test_reports.py` builds both reports end to end into a temp folder (`REPORT_OUT`). It reproduces the crash with the old code and passes with the fix. That makes 21 tests.
+4. **The design flaw.** A report bug blocked the time-critical forecast record. Refreshes now push in two phases: (1) record the forecasts, run the model and record tests, then push and tag immediately; (2) build the reports, run the full suite, then push. A report failure can no longer delay the record. Both the skill and the scheduled task prompt were updated.

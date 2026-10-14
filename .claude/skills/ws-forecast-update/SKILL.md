@@ -17,6 +17,10 @@ Project: `/Users/koonima/Documents/mlb_showcase`. GitHub: `git@github.com:dipgip
 - If the tests fail, don't push. Report the failure instead.
 
 ## Steps
+
+The refresh pushes in **two phases**, so a report bug can never hold the forecast record back past first pitch. (On 2026-10-14 a report crash left valid forecasts unpushed.)
+
+### Phase 1: record forecasts (time-critical)
 1. `cd /Users/koonima/Documents/mlb_showcase && git pull --ff-only`
 2. Pull new data and recompute:
    ```
@@ -30,18 +34,24 @@ Project: `/Users/koonima/Documents/mlb_showcase`. GitHub: `git@github.com:dipgip
    .venv/bin/python src/market.py
    .venv/bin/python src/sensitivity.py
    .venv/bin/python src/snapshot.py
+   .venv/bin/python -m unittest tests.test_core tests.test_forecast_record
+   ```
+5. If `forecasts/` changed and those tests pass, commit `forecasts/ data/ outputs/` right away. Tag new snapshots with `forecast-<YYYY-MM-DD>-<short state>` (annotated), then push main and the tag. **If these tests fail, push nothing and report it.**
+
+### Phase 2: reports (not time-critical)
+6. ```
    .venv/bin/python report/build.py
    .venv/bin/python report/build_md.py
    .venv/bin/python -m unittest discover -s tests
    ```
-   `snapshot.py` writes a new live snapshot only if the series state changed. It also records the next game of each live series in `forecasts/games/`, but only before first pitch.
-5. If anything changed, append a dated "Update" entry to `LOG.md`:
+7. If anything changed, append a dated "Update" entry to `LOG.md`:
    - the results since the last entry;
    - the new series state;
    - title odds with 90% intervals for each team, and the change since the last snapshot;
-   - which games were newly forecast, with their probabilities.
-6. Commit with a message summarizing the results and the new odds. Tag new snapshots with `forecast-<YYYY-MM-DD>-<short state>` (annotated), then run `git push origin main` and `git push origin <tag>`.
-7. If the Artifact tool is available, republish `report/index.html` to https://claude.ai/artifact/4vMEBXCDwCmGWZfo77XmFP. The Streamlit dashboard redeploys from the push on its own.
+   - which games were newly forecast, with their probabilities;
+   - how the latest graded games went.
+8. If the full test suite passes, commit and push the reports and `LOG.md`. If a report step fails, the forecasts are already safe from Phase 1. Don't push broken reports; report the error clearly instead.
+9. If the Artifact tool is available, republish `report/index.html` to https://claude.ai/artifact/4vMEBXCDwCmGWZfo77XmFP. The Streamlit dashboard redeploys from the push on its own.
 
 ## When the World Series is over
 `record.score()` returns the champion and scores every live snapshot. Add a final "Grade" entry to `LOG.md` with the champion, the title-forecast scores against the market and equal odds, and the per-game record. Commit, tag `forecast-final`, and push. Then the scheduled refresh can be turned off.
