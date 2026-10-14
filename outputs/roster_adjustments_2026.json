@@ -2,7 +2,7 @@
   "league": {
     "FIP": 4.171202191289008,
     "wOBA": 0.31304294471805716,
-    "roster_date": "2026-10-13"
+    "roster_date": "2026-10-14"
   },
   "Cleveland Guardians": {
     "pitching": {
@@ -333,32 +333,32 @@
   "Los Angeles Dodgers": {
     "pitching": {
       "season_staff_FIP": 3.8510381108107827,
-      "october_staff_FIP": 3.4998008484524643,
-      "delta_runs_allowed_pg": -0.3512372623583184,
+      "october_staff_FIP": 3.50928507280274,
+      "delta_runs_allowed_pg": -0.3417530380080427,
       "staff": [
         {
           "name": "Tarik Skubal",
           "role": "SP",
-          "share": 0.157,
+          "share": 0.138,
           "FIP_reg": 2.96
         },
         {
           "name": "Blake Snell",
           "role": "SP",
-          "share": 0.157,
+          "share": 0.138,
           "FIP_reg": 3.15
-        },
-        {
-          "name": "Yoshinobu Yamamoto",
-          "role": "SP",
-          "share": 0.157,
-          "FIP_reg": 3.53
         },
         {
           "name": "Tyler Glasnow",
           "role": "SP",
-          "share": 0.079,
+          "share": 0.138,
           "FIP_reg": 3.37
+        },
+        {
+          "name": "Yoshinobu Yamamoto",
+          "role": "SP",
+          "share": 0.138,
+          "FIP_reg": 3.53
         },
         {
           "name": "Justin Wrobleski",

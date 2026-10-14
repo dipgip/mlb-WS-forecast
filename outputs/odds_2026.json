@@ -1,9 +1,9 @@
 {
-  "as_of": "2026-10-12",
+  "as_of": "2026-10-13",
   "series_state": {
     "ALCS": {
       "Cleveland Guardians": 1,
-      "Tampa Bay Rays": 0
+      "Tampa Bay Rays": 1
     },
     "NLCS": {
       "Los Angeles Dodgers": 0,
@@ -12,20 +12,20 @@
   },
   "odds_now": {
     "Cleveland Guardians": {
-      "pennant": 0.5716193543896124,
-      "ws": 0.15168731228543794
+      "pennant": 0.4288761920456955,
+      "ws": 0.11380838730363163
     },
     "Tampa Bay Rays": {
-      "pennant": 0.4283806456103876,
-      "ws": 0.14904463155534925
+      "pennant": 0.5711238079543045,
+      "ws": 0.19870864475622624
     },
     "Los Angeles Dodgers": {
       "pennant": 0.1827097842040495,
-      "ws": 0.12498053430822456
+      "ws": 0.12278973284825218
     },
     "Milwaukee Brewers": {
       "pennant": 0.8172902157959505,
-      "ws": 0.5742875218509883
+      "ws": 0.56469323509189
     }
   },
   "odds_before_lcs": {
@@ -48,19 +48,19 @@
   },
   "ws_matchups": {
     "Cleveland Guardians vs Los Angeles Dodgers": {
-      "p_matchup": 0.10444044888738419,
+      "p_matchup": 0.07835987649892352,
       "p_al_wins": 0.27997693598457585
     },
     "Cleveland Guardians vs Milwaukee Brewers": {
-      "p_matchup": 0.46717890550222824,
+      "p_matchup": 0.350516315546772,
       "p_al_wins": 0.2620974405543026
     },
     "Tampa Bay Rays vs Los Angeles Dodgers": {
-      "p_matchup": 0.07826933531666533,
+      "p_matchup": 0.10434990770512599,
       "p_al_wins": 0.3639782158392192
     },
     "Tampa Bay Rays vs Milwaukee Brewers": {
-      "p_matchup": 0.3501113102937223,
+      "p_matchup": 0.46677390024917853,
       "p_al_wins": 0.34433705792231717
     }
   },
