@@ -2,36 +2,36 @@
   "league": {
     "FIP": 4.171202191289008,
     "wOBA": 0.31304294471805716,
-    "roster_date": "2026-10-14"
+    "roster_date": "2026-10-15"
   },
   "Cleveland Guardians": {
     "pitching": {
       "season_staff_FIP": 3.9273011357700294,
-      "october_staff_FIP": 3.836167876945263,
-      "delta_runs_allowed_pg": -0.0911332588247662,
+      "october_staff_FIP": 3.8373026378139086,
+      "delta_runs_allowed_pg": -0.0899984979561208,
       "staff": [
         {
           "name": "Parker Messick",
           "role": "SP",
-          "share": 0.236,
+          "share": 0.206,
           "FIP_reg": 3.33
         },
         {
           "name": "Gavin Williams",
           "role": "SP",
-          "share": 0.157,
+          "share": 0.206,
           "FIP_reg": 3.64
         },
         {
           "name": "Daniel Espino",
           "role": "SP",
-          "share": 0.079,
+          "share": 0.069,
           "FIP_reg": 4.08
         },
         {
           "name": "Foster Griffin",
           "role": "SP",
-          "share": 0.079,
+          "share": 0.069,
           "FIP_reg": 4.01
         },
         {

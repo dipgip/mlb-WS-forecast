@@ -1,0 +1,22 @@
+{
+  "game_id": "NLChampionshipSeries_G4",
+  "game_pk": 849810,
+  "series": "NL Championship Series",
+  "game": 4,
+  "home": "Los Angeles Dodgers",
+  "away": "Milwaukee Brewers",
+  "first_pitch_utc": "2026-10-16T00:00:00Z",
+  "created_at_utc": "2026-10-15T18:32:44Z",
+  "pregame_verified": true,
+  "model_version": "v2",
+  "code_commit": {
+    "sha": "b91e22b",
+    "src_has_uncommitted_changes": false
+  },
+  "series_state_before": {
+    "Los Angeles Dodgers": 0,
+    "Milwaukee Brewers": 3
+  },
+  "p_home_win": 0.519085223847324,
+  "p_away_win": 0.48091477615267597
+}
