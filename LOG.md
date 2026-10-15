@@ -335,3 +335,26 @@ Pennant odds: Brewers 94.2%, Rays 57.1%, Guardians 42.9%, Dodgers 5.8%.
 **Note:** this title snapshot was written at 18:32 UTC, after ALCS Game 3 had started, so it is correctly flagged `pregame_verified=False`. It still uses only results through Oct 14. The NLCS Game 4 forecast is pregame. No market prices were recorded today, because the only fresh-looking listing predated the latest games.
 
 Tag `forecast-2026-10-15-ALCS1-1-NLCS3-0` was pushed before NLCS Game 4.
+
+---
+
+## Update — 2026-10-15 (Guardians lead ALCS 2–1)
+
+**Result:** the Guardians beat the Rays 3–2 in ALCS Game 3 in Cleveland. Before first pitch the model had the Rays at 51.6%, so this forecast missed. **Graded record: 1 of 3 correct.** Log loss is 0.672 and Brier is 0.240, against 0.693 and 0.250 for a coin flip. The two misses were both near coin flips (51.6% and 51.9%), so they cost little.
+
+**State:** ALCS Guardians lead 2–1 · NLCS Brewers lead 3–0 (Game 4 in Los Angeles tonight, 00:00 UTC).
+
+| Team | Title odds | 90% interval | Change |
+|---|---|---|---|
+| Milwaukee Brewers | 66.6% | 53–77% | +1.5 |
+| Cleveland Guardians | 16.3% | 9–26% | +5.0 |
+| Tampa Bay Rays | 13.1% | 7–23% | −6.6 |
+| Los Angeles Dodgers | 4.0% | 2–7% | +0.1 |
+
+Pennant odds: Brewers 94.2%, Guardians 62.0%, Rays 38.0%, Dodgers 5.8%.
+
+**Newly forecast:** ALCS Game 4 (Rays @ Guardians, first pitch 2026-10-16 22:00 UTC): Rays 51.6%. NLCS Game 4 was already on record from earlier today (Dodgers 51.9%).
+
+**Notes:** this snapshot was written at 20:44 UTC, before NLCS Game 4, and is flagged `pregame_verified=True`. No market prices were recorded, because the newest futures listing I found predated the last two games. On the first Phase 2 run the full suite reported one error from 19 collected tests. Two clean reruns passed all 21 tests, so it looks like a transient collision while a report builder was still running, not a code fault.
+
+Tag `forecast-2026-10-15-ALCS2-1-NLCS3-0` was pushed before NLCS Game 4.
