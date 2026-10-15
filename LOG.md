@@ -312,3 +312,26 @@ Tag `forecast-2026-10-14-ALCS1-1-NLCS2-0` was pushed at 18:29 UTC, before both g
 2. **The bug, at its source.** `report/build.py` now turns missing values into `null`. It also writes strict JSON (`allow_nan=False`), so any future NaN fails loudly in the builder instead of downstream.
 3. **A test that would have caught it.** `tests/test_reports.py` builds both reports end to end into a temp folder (`REPORT_OUT`). It reproduces the crash with the old code and passes with the fix. That makes 21 tests.
 4. **The design flaw.** A report bug blocked the time-critical forecast record. Refreshes now push in two phases: (1) record the forecasts, run the model and record tests, then push and tag immediately; (2) build the reports, run the full suite, then push. A report failure can no longer delay the record. Both the skill and the scheduled task prompt were updated.
+
+---
+
+## Update — 2026-10-15 (Brewers lead NLCS 3–0)
+
+**Result:** the Brewers beat the Dodgers 6–2 in NLCS Game 3 in Los Angeles. Before first pitch the model had the Dodgers at 51.9%, so this forecast missed. **Graded record: 1 of 2 correct.** Log loss is 0.646 and Brier is 0.227, against 0.693 and 0.250 for a coin flip.
+
+**State:** ALCS tied 1–1 (Game 3 in Cleveland started at 17:00 UTC today) · NLCS Brewers lead 3–0.
+
+| Team | Title odds | 90% interval | Change |
+|---|---|---|---|
+| Milwaukee Brewers | 65.1% | 51–76% | +8.6 |
+| Tampa Bay Rays | 19.7% | 11–32% | −0.1 |
+| Cleveland Guardians | 11.3% | 6–20% | −0.1 |
+| Los Angeles Dodgers | 3.9% | 2–7% | −8.4 |
+
+Pennant odds: Brewers 94.2%, Rays 57.1%, Guardians 42.9%, Dodgers 5.8%.
+
+**Newly forecast:** NLCS Game 4 (Brewers @ Dodgers, first pitch 2026-10-16 00:00 UTC): Dodgers 51.9%. ALCS Game 3 was already on record from Oct 14 (Rays 51.6%).
+
+**Note:** this title snapshot was written at 18:32 UTC, after ALCS Game 3 had started, so it is correctly flagged `pregame_verified=False`. It still uses only results through Oct 14. The NLCS Game 4 forecast is pregame. No market prices were recorded today, because the only fresh-looking listing predated the latest games.
+
+Tag `forecast-2026-10-15-ALCS1-1-NLCS3-0` was pushed before NLCS Game 4.
