@@ -167,31 +167,31 @@
   "Tampa Bay Rays": {
     "pitching": {
       "season_staff_FIP": 3.978355777266039,
-      "october_staff_FIP": 3.857451334666135,
-      "delta_runs_allowed_pg": -0.12090444259990418,
+      "october_staff_FIP": 3.8748046021827607,
+      "delta_runs_allowed_pg": -0.10355117508327849,
       "staff": [
         {
           "name": "Drew Rasmussen",
           "role": "SP",
-          "share": 0.183,
+          "share": 0.157,
           "FIP_reg": 3.16
         },
         {
           "name": "Freddy Peralta",
           "role": "SP",
-          "share": 0.183,
+          "share": 0.157,
           "FIP_reg": 4.25
         },
         {
           "name": "Nick Martinez",
           "role": "SP",
-          "share": 0.092,
+          "share": 0.157,
           "FIP_reg": 4.01
         },
         {
           "name": "Griffin Jax",
           "role": "SP",
-          "share": 0.092,
+          "share": 0.079,
           "FIP_reg": 3.9
         },
         {

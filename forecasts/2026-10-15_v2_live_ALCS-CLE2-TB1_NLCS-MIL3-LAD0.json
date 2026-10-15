@@ -1,0 +1,70 @@
+{
+  "snapshot_id": "2026-10-15_v2_live_ALCS-CLE2-TB1_NLCS-MIL3-LAD0",
+  "kind": "live",
+  "model_version": "v2",
+  "created_at_utc": "2026-10-15T20:43:59Z",
+  "code_commit": {
+    "sha": "30d00d4",
+    "src_has_uncommitted_changes": false
+  },
+  "information": {
+    "games_through": "2026-10-15",
+    "postseason_games_included": 31
+  },
+  "series_state": {
+    "ALCS": {
+      "Cleveland Guardians": 2,
+      "Tampa Bay Rays": 1
+    },
+    "NLCS": {
+      "Los Angeles Dodgers": 0,
+      "Milwaukee Brewers": 3
+    }
+  },
+  "state_key": "ALCS-CLE2-TB1_NLCS-MIL3-LAD0",
+  "next_games": [
+    {
+      "series": "NL Championship Series",
+      "game": 4,
+      "first_pitch_utc": "2026-10-16T00:00:00Z",
+      "matchup": "Milwaukee Brewers @ Los Angeles Dodgers"
+    }
+  ],
+  "pregame_verified": true,
+  "odds": {
+    "Cleveland Guardians": {
+      "title": 0.1630843821579796,
+      "pennant": 0.6197891849316188,
+      "title_p05": 0.0880027136752204,
+      "title_p95": 0.2627007026884732
+    },
+    "Tampa Bay Rays": {
+      "title": 0.13135144277132402,
+      "pennant": 0.38021081506838117,
+      "title_p05": 0.0673552086035168,
+      "title_p95": 0.227531747000302
+    },
+    "Los Angeles Dodgers": {
+      "title": 0.039691290473920976,
+      "pennant": 0.05768371354444719,
+      "title_p05": 0.0204570952525745,
+      "title_p95": 0.0702343605034189
+    },
+    "Milwaukee Brewers": {
+      "title": 0.6658728845967754,
+      "pennant": 0.9423162864555528,
+      "title_p05": 0.5276347119404622,
+      "title_p95": 0.7699992161786081
+    }
+  },
+  "market": {
+    "captured": "2026-10-14",
+    "fair_power": {
+      "Cleveland Guardians": 0.13415770476562425,
+      "Los Angeles Dodgers": 0.19906725995982175,
+      "Milwaukee Brewers": 0.4628485260832324,
+      "Tampa Bay Rays": 0.2039265091913218
+    }
+  },
+  "notes": ""
+}
