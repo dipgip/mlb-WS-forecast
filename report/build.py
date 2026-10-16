@@ -168,6 +168,7 @@ scen = sens.set_index("scenario")
 non_coin = scen[~scen.index.str.startswith("Every")]
 fav_top_everywhere = all(r.idxmax() == fav for _, r in scen.iterrows())
 mk = {t: v["fair_power"] for t, v in market["teams"].items()}
+mk.update({t: 0.0 for t in four if t not in mk})  # eliminated teams drop out of the market
 gap_team = max(four, key=lambda t: abs(mk[t] - now[t]["ws"]) if t != fav else -1)
 roster_full = scen.loc[[i for i in scen.index if "100%" in i][0]]
 sp_better = spb["share_boot_better"]
@@ -259,7 +260,8 @@ data = {
                    "sps": [s["name"] for s in v["pitching"]["staff"] if s["role"] == "SP"]}
                for t, v in roster.items() if t != "league"},
     "backtest": backtest,
-    "market": {t: {"american": v["american"], "implied": v["fair_power"]} for t, v in market["teams"].items()},
+    "market": {t: ({"american": market["teams"][t]["american"], "implied": mk[t]} if t in market["teams"]
+                   else {"american": "out", "implied": 0.0}) for t in four},
     "market_sources": market["sources"],
 }
 tl = R.timeline()

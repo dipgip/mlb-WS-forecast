@@ -24,7 +24,13 @@ class TestDashboard(unittest.TestCase):
             return {m.label: float(m.value.rstrip("%")) for m in at.metric if "vs now" in str(m.proto.delta)}
         before = sim(self.at)
         at = AppTest.from_file(APP, default_timeout=120).run()
-        key = next(s.key for s in at.select_slider if s.key.startswith("nlcs-") and s.value == 0)
+        # move the trailing team of a series that's still going to 4 wins
+        series = {}
+        for s in at.select_slider:
+            if s.key and s.key.startswith(("alcs-", "nlcs-")):
+                series.setdefault(s.key.split("-")[0], []).append(s)
+        live = next(v for v in series.values() if max(s.value for s in v) < 4)
+        key = min(live, key=lambda s: s.value).key
         at.select_slider(key=key).set_value(4).run()
         after = sim(at)
         self.assertNotEqual(before, after)

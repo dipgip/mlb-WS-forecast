@@ -358,3 +358,31 @@ Pennant odds: Brewers 94.2%, Guardians 62.0%, Rays 38.0%, Dodgers 5.8%.
 **Notes:** this snapshot was written at 20:44 UTC, before NLCS Game 4, and is flagged `pregame_verified=True`. No market prices were recorded, because the newest futures listing I found predated the last two games. On the first Phase 2 run the full suite reported one error from 19 collected tests. Two clean reruns passed all 21 tests, so it looks like a transient collision while a report builder was still running, not a code fault.
 
 Tag `forecast-2026-10-15-ALCS2-1-NLCS3-0` was pushed before NLCS Game 4.
+
+---
+
+## Update — 2026-10-16 (Brewers sweep NLCS 4–0; Guardians lead ALCS 2–1)
+
+**Result:** the Brewers beat the Dodgers 6–4 in NLCS Game 4 in Los Angeles to finish a 4–0 sweep and win the NL pennant. Before first pitch the model had the Dodgers at 51.9%, so this forecast missed. **Graded record: 1 of 4 correct.** Log loss is 0.687 and Brier is 0.247, against 0.693 and 0.250 for a coin flip. All three misses were near coin flips (51.6–51.9%), so the model is still just ahead of a coin flip on probability scoring.
+
+**State:** ALCS Guardians lead 2–1 (Game 4 in Cleveland tonight) · NLCS final, Brewers win 4–0. The Brewers host Games 1, 2, 6 and 7 of the World Series against either AL team, because they have the better record.
+
+| Team | Title odds | 90% interval | Change | Market (margin removed) |
+|---|---|---|---|---|
+| Milwaukee Brewers | 70.7% | 57–80% | +4.1 | 61.8% (−170) |
+| Cleveland Guardians | 16.2% | 9–26% | −0.1 | 22.0% (+330) |
+| Tampa Bay Rays | 13.1% | 7–23% | −0.0 | 16.2% (+475) |
+| Los Angeles Dodgers | 0.0% | — | −4.0 | out |
+
+Pennant odds: Brewers 100% (clinched), Guardians 62.0%, Rays 38.0%. The model likes Milwaukee more than the market does, 70.7% against 61.8%. It rates the Brewers the best team in baseball (expected .612), and it rates the Guardians only 16th (.499). Against the Brewers, the model gives the Guardians 26.2% and the Rays 34.4% to win the series.
+
+**Newly forecast:** none. ALCS Game 4 (Rays @ Guardians) was already on record from Oct 15 (Rays 51.6%). MLB has since moved its first pitch from 22:00 UTC to 00:00 UTC Oct 17, so the forecast stays pregame. The World Series games will be forecast once the AL champion is known.
+
+**Market:** SI (DraftKings) prices published today for all three remaining teams were added to `data/market_odds.csv`.
+
+**Fixes this run (no model change):** after the sweep, MLB dropped NLCS Games 5–7 from the schedule. That broke three pieces of plumbing:
+1. `predict.py` crashed computing the pre-LCS counterfactual. `bracket.series_states` now pads a truncated LCS/WS home order with the 2-3-2 pattern. Pre-LCS odds are unchanged (MIL 36.4%, LAD 31.5%, TB 21.3%, CLE 10.7%).
+2. `report/build.py`, and through it the dashboard and Markdown report, crashed because the market no longer prices the Dodgers. Eliminated teams now get a 0% market entry.
+3. `tests/test_dashboard.py` moved the Dodgers' slider to 4, which makes the NLCS 4–4. The test now moves the trailing team in a series that is still live.
+
+Tag `forecast-2026-10-16-ALCS2-1-NLCS4-0` was pushed before ALCS Game 4.
