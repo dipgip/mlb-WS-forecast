@@ -1,34 +1,29 @@
 {
-  "captured": "2026-10-14",
+  "captured": "2026-10-16",
   "sources": [
     {
       "source": "SI (DraftKings)",
-      "url": "https://www.si.com/betting/world-series-odds-rays-jump-ahead-of-guardians-dodgers-to-no-2-spot-after-evening-alcs"
+      "url": "https://www.si.com/betting/world-series-odds-brewers-set-as-odds-on-favorites-after-sweeping-dodgers-01m52kz736d4"
     }
   ],
   "overround": {
-    "SI (DraftKings)": 0.09114598138988383
+    "SI (DraftKings)": 0.036100812642774205
   },
   "teams": {
     "Cleveland Guardians": {
-      "fair_power": 0.13415770476562425,
-      "fair_proportional": 0.1409950240115325,
-      "american": "+550"
-    },
-    "Los Angeles Dodgers": {
-      "fair_power": 0.19906725995982175,
-      "fair_proportional": 0.20365947912776913,
-      "american": "+350"
+      "fair_power": 0.2195131165183125,
+      "fair_proportional": 0.2244551270466621,
+      "american": "+330"
     },
     "Milwaukee Brewers": {
-      "fair_power": 0.4628485260832324,
-      "fair_proportional": 0.4470573932072981,
-      "american": "+105"
+      "fair_power": 0.6182063465359184,
+      "fair_proportional": 0.6076914735967037,
+      "american": "-170"
     },
     "Tampa Bay Rays": {
-      "fair_power": 0.2039265091913218,
-      "fair_proportional": 0.20828810365340025,
-      "american": "+340"
+      "fair_power": 0.1622805369457691,
+      "fair_proportional": 0.16785339935663426,
+      "american": "+475"
     }
   }
 }

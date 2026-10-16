@@ -28666,18 +28666,15 @@ season,game_pk,date,game_time_utc,game_type,series_desc,series_game,status,coded
 2026,849813,2026-10-13,2026-10-14T00:00:00Z,L,AL Championship Series,2,Final,F,139,Tampa Bay Rays,114,Cleveland Guardians,3.0,1.0,Freddy Peralta,Parker Messick,Tropicana Field
 2026,849811,2026-10-14,2026-10-15T00:00:00Z,L,NL Championship Series,3,Final,F,119,Los Angeles Dodgers,158,Milwaukee Brewers,2.0,6.0,Blake Snell,Robert Gasser,UNIQLO Field at Dodger Stadium
 2026,849818,2026-10-15,2026-10-15T17:00:00Z,L,AL Championship Series,3,Final,F,114,Cleveland Guardians,139,Tampa Bay Rays,3.0,2.0,Gavin Williams,Griffin Jax,Progressive Field
-2026,849810,2026-10-15,2026-10-16T00:00:00Z,L,NL Championship Series,4,Pre-Game,P,119,Los Angeles Dodgers,158,Milwaukee Brewers,,,Tyler Glasnow,Shane Drohan,UNIQLO Field at Dodger Stadium
-2026,849817,2026-10-16,2026-10-16T22:00:00Z,L,AL Championship Series,4,Scheduled,S,114,Cleveland Guardians,139,Tampa Bay Rays,,,,Nick Martinez,Progressive Field
-2026,849808,2026-10-16,2026-10-17T01:00:00Z,L,NL Championship Series,5,Scheduled,S,119,Los Angeles Dodgers,158,Milwaukee Brewers,,,,,UNIQLO Field at Dodger Stadium
+2026,849810,2026-10-15,2026-10-16T00:00:00Z,L,NL Championship Series,4,Final,F,119,Los Angeles Dodgers,158,Milwaukee Brewers,4.0,6.0,Tyler Glasnow,Shane Drohan,UNIQLO Field at Dodger Stadium
+2026,849817,2026-10-16,2026-10-17T00:00:00Z,L,AL Championship Series,4,Pre-Game,P,114,Cleveland Guardians,139,Tampa Bay Rays,,,Shawn Armstrong,Nick Martinez,Progressive Field
 2026,849816,2026-10-17,2026-10-18T00:00:00Z,L,AL Championship Series,5,Scheduled,S,114,Cleveland Guardians,139,Tampa Bay Rays,,,,,Progressive Field
-2026,849806,2026-10-18,2026-10-19T00:00:00Z,L,NL Championship Series,6,Scheduled,S,158,Milwaukee Brewers,119,Los Angeles Dodgers,,,,,American Family Field
-2026,849815,2026-10-19,2026-10-19T21:00:00Z,L,AL Championship Series,6,Scheduled,S,139,Tampa Bay Rays,114,Cleveland Guardians,,,,,Tropicana Field
-2026,849807,2026-10-19,2026-10-20T00:00:00Z,L,NL Championship Series,7,Scheduled,S,158,Milwaukee Brewers,119,Los Angeles Dodgers,,,,,American Family Field
+2026,849815,2026-10-19,2026-10-20T00:00:00Z,L,AL Championship Series,6,Scheduled,S,139,Tampa Bay Rays,114,Cleveland Guardians,,,,,Tropicana Field
 2026,849814,2026-10-20,2026-10-21T00:00:00Z,L,AL Championship Series,7,Scheduled,S,139,Tampa Bay Rays,114,Cleveland Guardians,,,,,Tropicana Field
-2026,849805,2026-10-23,2026-10-23T07:33:00Z,W,World Series,1,Scheduled,S,31,NL Champion,21,AL Champion,,,,,TBD
-2026,849802,2026-10-24,2026-10-24T07:33:00Z,W,World Series,2,Scheduled,S,31,NL Champion,21,AL Champion,,,,,TBD
-2026,849804,2026-10-26,2026-10-26T07:33:00Z,W,World Series,3,Scheduled,S,21,AL Champion,31,NL Champion,,,,,TBD
-2026,849803,2026-10-27,2026-10-27T07:33:00Z,W,World Series,4,Scheduled,S,21,AL Champion,31,NL Champion,,,,,TBD
-2026,849799,2026-10-28,2026-10-28T07:33:00Z,W,World Series,5,Scheduled,S,21,AL Champion,31,NL Champion,,,,,TBD
-2026,849801,2026-10-30,2026-10-30T07:33:00Z,W,World Series,6,Scheduled,S,31,NL Champion,21,AL Champion,,,,,TBD
-2026,849800,2026-10-31,2026-10-31T07:33:00Z,W,World Series,7,Scheduled,S,31,NL Champion,21,AL Champion,,,,,TBD
+2026,849805,2026-10-23,2026-10-23T08:33:00Z,W,World Series,1,Scheduled,S,158,Milwaukee Brewers,21,TB/CLE,,,,,American Family Field
+2026,849802,2026-10-24,2026-10-24T08:33:00Z,W,World Series,2,Scheduled,S,158,Milwaukee Brewers,21,TB/CLE,,,,,American Family Field
+2026,849804,2026-10-26,2026-10-26T07:33:00Z,W,World Series,3,Scheduled,S,21,TB/CLE,158,Milwaukee Brewers,,,,,TBD
+2026,849803,2026-10-27,2026-10-27T07:33:00Z,W,World Series,4,Scheduled,S,21,TB/CLE,158,Milwaukee Brewers,,,,,TBD
+2026,849799,2026-10-28,2026-10-28T07:33:00Z,W,World Series,5,Scheduled,S,21,TB/CLE,158,Milwaukee Brewers,,,,,TBD
+2026,849801,2026-10-30,2026-10-30T08:33:00Z,W,World Series,6,Scheduled,S,158,Milwaukee Brewers,21,TB/CLE,,,,,American Family Field
+2026,849800,2026-10-31,2026-10-31T08:33:00Z,W,World Series,7,Scheduled,S,158,Milwaukee Brewers,21,TB/CLE,,,,,American Family Field

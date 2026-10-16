@@ -41,7 +41,14 @@ def series_states(sched_season, post_games, game_type, known_teams=None):
         wins = {t: 0 for t in teams}
         for x in played.itertuples():
             wins[x.home if x.home_runs > x.away_runs else x.away] += 1
-        states[desc] = (teams, list(grp.home), wins)
+        home = list(grp.home)
+        if game_type in ("L", "W") and len(home) < 7:
+            # MLB drops unneeded "if necessary" games once a series ends; restore
+            # the 2-3-2 order so counterfactuals (e.g. odds before the LCS) still work.
+            h0 = home[0]
+            other = teams[1] if teams[0] == h0 else teams[0]
+            home += [h0, h0, other, other, other, h0, h0][len(home):]
+        states[desc] = (teams, home, wins)
     return states
 
 
