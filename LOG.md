@@ -386,3 +386,28 @@ Pennant odds: Brewers 100% (clinched), Guardians 62.0%, Rays 38.0%. The model li
 3. `tests/test_dashboard.py` moved the Dodgers' slider to 4, which makes the NLCS 4–4. The test now moves the trailing team in a series that is still live.
 
 Tag `forecast-2026-10-16-ALCS2-1-NLCS4-0` was pushed before ALCS Game 4.
+
+---
+
+## Update — 2026-10-18 (Rays even ALCS 2–2; Brewers await)
+
+**Result:** ALCS Game 4 was postponed from Oct 16 and played Oct 17 in Cleveland, and the Rays won 7–3. The model had the Rays at 51.6% before the original first pitch, so this forecast hit. **Graded record: 2 of 5 correct.** Log loss is 0.682 and Brier is 0.245, against 0.693 and 0.250 for a coin flip.
+
+**State:** ALCS tied 2–2 (Game 5 in Cleveland today; Games 6–7 in Tampa Bay if needed) · NLCS final, Brewers won 4–0.
+
+| Team | Title odds | 90% interval | Change | Pennant |
+|---|---|---|---|---|
+| Milwaukee Brewers | 69.0% | 55–79% | −1.6 | 100% (clinched) |
+| Tampa Bay Rays | 19.9% | 11–32% | +6.9 | 57.9% |
+| Cleveland Guardians | 11.0% | 6–19% | −5.2 | 42.1% |
+| Los Angeles Dodgers | 0.0% | — | 0.0 | out |
+
+The Rays are now favored for the pennant. Games 6 and 7 are in Tampa Bay, and the model rates the Rays well ahead of the Guardians (expected .543 against .499). The model's title odds still differ from the last market prices (Oct 16, before Game 4): MIL 61.8%, CLE 22.0%, TB 16.2%.
+
+**Newly forecast:** ALCS Game 5 (Rays @ Guardians, first pitch 2026-10-18 21:08 UTC): Guardians 48.4%, Rays 51.6%. This forecast is `pregame_verified=True`. A Guardians win would put the title odds at MIL 71.1 / CLE 17.7 / TB 11.2, and a Rays win at MIL 67.1 / TB 28.1 / CLE 4.8.
+
+**Market:** none recorded. I found no World Series futures published today that reflect Game 4.
+
+**Note on the snapshot flag:** the title snapshot `2026-10-18_v2_live_ALCS-CLE2-TB2_NLCS-MIL4-LAD0` is flagged `pregame_verified=False`, and the flag is wrong. MLB keeps a "Postponed" row for Game 4 with its old time (2026-10-17 00:00 UTC). `snapshot.next_games()` doesn't filter out postponed games, so it picked that past time as the next first pitch. The snapshot was actually written at 16:09 UTC, five hours before Game 5. The record is append-only, so the flag stays as written. Excluding postponed games in `next_games()` would prevent this in future; I haven't made that change in this automated run.
+
+Tag `forecast-2026-10-18-ALCS2-2-NLCS4-0` was pushed before ALCS Game 5.
