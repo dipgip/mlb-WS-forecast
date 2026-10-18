@@ -84,7 +84,7 @@ Every forecast is saved before the games it predicts and never changed afterward
 | --- | --- | --- | --- | --- | ---: | --- |
 | ALCS G2 | Cleveland Guardians @ Tampa Bay Rays | 2026-10-14 00:00:00 | 2026-10-13 22:34:05 | Tampa Bay Rays | 57.1% | ✓ Tampa Bay Rays (3–1) |
 | ALCS G3 | Tampa Bay Rays @ Cleveland Guardians | 2026-10-15 17:00:00 | 2026-10-14 16:10:12 | Tampa Bay Rays | 51.6% | ✗ Cleveland Guardians (3–2) |
-| ALCS G4 | Tampa Bay Rays @ Cleveland Guardians | 2026-10-16 22:00:00 | 2026-10-15 20:44:00 | Tampa Bay Rays | 51.6% | not played yet |
+| ALCS G4 | Tampa Bay Rays @ Cleveland Guardians | 2026-10-16 22:00:00 | 2026-10-15 20:44:00 | Tampa Bay Rays | 51.6% | ✓ Tampa Bay Rays (7–3) |
 | ALCS G5 | Tampa Bay Rays @ Cleveland Guardians | 2026-10-18 21:08:00 | 2026-10-18 16:09:40 | Tampa Bay Rays | 51.6% | not played yet |
 | NLCS G3 | Milwaukee Brewers @ Los Angeles Dodgers | 2026-10-15 00:00:00 | 2026-10-13 22:34:05 | Los Angeles Dodgers | 51.9% | ✗ Milwaukee Brewers (6–2) |
 | NLCS G4 | Milwaukee Brewers @ Los Angeles Dodgers | 2026-10-16 00:00:00 | 2026-10-15 18:32:44 | Los Angeles Dodgers | 51.9% | ✗ Milwaukee Brewers (6–4) |

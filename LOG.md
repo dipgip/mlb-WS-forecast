@@ -410,4 +410,6 @@ The Rays are now favored for the pennant. Games 6 and 7 are in Tampa Bay, and th
 
 **Note on the snapshot flag:** the title snapshot `2026-10-18_v2_live_ALCS-CLE2-TB2_NLCS-MIL4-LAD0` is flagged `pregame_verified=False`, and the flag is wrong. MLB keeps a "Postponed" row for Game 4 with its old time (2026-10-17 00:00 UTC). `snapshot.next_games()` doesn't filter out postponed games, so it picked that past time as the next first pitch. The snapshot was actually written at 16:09 UTC, five hours before Game 5. The record is append-only, so the flag stays as written. Excluding postponed games in `next_games()` would prevent this in future; I haven't made that change in this automated run.
 
+**Fix this run (no model change):** MLB reused Game 4's original `game_pk` (849817) for Game 5 and gave the rescheduled Game 4 a new one (849816). `record.game_forecasts()` joined forecasts to results by `game_pk`, so the reports showed Game 4 as ungraded, and once Game 5 was final they would have graded the Game 4 forecast against the Game 5 result. The join now matches on season, series, game number and teams. Forecast files are untouched.
+
 Tag `forecast-2026-10-18-ALCS2-2-NLCS4-0` was pushed before ALCS Game 5.

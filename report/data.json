@@ -897,8 +897,8 @@
     "made": "2026-10-15T20:44:00Z",
     "fav": "Tampa Bay Rays",
     "p_fav": 0.5158684950767969,
-    "winner": null,
-    "called": null
+    "winner": "Tampa Bay Rays (7\u20133)",
+    "called": true
    },
    {
     "game": "ALCS G5",
@@ -933,11 +933,11 @@
   ],
   "game_summary": {
    "n_forecast": 6,
-   "n_graded": 4,
-   "called": 1,
-   "log_loss": 0.68735803337689,
+   "n_graded": 5,
+   "called": 2,
+   "log_loss": 0.6822671067982787,
    "log_loss_coin": 0.6931471805599453,
-   "brier": 0.2472083509757052
+   "brier": 0.24464334359240528
   },
   "score": null,
   "repo": "https://github.com/dipgip/mlb-WS-forecast"

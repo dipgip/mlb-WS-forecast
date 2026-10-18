@@ -136,7 +136,8 @@ def score():
 def game_forecasts():
     """Every per-game forecast on record, joined to its result once played."""
     games = pd.read_csv(ROOT / "data/processed/games.csv")
-    done = games.set_index("game_pk")
+    # Join on series/game/teams, not game_pk: MLB reassigns game_pk when a game is postponed
+    # (2026 ALCS G4's original pk went to G5).
     rows = []
     for p in sorted((FC / "games").glob("*.json")):
         g = json.loads(p.read_text())
@@ -147,8 +148,11 @@ def game_forecasts():
                "Forecast made (UTC)": g["created_at_utc"], "Model favorite": fav, "Favorite's chance": p_fav,
                "Winner": None, "Called it": None, "_p_home": g["p_home_win"], "_home": g["home"],
                "File": f"{REPO}/blob/main/forecasts/games/{p.name}"}
-        if g["game_pk"] in done.index:
-            r = done.loc[g["game_pk"]]
+        m = games[(games.season == int(g["first_pitch_utc"][:4]))
+                  & (games.series_desc == g["series"]) & (games.series_game == g["game"])
+                  & (games.home == g["home"]) & (games.away == g["away"])]
+        if len(m):
+            r = m.iloc[0]
             winner = r.home if r.home_runs > r.away_runs else r.away
             row.update({"Winner": f"{winner} ({max(r.home_runs, r.away_runs)}–{min(r.home_runs, r.away_runs)})",
                         "Called it": winner == fav, "_home_won": winner == g["home"]})
