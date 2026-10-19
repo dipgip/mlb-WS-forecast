@@ -138,6 +138,18 @@ class TestSeriesStates(unittest.TestCase):
         self.assertEqual(B.series_states(sched, post, "W", known_teams={"M", "D"}), {})
         self.assertIn("NLCS", B.series_states(sched, post, "L", known_teams={"M", "D"}))
 
+    def test_decided_series_keeps_full_home_order(self):
+        # After a sweep MLB removes games 5-7 from the schedule
+        sched = pd.DataFrame([
+            {"game_type": "L", "series_desc": "NLCS", "series_game": i + 1, "home": h, "away": a}
+            for i, (h, a) in enumerate([("M", "D"), ("M", "D"), ("D", "M"), ("D", "M")])
+        ])
+        post = pd.DataFrame([{"game_type": "L", "home": h, "away": a, "home_runs": hr, "away_runs": ar}
+                             for h, a, hr, ar in [("M", "D", 2, 1), ("M", "D", 7, 4), ("D", "M", 2, 6), ("D", "M", 4, 6)]])
+        st = B.series_states(sched, post, "L")["NLCS"]
+        self.assertEqual(st[1], ["M", "M", "D", "D", "D", "M", "M"])
+        self.assertEqual(st[2], {"D": 0, "M": 4})
+
 
 class TestMarket(unittest.TestCase):
     def test_american_odds(self):
