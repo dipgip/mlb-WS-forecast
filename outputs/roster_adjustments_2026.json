@@ -2,36 +2,36 @@
   "league": {
     "FIP": 4.171202191289008,
     "wOBA": 0.31304294471805716,
-    "roster_date": "2026-10-18"
+    "roster_date": "2026-10-19"
   },
   "Cleveland Guardians": {
     "pitching": {
       "season_staff_FIP": 3.9273011357700294,
-      "october_staff_FIP": 3.861267897919062,
-      "delta_runs_allowed_pg": -0.06603323785096737,
+      "october_staff_FIP": 3.890198939685433,
+      "delta_runs_allowed_pg": -0.03710219608459653,
       "staff": [
         {
           "name": "Parker Messick",
           "role": "SP",
-          "share": 0.22,
+          "share": 0.2,
           "FIP_reg": 3.33
         },
         {
           "name": "Gavin Williams",
           "role": "SP",
-          "share": 0.165,
+          "share": 0.15,
           "FIP_reg": 3.64
         },
         {
           "name": "Shawn Armstrong",
           "role": "SP",
-          "share": 0.11,
+          "share": 0.15,
           "FIP_reg": 4.26
         },
         {
           "name": "Daniel Espino",
           "role": "SP",
-          "share": 0.055,
+          "share": 0.05,
           "FIP_reg": 4.08
         },
         {
@@ -167,31 +167,31 @@
   "Tampa Bay Rays": {
     "pitching": {
       "season_staff_FIP": 3.978355777266039,
-      "october_staff_FIP": 3.8461355248264493,
-      "delta_runs_allowed_pg": -0.1322202524395899,
+      "october_staff_FIP": 3.872640493882704,
+      "delta_runs_allowed_pg": -0.10571528338333502,
       "staff": [
         {
           "name": "Drew Rasmussen",
           "role": "SP",
-          "share": 0.183,
+          "share": 0.165,
           "FIP_reg": 3.16
-        },
-        {
-          "name": "Nick Martinez",
-          "role": "SP",
-          "share": 0.183,
-          "FIP_reg": 4.01
         },
         {
           "name": "Freddy Peralta",
           "role": "SP",
-          "share": 0.122,
+          "share": 0.165,
           "FIP_reg": 4.25
+        },
+        {
+          "name": "Nick Martinez",
+          "role": "SP",
+          "share": 0.165,
+          "FIP_reg": 4.01
         },
         {
           "name": "Griffin Jax",
           "role": "SP",
-          "share": 0.061,
+          "share": 0.055,
           "FIP_reg": 3.9
         },
         {

@@ -28669,8 +28669,8 @@ season,game_pk,date,game_time_utc,game_type,series_desc,series_game,status,coded
 2026,849810,2026-10-15,2026-10-16T00:00:00Z,L,NL Championship Series,4,Final,F,119,Los Angeles Dodgers,158,Milwaukee Brewers,4.0,6.0,Tyler Glasnow,Shane Drohan,UNIQLO Field at Dodger Stadium
 2026,849817,2026-10-18,2026-10-17T00:00:00Z,L,AL Championship Series,4,Postponed,D,114,Cleveland Guardians,139,Tampa Bay Rays,,,Shawn Armstrong,Nick Martinez,Progressive Field
 2026,849816,2026-10-17,2026-10-18T00:08:00Z,L,AL Championship Series,4,Final,F,114,Cleveland Guardians,139,Tampa Bay Rays,3.0,7.0,Shawn Armstrong,Nick Martinez,Progressive Field
-2026,849817,2026-10-18,2026-10-18T21:08:00Z,L,AL Championship Series,5,Scheduled,S,114,Cleveland Guardians,139,Tampa Bay Rays,,,Parker Messick,Drew Rasmussen,Progressive Field
-2026,849815,2026-10-19,2026-10-20T00:08:00Z,L,AL Championship Series,6,Scheduled,S,139,Tampa Bay Rays,114,Cleveland Guardians,,,,,Tropicana Field
+2026,849817,2026-10-18,2026-10-18T21:08:00Z,L,AL Championship Series,5,Final,F,114,Cleveland Guardians,139,Tampa Bay Rays,1.0,3.0,Parker Messick,Drew Rasmussen,Progressive Field
+2026,849815,2026-10-19,2026-10-20T00:08:00Z,L,AL Championship Series,6,Scheduled,S,139,Tampa Bay Rays,114,Cleveland Guardians,,,Freddy Peralta,Shawn Armstrong,Tropicana Field
 2026,849814,2026-10-20,2026-10-21T00:08:00Z,L,AL Championship Series,7,Scheduled,S,139,Tampa Bay Rays,114,Cleveland Guardians,,,,,Tropicana Field
 2026,849805,2026-10-23,2026-10-24T00:00:00Z,W,World Series,1,Scheduled,S,158,Milwaukee Brewers,21,TB/CLE,,,,,American Family Field
 2026,849802,2026-10-24,2026-10-25T00:00:00Z,W,World Series,2,Scheduled,S,158,Milwaukee Brewers,21,TB/CLE,,,,,American Family Field
