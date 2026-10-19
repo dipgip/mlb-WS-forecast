@@ -413,3 +413,28 @@ The Rays are now favored for the pennant. Games 6 and 7 are in Tampa Bay, and th
 **Fix this run (no model change):** MLB reused Game 4's original `game_pk` (849817) for Game 5 and gave the rescheduled Game 4 a new one (849816). `record.game_forecasts()` joined forecasts to results by `game_pk`, so the reports showed Game 4 as ungraded, and once Game 5 was final they would have graded the Game 4 forecast against the Game 5 result. The join now matches on season, series, game number and teams. Forecast files are untouched.
 
 Tag `forecast-2026-10-18-ALCS2-2-NLCS4-0` was pushed before ALCS Game 5.
+
+---
+
+## Update — 2026-10-19 (Rays lead ALCS 3–2; Brewers await)
+
+**Result:** the Rays beat the Guardians 3–1 in ALCS Game 5 in Cleveland. The model had the Rays at 51.6% before first pitch, so this forecast hit. **Graded record: 3 of 6 correct.** Log loss is 0.679 and Brier is 0.243, against 0.693 and 0.250 for a coin flip.
+
+**State:** Rays lead the ALCS 3–2 (Game 6 in Tampa Bay tonight; Game 7 there if needed) · NLCS final, Brewers won 4–0.
+
+| Team | Title odds | 90% interval | Change | Pennant | Market (margin removed) |
+|---|---|---|---|---|---|
+| Milwaukee Brewers | 67.1% | 53–78% | −1.9 | 100% (clinched) | 60.3% (−165) |
+| Tampa Bay Rays | 28.1% | 17–43% | +8.2 | 81.6% | 33.3% (+180) |
+| Cleveland Guardians | 4.8% | 2–9% | −6.2 | 18.4% | 6.5% (+1200) |
+| Los Angeles Dodgers | 0.0% | — | 0.0 | out | out |
+
+The Rays need one win in two home games. The model still prices Milwaukee above the market (67.1% against 60.3%) and both AL teams a little below it.
+
+**Newly forecast:** ALCS Game 6 (Guardians @ Rays, first pitch 2026-10-20 00:08 UTC): Rays 57.1%, Guardians 42.9%. This forecast is `pregame_verified=True`. A Rays win ends the series and puts the title odds at MIL 65.6 / TB 34.4. A Guardians win forces Game 7 and puts them at MIL 69.1 / TB 19.7 / CLE 11.2.
+
+**Market:** SI (DraftKings) prices published today, after Game 5, for all three remaining teams were added to `data/market_odds.csv`.
+
+**Note on the snapshot flag:** the title snapshot `2026-10-19_v2_live_ALCS-TB3-CLE2_NLCS-MIL4-LAD0` is again flagged `pregame_verified=False`. It was written at 16:10 UTC, eight hours before Game 6. This looks like the same issue as Oct 18: `snapshot.next_games()` still counts the stale "Postponed" Game 4 row. The record is append-only, so the flag stays as written. I didn't change the code in this automated run.
+
+Tag `forecast-2026-10-19-ALCS3-2-NLCS4-0` was pushed before ALCS Game 6.
