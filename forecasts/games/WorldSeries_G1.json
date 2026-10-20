@@ -1,0 +1,22 @@
+{
+  "game_id": "WorldSeries_G1",
+  "game_pk": 849805,
+  "series": "World Series",
+  "game": 1,
+  "home": "Milwaukee Brewers",
+  "away": "Tampa Bay Rays",
+  "first_pitch_utc": "2026-10-24T00:00:00Z",
+  "created_at_utc": "2026-10-20T16:09:44Z",
+  "pregame_verified": true,
+  "model_version": "v2",
+  "code_commit": {
+    "sha": "6cd9078",
+    "src_has_uncommitted_changes": false
+  },
+  "series_state_before": {
+    "Milwaukee Brewers": 0,
+    "Tampa Bay Rays": 0
+  },
+  "p_home_win": 0.5964072157458955,
+  "p_away_win": 0.4035927842541045
+}

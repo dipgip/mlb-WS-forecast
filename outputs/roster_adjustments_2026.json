@@ -2,164 +2,164 @@
   "league": {
     "FIP": 4.171202191289008,
     "wOBA": 0.31304294471805716,
-    "roster_date": "2026-10-19"
+    "roster_date": "2026-10-20"
   },
-  "Cleveland Guardians": {
+  "Milwaukee Brewers": {
     "pitching": {
-      "season_staff_FIP": 3.9273011357700294,
-      "october_staff_FIP": 3.890198939685433,
-      "delta_runs_allowed_pg": -0.03710219608459653,
+      "season_staff_FIP": 3.81372857423836,
+      "october_staff_FIP": 3.67881409749278,
+      "delta_runs_allowed_pg": -0.1349144767455801,
       "staff": [
         {
-          "name": "Parker Messick",
+          "name": "Jacob Misiorowski",
           "role": "SP",
-          "share": 0.2,
-          "FIP_reg": 3.33
+          "share": 0.157,
+          "FIP_reg": 2.67
         },
         {
-          "name": "Gavin Williams",
+          "name": "Logan Henderson",
           "role": "SP",
-          "share": 0.15,
+          "share": 0.157,
           "FIP_reg": 3.64
         },
         {
-          "name": "Shawn Armstrong",
+          "name": "Robert Gasser",
           "role": "SP",
-          "share": 0.15,
-          "FIP_reg": 4.26
+          "share": 0.157,
+          "FIP_reg": 4.21
         },
         {
-          "name": "Daniel Espino",
+          "name": "Dustin May",
           "role": "SP",
-          "share": 0.05,
-          "FIP_reg": 4.08
+          "share": 0.079,
+          "FIP_reg": 3.78
         },
         {
-          "name": "Tanner Bibee",
+          "name": "Shane Drohan",
           "role": "RP",
-          "share": 0.101,
-          "FIP_reg": 4.43
-        },
-        {
-          "name": "Foster Griffin",
-          "role": "RP",
-          "share": 0.092,
-          "FIP_reg": 4.01
-        },
-        {
-          "name": "Joey Cantillo",
-          "role": "RP",
-          "share": 0.085,
-          "FIP_reg": 4.03
-        },
-        {
-          "name": "Slade Cecconi",
-          "role": "RP",
-          "share": 0.065,
-          "FIP_reg": 4.42
-        },
-        {
-          "name": "Cade Smith",
-          "role": "RP",
-          "share": 0.04,
-          "FIP_reg": 3.07
-        },
-        {
-          "name": "Matt Festa",
-          "role": "RP",
-          "share": 0.036,
+          "share": 0.089,
           "FIP_reg": 3.87
         },
         {
-          "name": "Hunter Gaddis",
+          "name": "Kyle Harrison",
           "role": "RP",
-          "share": 0.032,
-          "FIP_reg": 4.06
+          "share": 0.082,
+          "FIP_reg": 4.07
+        },
+        {
+          "name": "Chad Patrick",
+          "role": "RP",
+          "share": 0.075,
+          "FIP_reg": 4.16
+        },
+        {
+          "name": "Aaron Ashby",
+          "role": "RP",
+          "share": 0.064,
+          "FIP_reg": 3.53
+        },
+        {
+          "name": "Antonio Senzatela",
+          "role": "RP",
+          "share": 0.052,
+          "FIP_reg": 3.89
+        },
+        {
+          "name": "Trevor Megill",
+          "role": "RP",
+          "share": 0.044,
+          "FIP_reg": 2.99
+        },
+        {
+          "name": "DL Hall",
+          "role": "RP",
+          "share": 0.044,
+          "FIP_reg": 4.02
         }
       ]
     },
     "hitting": {
-      "season_lineup_wOBA": 0.31103797293772373,
-      "october_lineup_wOBA": 0.31340461141317194,
-      "delta_runs_scored_pg": 0.07494355172252674,
+      "season_lineup_wOBA": 0.32317773936960603,
+      "october_lineup_wOBA": 0.3230397195167506,
+      "delta_runs_scored_pg": -0.004370628673755669,
       "lineup": [
         {
-          "name": "Jo Adell",
+          "name": "Brice Turang",
           "role": "starter",
           "share": 0.1,
-          "wOBA_reg": 0.306
+          "wOBA_reg": 0.344
         },
         {
-          "name": "Steven Kwan",
+          "name": "William Contreras",
           "role": "starter",
           "share": 0.1,
-          "wOBA_reg": 0.326
+          "wOBA_reg": 0.323
         },
         {
-          "name": "Brayan Rocchio",
+          "name": "Jake Bauers",
           "role": "starter",
           "share": 0.1,
-          "wOBA_reg": 0.309
+          "wOBA_reg": 0.359
         },
         {
-          "name": "Chase DeLauter",
+          "name": "Jackson Chourio",
           "role": "starter",
           "share": 0.1,
-          "wOBA_reg": 0.343
+          "wOBA_reg": 0.345
         },
         {
-          "name": "Jos\u00e9 Ram\u00edrez",
+          "name": "Garrett Mitchell",
           "role": "starter",
           "share": 0.1,
-          "wOBA_reg": 0.302
+          "wOBA_reg": 0.33
         },
         {
-          "name": "Travis Bazzana",
+          "name": "Christian Yelich",
           "role": "starter",
           "share": 0.1,
-          "wOBA_reg": 0.321
+          "wOBA_reg": 0.305
         },
         {
-          "name": "Nathaniel Lowe",
+          "name": "Joey Ortiz",
           "role": "starter",
           "share": 0.1,
-          "wOBA_reg": 0.321
+          "wOBA_reg": 0.316
         },
         {
-          "name": "Angel Mart\u00ednez",
+          "name": "Sal Frelick",
           "role": "starter",
           "share": 0.1,
-          "wOBA_reg": 0.319
+          "wOBA_reg": 0.287
         },
         {
-          "name": "Patrick Bailey",
+          "name": "David Hamilton",
           "role": "starter",
           "share": 0.1,
-          "wOBA_reg": 0.285
+          "wOBA_reg": 0.298
         },
         {
-          "name": "Austin Hedges",
+          "name": "Andrew Vaughn",
           "role": "bench",
           "share": 0.031,
-          "wOBA_reg": 0.311
+          "wOBA_reg": 0.344
         },
         {
-          "name": "David Fry",
+          "name": "Gary S\u00e1nchez",
           "role": "bench",
-          "share": 0.027,
-          "wOBA_reg": 0.307
+          "share": 0.025,
+          "wOBA_reg": 0.327
         },
         {
-          "name": "Petey Halpin",
+          "name": "Cooper Pratt",
           "role": "bench",
           "share": 0.024,
-          "wOBA_reg": 0.289
+          "wOBA_reg": 0.315
         },
         {
-          "name": "Angel Genao",
+          "name": "Luis Lara",
           "role": "bench",
-          "share": 0.018,
-          "wOBA_reg": 0.292
+          "share": 0.02,
+          "wOBA_reg": 0.298
         }
       ]
     }
@@ -326,166 +326,6 @@
           "role": "bench",
           "share": 0.016,
           "wOBA_reg": 0.279
-        }
-      ]
-    }
-  },
-  "Milwaukee Brewers": {
-    "pitching": {
-      "season_staff_FIP": 3.81372857423836,
-      "october_staff_FIP": 3.67881409749278,
-      "delta_runs_allowed_pg": -0.1349144767455801,
-      "staff": [
-        {
-          "name": "Jacob Misiorowski",
-          "role": "SP",
-          "share": 0.157,
-          "FIP_reg": 2.67
-        },
-        {
-          "name": "Logan Henderson",
-          "role": "SP",
-          "share": 0.157,
-          "FIP_reg": 3.64
-        },
-        {
-          "name": "Robert Gasser",
-          "role": "SP",
-          "share": 0.157,
-          "FIP_reg": 4.21
-        },
-        {
-          "name": "Dustin May",
-          "role": "SP",
-          "share": 0.079,
-          "FIP_reg": 3.78
-        },
-        {
-          "name": "Shane Drohan",
-          "role": "RP",
-          "share": 0.089,
-          "FIP_reg": 3.87
-        },
-        {
-          "name": "Kyle Harrison",
-          "role": "RP",
-          "share": 0.082,
-          "FIP_reg": 4.07
-        },
-        {
-          "name": "Chad Patrick",
-          "role": "RP",
-          "share": 0.075,
-          "FIP_reg": 4.16
-        },
-        {
-          "name": "Aaron Ashby",
-          "role": "RP",
-          "share": 0.064,
-          "FIP_reg": 3.53
-        },
-        {
-          "name": "Antonio Senzatela",
-          "role": "RP",
-          "share": 0.052,
-          "FIP_reg": 3.89
-        },
-        {
-          "name": "Trevor Megill",
-          "role": "RP",
-          "share": 0.044,
-          "FIP_reg": 2.99
-        },
-        {
-          "name": "DL Hall",
-          "role": "RP",
-          "share": 0.044,
-          "FIP_reg": 4.02
-        }
-      ]
-    },
-    "hitting": {
-      "season_lineup_wOBA": 0.32317773936960603,
-      "october_lineup_wOBA": 0.3230397195167506,
-      "delta_runs_scored_pg": -0.004370628673755669,
-      "lineup": [
-        {
-          "name": "Brice Turang",
-          "role": "starter",
-          "share": 0.1,
-          "wOBA_reg": 0.344
-        },
-        {
-          "name": "William Contreras",
-          "role": "starter",
-          "share": 0.1,
-          "wOBA_reg": 0.323
-        },
-        {
-          "name": "Jake Bauers",
-          "role": "starter",
-          "share": 0.1,
-          "wOBA_reg": 0.359
-        },
-        {
-          "name": "Jackson Chourio",
-          "role": "starter",
-          "share": 0.1,
-          "wOBA_reg": 0.345
-        },
-        {
-          "name": "Garrett Mitchell",
-          "role": "starter",
-          "share": 0.1,
-          "wOBA_reg": 0.33
-        },
-        {
-          "name": "Christian Yelich",
-          "role": "starter",
-          "share": 0.1,
-          "wOBA_reg": 0.305
-        },
-        {
-          "name": "Joey Ortiz",
-          "role": "starter",
-          "share": 0.1,
-          "wOBA_reg": 0.316
-        },
-        {
-          "name": "Sal Frelick",
-          "role": "starter",
-          "share": 0.1,
-          "wOBA_reg": 0.287
-        },
-        {
-          "name": "David Hamilton",
-          "role": "starter",
-          "share": 0.1,
-          "wOBA_reg": 0.298
-        },
-        {
-          "name": "Andrew Vaughn",
-          "role": "bench",
-          "share": 0.031,
-          "wOBA_reg": 0.344
-        },
-        {
-          "name": "Gary S\u00e1nchez",
-          "role": "bench",
-          "share": 0.025,
-          "wOBA_reg": 0.327
-        },
-        {
-          "name": "Cooper Pratt",
-          "role": "bench",
-          "share": 0.024,
-          "wOBA_reg": 0.315
-        },
-        {
-          "name": "Luis Lara",
-          "role": "bench",
-          "share": 0.02,
-          "wOBA_reg": 0.298
         }
       ]
     }

@@ -1,29 +1,24 @@
 {
-  "captured": "2026-10-19",
+  "captured": "2026-10-20",
   "sources": [
     {
       "source": "SI (DraftKings)",
-      "url": "https://www.si.com/betting/2026-world-series-odds-rays-skyrocket-after-game-5-win-vs-guardians-brewers-remain-odds-on-favorites"
+      "url": "https://www.si.com/betting/rays-vs-brewers-opening-odds-for-2026-world-series-milwaukee-favored-to-win-first-title-in-franchise-history"
     }
   ],
   "overround": {
-    "SI (DraftKings)": 0.056707443499896204
+    "SI (DraftKings)": 0.03205128205128216
   },
   "teams": {
-    "Cleveland Guardians": {
-      "fair_power": 0.06450582032658476,
-      "fair_proportional": 0.07279505543019721,
-      "american": "+1200"
-    },
     "Milwaukee Brewers": {
-      "fair_power": 0.6027194213236136,
-      "fair_proportional": 0.5892279015010302,
-      "american": "-165"
+      "fair_power": 0.6008774482239536,
+      "fair_proportional": 0.5962732919254659,
+      "american": "-160"
     },
     "Tampa Bay Rays": {
-      "fair_power": 0.33277475834979847,
-      "fair_proportional": 0.33797704306877274,
-      "american": "+180"
+      "fair_power": 0.39912255177604633,
+      "fair_proportional": 0.40372670807453415,
+      "american": "+140"
     }
   }
 }
