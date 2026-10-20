@@ -1,29 +1,27 @@
 # 2026 World Series Forecast
 
-*Forecast as of Oct 18, 2026 games · next: ALCS G6 Oct 19. Static version of the report. The [live dashboard](https://mlb-ws-forecast-w3huajspduv8ae2mctsydr.streamlit.app/) has the same numbers plus a what-if simulator.*
+*Forecast as of Oct 19, 2026 games. Static version of the report. The [live dashboard](https://mlb-ws-forecast-w3huajspduv8ae2mctsydr.streamlit.app/) has the same numbers plus a what-if simulator.*
 
-## The pick: Milwaukee Brewers, 67%
+## The pick: Milwaukee Brewers, 66%
 
 |  |  |
 | --- | ---: |
-| Model | **67%** |
-| 90% interval (1,000 resampled seasons) | 53%–78% |
+| Model | **66%** |
+| 90% interval (1,000 resampled seasons) | 50%–78% |
 | Betting market, margin removed | 60% |
-| Most likely World Series | TB vs MIL (82%) |
+| Most likely World Series | TB vs MIL (100%) |
 
-The Brewers finished 103–59, the best record in baseball. They lead the Dodgers 4–0 in the NLCS and would host Games 1, 2, 6 and 7 of any World Series. Every version of the model makes them the favorite. That still leaves a 33% chance the trophy goes somewhere else. October baseball is mostly noise, and this report shows how much.
+The Brewers finished 103–59, the best record in baseball. They lead the Dodgers 4–0 in the NLCS and would host Games 1, 2, 6 and 7 of any World Series. Every version of the model makes them the favorite. That still leaves a 34% chance the trophy goes somewhere else. October baseball is mostly noise, and this report shows how much.
 
 ## Where the series stand
 
-### AL Championship Series: Rays lead 3–2
+### AL Championship Series: Rays win 4–2
 
-|  | G1 | G2 | G3 | G4 | G5 | G6 | G7 | W |
-| --- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Guardians** | **7** | 1 | **3** | 3 | 1 | · | · | **2** |
-| **Rays** | 3 | **3** | 2 | **7** | **3** | · | · | **3** |
-| *Home* | *Rays* | *Rays* | *Guardians* | *Guardians* | *Guardians* | *Rays* | *Rays* |  |
-
-Next: Game 6, 2026-10-19, Guardians at Rays, Shawn Armstrong vs Freddy Peralta.
+|  | G1 | G2 | G3 | G4 | G5 | G6 | W |
+| --- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Guardians** | **7** | 1 | **3** | 3 | 1 | 3 | **2** |
+| **Rays** | 3 | **3** | 2 | **7** | **3** | **7** | **4** |
+| *Home* | *Rays* | *Rays* | *Guardians* | *Guardians* | *Guardians* | *Rays* |  |
 
 ### NL Championship Series: Brewers win 4–0
 
@@ -33,9 +31,19 @@ Next: Game 6, 2026-10-19, Guardians at Rays, Shawn Armstrong vs Freddy Peralta.
 | **Brewers** | **2** | **7** | **6** | **6** | **4** |
 | *Home* | *Brewers* | *Brewers* | *Dodgers* | *Dodgers* |  |
 
+### World Series: tied 0–0
+
+|  | G1 | G2 | G3 | G4 | G5 | G6 | G7 | W |
+| --- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Rays** | · | · | · | · | · | · | · | **0** |
+| **Brewers** | · | · | · | · | · | · | · | **0** |
+| *Home* | *Brewers* | *Brewers* | *Rays* | *Rays* | *Rays* | *Brewers* | *Brewers* |  |
+
+Next: Game 1, 2026-10-23, Rays at Brewers.
+
 ## Title odds
 
-Exact probabilities from every remaining path through the bracket, using the real home/away schedule. Since the LCS began, the Brewers moved from 36% to 67% and the Dodgers went from 32% to 0%.
+Exact probabilities from every remaining path through the bracket, using the real home/away schedule. Since the LCS began, the Brewers moved from 36% to 66% and the Dodgers went from 32% to 0%.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="figures/odds-dark.png">
@@ -44,16 +52,16 @@ Exact probabilities from every remaining path through the bracket, using the rea
 
 | Team | Title now | 90% interval | Pennant now | Title before LCS | Market |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Milwaukee Brewers | **67.1%** | 53%–78% | 100.0% | 36.4% | 60% |
-| Tampa Bay Rays | **28.1%** | 17%–43% | 81.6% | 21.3% | 33% |
-| Cleveland Guardians | **4.8%** | 2%–9% | 18.4% | 10.7% | 6% |
+| Milwaukee Brewers | **65.6%** | 50%–78% | 100.0% | 36.4% | 60% |
+| Tampa Bay Rays | **34.4%** | 22%–50% | 100.0% | 21.3% | 40% |
+| Cleveland Guardians | **0.0%** | 0%–0% | 0.0% | 10.7% | 0% |
 | Los Angeles Dodgers | **0.0%** | 0%–0% | 0.0% | 31.5% | 0% |
 
 | Possible World Series | Chance it happens | AL team wins | NL team wins | Home field |
 | --- | ---: | ---: | ---: | ---: |
-| Rays vs Brewers | 81.6% | 34.4% | 65.6% | Brewers (better record) |
-| Guardians vs Brewers | 18.4% | 26.2% | 73.8% | Brewers (better record) |
+| Rays vs Brewers | 100.0% | 34.4% | 65.6% | Brewers (better record) |
 | Guardians vs Dodgers | 0.0% | 28.0% | 72.0% | Dodgers (better record) |
+| Guardians vs Brewers | 0.0% | 26.2% | 73.8% | Brewers (better record) |
 | Rays vs Dodgers | 0.0% | 36.4% | 63.6% | Dodgers (better record) |
 
 ## The forecast record
@@ -71,6 +79,7 @@ Every forecast is saved before the games it predicts and never changed afterward
 | Oct 16 · v2 | live | 2026-10-16 20:10:20 | ALCS CLE 2–1 · NLCS MIL 4–0 | ✓ | 70.7% | 13.1% | 16.2% | 0.0% | [b221bad](https://github.com/dipgip/mlb-WS-forecast/commit/b221bad) |
 | Oct 18 · v2 | live | 2026-10-18 16:09:39 | ALCS 2–2 · NLCS MIL 4–0 | ✗ | 69.0% | 19.9% | 11.0% | 0.0% | [51c9dd4](https://github.com/dipgip/mlb-WS-forecast/commit/51c9dd4) |
 | Oct 19 · v2 | live | 2026-10-19 16:10:14 | ALCS TB 3–2 · NLCS MIL 4–0 | ✗ | 67.1% | 28.1% | 4.8% | 0.0% | [199cb62](https://github.com/dipgip/mlb-WS-forecast/commit/199cb62) |
+| Oct 20 · v2 | live | 2026-10-20 16:09:43 | ALCS TB 4–2 · NLCS MIL 4–0 · WS 0–0 | ✗ | 65.6% | 34.4% | 0.0% | 0.0% | [6cd9078](https://github.com/dipgip/mlb-WS-forecast/commit/6cd9078) |
 
 - **Oct 13 · v1 → Oct 13 · v2:** no new games; model v1 → v2.
 - **Oct 13 · v2 → Oct 14 · v2:** ALCS G2: Cleveland Guardians 1, Tampa Bay Rays 3.
@@ -79,6 +88,7 @@ Every forecast is saved before the games it predicts and never changed afterward
 - **Oct 15 · v2 → Oct 16 · v2:** no new games.
 - **Oct 16 · v2 → Oct 18 · v2:** ALCS G4: Tampa Bay Rays 7, Cleveland Guardians 3.
 - **Oct 18 · v2 → Oct 19 · v2:** ALCS G5: Tampa Bay Rays 3, Cleveland Guardians 1.
+- **Oct 19 · v2 → Oct 20 · v2:** ALCS G6: Cleveland Guardians 3, Tampa Bay Rays 7.
 
 **Game-by-game forecasts**
 
@@ -88,15 +98,16 @@ Every forecast is saved before the games it predicts and never changed afterward
 | ALCS G3 | Tampa Bay Rays @ Cleveland Guardians | 2026-10-15 17:00:00 | 2026-10-14 16:10:12 | Tampa Bay Rays | 51.6% | ✗ Cleveland Guardians (3–2) |
 | ALCS G4 | Tampa Bay Rays @ Cleveland Guardians | 2026-10-16 22:00:00 | 2026-10-15 20:44:00 | Tampa Bay Rays | 51.6% | ✓ Tampa Bay Rays (7–3) |
 | ALCS G5 | Tampa Bay Rays @ Cleveland Guardians | 2026-10-18 21:08:00 | 2026-10-18 16:09:40 | Tampa Bay Rays | 51.6% | ✓ Tampa Bay Rays (3–1) |
-| ALCS G6 | Cleveland Guardians @ Tampa Bay Rays | 2026-10-20 00:08:00 | 2026-10-19 16:10:15 | Tampa Bay Rays | 57.1% | not played yet |
+| ALCS G6 | Cleveland Guardians @ Tampa Bay Rays | 2026-10-20 00:08:00 | 2026-10-19 16:10:15 | Tampa Bay Rays | 57.1% | ✓ Tampa Bay Rays (7–3) |
 | NLCS G3 | Milwaukee Brewers @ Los Angeles Dodgers | 2026-10-15 00:00:00 | 2026-10-13 22:34:05 | Los Angeles Dodgers | 51.9% | ✗ Milwaukee Brewers (6–2) |
 | NLCS G4 | Milwaukee Brewers @ Los Angeles Dodgers | 2026-10-16 00:00:00 | 2026-10-15 18:32:44 | Los Angeles Dodgers | 51.9% | ✗ Milwaukee Brewers (6–4) |
+| World Series G1 | Tampa Bay Rays @ Milwaukee Brewers | 2026-10-24 00:00:00 | 2026-10-20 16:09:44 | Milwaukee Brewers | 59.6% | not played yet |
 
 ## How I got here
 
 The full log with every number is in [LOG.md](../LOG.md), and a partner review of the weak spots is in [REVIEW.md](../REVIEW.md). The core method was fixed before any 2026 odds were computed.
 
-1. **Pulled every game since 2015.** 28,095 regular-season and postseason results from the official MLB Stats API, plus the live bracket, rosters and announced starters.
+1. **Pulled every game since 2015.** 28,096 regular-season and postseason results from the official MLB Stats API, plus the live bracket, rosters and announced starters.
 2. **Rated every team on runs, not wins.** A Poisson model gives each team an offense and a defense rating, adjusted for opponents and pulled toward average. Home field is set from actual home win rates (53% between equal teams), because run totals understate it.
 3. **Tuned it on games it hadn't seen.** Fit through August, predict September, ten seasons over. Heavy shrinkage won, and weighting recent form didn't help.
 4. **Graded it on 11 real Octobers.** Every playoff game and series from 2015–2025, each predicted using only that year's regular season. Also tested whether adjusting for each game's starting pitchers helps; it doesn't.
@@ -138,7 +149,7 @@ Of 11 World Series since 2015, the model's favorite won 8. Counting only clear f
 
 ## Stress test: the Brewers lead under every setup
 
-Each row changes one judgment call. Across these the favorite's title odds range 61%–70%. That range measures sensitivity to choices; the wider interval above measures statistical noise. With every remaining game a coin flip, the current series lead alone still gives the favorite 50%.
+Each row changes one judgment call. Across these the favorite's title odds range 60%–68%. That range measures sensitivity to choices; the wider interval above measures statistical noise. With every remaining game a coin flip, the current series lead alone still gives the favorite 50%.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="figures/sensitivity-dark.png">
@@ -147,9 +158,9 @@ Each row changes one judgment call. Across these the favorite's title odds range
 
 ## Model vs the betting market
 
-Sportsbooks agree on the favorite: the market has the Brewers at 60% after removing the bookmaker margin, against the model's 67%. The biggest disagreement is the Rays: market 33%, model 28%.
+Sportsbooks agree on the favorite: the market has the Brewers at 60% after removing the bookmaker margin, against the model's 66%. The biggest disagreement is the Rays: market 40%, model 34%.
 
-One natural explanation is October deployment: the Rays' playoff rotation (Drew Rasmussen, Freddy Peralta, Nick Martinez, Griffin Jax) projects to a 3.87 FIP against 3.98 for the season, and an adjustment for that moves them to 28%. But I tested the closest checkable version, adjusting each past playoff game for its actual starting pitchers (387 games, 2015–2025), and it did not improve predictions: it beat the plain model in only 39% of bootstrap resamples. So the gap is unexplained. The rotation story is a hypothesis, not a finding.
+One natural explanation is October deployment: the Rays' playoff rotation (Drew Rasmussen, Freddy Peralta, Nick Martinez, Griffin Jax) projects to a 3.87 FIP against 3.98 for the season, and an adjustment for that moves them to 34%. But I tested the closest checkable version, adjusting each past playoff game for its actual starting pitchers (387 games, 2015–2025), and it did not improve predictions: it beat the plain model in only 39% of bootstrap resamples. So the gap is unexplained. The rotation story is a hypothesis, not a finding.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="figures/market-dark.png">
@@ -158,27 +169,26 @@ One natural explanation is October deployment: the Rays' playoff rotation (Drew 
 
 | Team | Model | Roster-adjusted (untested) | Market | Sportsbook prices |
 | --- | ---: | ---: | ---: | ---: |
-| Milwaukee Brewers | 67.1% | 67.6% | 60.3% | -165 |
-| Tampa Bay Rays | 28.1% | 27.7% | 33.3% | +180 |
-| Cleveland Guardians | 4.8% | 4.7% | 6.5% | +1200 |
+| Milwaukee Brewers | 65.6% | 66.1% | 60.1% | -160 |
+| Tampa Bay Rays | 34.4% | 33.9% | 39.9% | +140 |
+| Cleveland Guardians | 0.0% | 0.0% | 0.0% | out |
 | Los Angeles Dodgers | 0.0% | 0.0% | 0.0% | out |
 
-1 sportsbook sources captured Oct 19, 2026, margin removed with the power method.
+1 sportsbook sources captured Oct 20, 2026, margin removed with the power method.
 
 | October roster check (untested) | Starters used | Staff FIP: season → Oct | Lineup wOBA: season → Oct |
 | --- | --- | ---: | ---: |
 | Brewers | Jacob Misiorowski, Logan Henderson, Robert Gasser, Dustin May | 3.81 → 3.68 | 0.323 → 0.323 |
 | Rays | Drew Rasmussen, Freddy Peralta, Nick Martinez, Griffin Jax | 3.98 → 3.87 | 0.318 → 0.318 |
-| Guardians | Parker Messick, Gavin Williams, Shawn Armstrong, Daniel Espino | 3.93 → 3.89 | 0.311 → 0.313 |
 
 ## What the next game in each series does
 
-Title odds after each possible result. The largest single swing: if the Guardians win ALCS Game 6, the Rays fall from 28% to 20%.
+Title odds after each possible result. The largest single swing: if the Rays win WS Game 1, the Brewers fall from 66% to 48%.
 
 | If this happens | Brewers | Rays | Guardians | Dodgers |
 | --- | ---: | ---: | ---: | ---: |
-| Guardians win ALCS G6 | 69.1% (+2.0) | 19.7% (−8.4) | 11.2% (+6.4) | 0.0% (+0.0) |
-| Rays win ALCS G6 | 65.6% (−1.5) | 34.4% (+6.3) | 0.0% (−4.8) | 0.0% (+0.0) |
+| Brewers win WS G1 | 77.5% (+11.9) | 22.5% (−11.9) | 0.0% (+0.0) | 0.0% (+0.0) |
+| Rays win WS G1 | 47.9% (−17.6) | 52.1% (+17.6) | 0.0% (+0.0) | 0.0% (+0.0) |
 
 ## 2026 team ratings
 
@@ -203,11 +213,11 @@ Expected runs per game against a league-average opponent after shrinkage, and th
 ## What this model can't see
 
 - It rates teams on the full season. Injuries and October roster changes appear only in the roster-adjusted scenario, which is not backtested.
-- It ignores the specific pitching matchup in each game (for example Shawn Armstrong vs Freddy Peralta in ALCS Game 6). The backtest found that adding starters by season FIP doesn't help, so a better pitcher metric is open work.
+- It ignores the specific pitching matchup in each game. The backtest found that adding starters by season FIP doesn't help, so a better pitcher metric is open work.
 - Bullpen fatigue, travel and day-to-day lineup choices are not modeled.
 - The backtest covers 113 series: enough to show the probabilities aren't badly off, not enough to fine-tune them.
 - Market prices are a recorded snapshot from published articles, not a live feed, and they move by the hour.
 
 ---
 
-Data: MLB Stats API (statsapi.mlb.com), games through Oct 18, 2026. Market prices: [SI (DraftKings)](https://www.si.com/betting/2026-world-series-odds-rays-skyrocket-after-game-5-win-vs-guardians-brewers-remain-odds-on-favorites). Generated 2026-10-19 by `report/build_md.py`; rebuild everything with `./run_all.sh`.
+Data: MLB Stats API (statsapi.mlb.com), games through Oct 19, 2026. Market prices: [SI (DraftKings)](https://www.si.com/betting/rays-vs-brewers-opening-odds-for-2026-world-series-milwaukee-favored-to-win-first-title-in-franchise-history). Generated 2026-10-20 by `report/build_md.py`; rebuild everything with `./run_all.sh`.

@@ -29,9 +29,14 @@ class TestDashboard(unittest.TestCase):
         for s in at.select_slider:
             if s.key and s.key.startswith(("alcs-", "nlcs-")):
                 series.setdefault(s.key.split("-")[0], []).append(s)
-        live = next(v for v in series.values() if max(s.value for s in v) < 4)
-        key = min(live, key=lambda s: s.value).key
-        at.select_slider(key=key).set_value(4).run()
+        live = next((v for v in series.values() if max(s.value for s in v) < 4), None)
+        if live:
+            key = min(live, key=lambda s: s.value).key
+            at.select_slider(key=key).set_value(4).run()
+        else:
+            # both LCS decided: change a model setting instead
+            lam = next(s for s in at.select_slider if s.label.startswith("Shrinkage"))
+            lam.set_value(20).run()
         after = sim(at)
         self.assertNotEqual(before, after)
         self.assertAlmostEqual(sum(after.values()), 100.0, delta=0.5)

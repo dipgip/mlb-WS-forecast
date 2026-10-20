@@ -438,3 +438,30 @@ The Rays need one win in two home games. The model still prices Milwaukee above 
 **Note on the snapshot flag:** the title snapshot `2026-10-19_v2_live_ALCS-TB3-CLE2_NLCS-MIL4-LAD0` is again flagged `pregame_verified=False`. It was written at 16:10 UTC, eight hours before Game 6. This looks like the same issue as Oct 18: `snapshot.next_games()` still counts the stale "Postponed" Game 4 row. The record is append-only, so the flag stays as written. I didn't change the code in this automated run.
 
 Tag `forecast-2026-10-19-ALCS3-2-NLCS4-0` was pushed before ALCS Game 6.
+
+---
+
+## Update — 2026-10-20 (Rays win the pennant; World Series is Brewers vs Rays)
+
+**Result:** the Rays beat the Guardians 7–3 in ALCS Game 6 at Tropicana Field and won the series 4–2. The model had the Rays at 57.1% before first pitch, so this forecast hit. **Graded record: 4 of 7 correct.** Log loss is 0.662 and Brier is 0.234, against 0.693 and 0.250 for a coin flip.
+
+**State:** ALCS final, Rays won 4–2 · NLCS final, Brewers won 4–0 · World Series Brewers 0, Rays 0. Milwaukee has home field (better record). Game 1 is in Milwaukee on Oct 23 (2026-10-24 00:00 UTC).
+
+| Team | Title odds | 90% interval | Change | Market (margin removed) |
+|---|---|---|---|---|
+| Milwaukee Brewers | 65.6% | 50–78% | −1.5 | 60.1% (−160) |
+| Tampa Bay Rays | 34.4% | 22–50% | +6.3 | 39.9% (+140) |
+| Cleveland Guardians | 0.0% | — | −4.8 | out |
+| Los Angeles Dodgers | 0.0% | — | 0.0 | out |
+
+The model rates the Brewers ahead (expected winning pct .612 for Milwaukee against .543 for Tampa Bay) and gives Milwaukee 5.5 points more than the market does.
+
+**Newly forecast:** World Series Game 1 (Rays @ Brewers, first pitch 2026-10-24 00:00 UTC): Brewers 59.6%, Rays 40.4%. This forecast is `pregame_verified=True`. A Brewers win would put the title odds at MIL 77.5 / TB 22.5, and a Rays win at TB 52.1 / MIL 47.9.
+
+**Market:** SI (DraftKings) opening World Series prices, published today, were added to `data/market_odds.csv`.
+
+**Note on the snapshot flag:** the title snapshot `2026-10-20_v2_live_ALCS-TB4-CLE2_NLCS-MIL4-LAD0_WS-MIL0-TB0` is again flagged `pregame_verified=False`, even though it was written at 16:09 UTC, more than three days before Game 1. It's the same stale "Postponed" ALCS Game 4 row in `snapshot.next_games()`. The record is append-only, so the flag stays as written.
+
+**Test fix this run (no model change):** `tests/test_dashboard.py::test_simulator_recomputes` moved a slider in an LCS still in progress. Both LCS are now over, so it failed with `StopIteration`. When no LCS is live, it now changes the λ setting instead. The dashboard's what-if simulator still has only ALCS and NLCS inputs and no World Series score, so it can't show World Series what-ifs.
+
+Tag `forecast-2026-10-20-ALCS4-2-NLCS4-0-WS0-0` was pushed before World Series Game 1.
