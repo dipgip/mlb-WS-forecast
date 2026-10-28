@@ -465,3 +465,35 @@ The model rates the Brewers ahead (expected winning pct .612 for Milwaukee again
 **Test fix this run (no model change):** `tests/test_dashboard.py::test_simulator_recomputes` moved a slider in an LCS still in progress. Both LCS are now over, so it failed with `StopIteration`. When no LCS is live, it now changes the λ setting instead. The dashboard's what-if simulator still has only ALCS and NLCS inputs and no World Series score, so it can't show World Series what-ifs.
 
 Tag `forecast-2026-10-20-ALCS4-2-NLCS4-0-WS0-0` was pushed before World Series Game 1.
+
+---
+
+## Update — 2026-10-28 (Brewers lead the World Series 3–1)
+
+**Results since the last entry:**
+
+| Game | Site | Result |
+|---|---|---|
+| WS Game 1 | Milwaukee | Brewers 3, Rays 2 |
+| WS Game 2 | Milwaukee | Brewers 5, Rays 4 |
+| WS Game 3 | Tampa Bay | Brewers 10, Rays 1 |
+| WS Game 4 | Tampa Bay | Rays 4, Brewers 3 |
+
+**Graded:** Game 1 was the only one of these forecast before first pitch. The model had the Brewers at 59.6%, so it hit. **Graded record: 5 of 8 correct.** Log loss is 0.644 and Brier is 0.226, against 0.693 and 0.250 for a coin flip.
+
+**Gap in the record:** no refresh ran between Oct 20 and today, so Games 2, 3 and 4 have no pregame forecasts in `forecasts/games/`. They can't be graded, and none were added after the fact.
+
+**State:** World Series Brewers 3, Rays 1. Game 5 is at Tropicana Field tonight (2026-10-29 00:00 UTC). If needed, Games 6 and 7 are in Milwaukee on Oct 30 and Oct 31.
+
+| Team | Title odds | 90% interval | Change | Market (margin removed) |
+|---|---|---|---|---|
+| Milwaukee Brewers | 92.5% | 88–96% | +26.9 | no new price |
+| Tampa Bay Rays | 7.5% | 5–12% | −26.9 | no new price |
+
+**Newly forecast:** World Series Game 5 (Brewers @ Rays, first pitch 2026-10-29 00:00 UTC): Brewers 54.1%, Rays 45.9%. This forecast is `pregame_verified=True`. A Brewers win ends the series. A Rays win sends it back to Milwaukee and puts the title odds at MIL 83.7 / TB 16.3.
+
+**Market:** I found no futures prices published today that reflect the 3–1 state. The only in-series price was SI's after Game 2. Nothing was added to `data/market_odds.csv`, and the market comparison still uses the Oct 20 opening prices.
+
+**Note on the snapshot flag:** the title snapshot `2026-10-28_v2_live_ALCS-TB4-CLE2_NLCS-MIL4-LAD0_WS-MIL3-TB1` is again flagged `pregame_verified=False`, even though it was written at 17:08 UTC, about seven hours before Game 5. This looks like the same stale "Postponed" ALCS Game 4 row in `snapshot.next_games()`. The record is append-only, so the flag stays as written.
+
+Tag `forecast-2026-10-28-ALCS4-2-NLCS4-0-WS3-1` was pushed before World Series Game 5.
