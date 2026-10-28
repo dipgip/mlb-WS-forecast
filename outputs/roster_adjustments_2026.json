@@ -2,79 +2,79 @@
   "league": {
     "FIP": 4.171202191289008,
     "wOBA": 0.31304294471805716,
-    "roster_date": "2026-10-20"
+    "roster_date": "2026-10-28"
   },
   "Milwaukee Brewers": {
     "pitching": {
       "season_staff_FIP": 3.81372857423836,
-      "october_staff_FIP": 3.67881409749278,
-      "delta_runs_allowed_pg": -0.1349144767455801,
+      "october_staff_FIP": 3.5989672727132667,
+      "delta_runs_allowed_pg": -0.21476130152509354,
       "staff": [
         {
           "name": "Jacob Misiorowski",
           "role": "SP",
-          "share": 0.157,
+          "share": 0.183,
           "FIP_reg": 2.67
         },
         {
           "name": "Logan Henderson",
           "role": "SP",
-          "share": 0.157,
+          "share": 0.138,
           "FIP_reg": 3.64
         },
         {
           "name": "Robert Gasser",
           "role": "SP",
-          "share": 0.157,
+          "share": 0.138,
           "FIP_reg": 4.21
         },
         {
           "name": "Dustin May",
           "role": "SP",
-          "share": 0.079,
+          "share": 0.092,
           "FIP_reg": 3.78
         },
         {
           "name": "Shane Drohan",
           "role": "RP",
-          "share": 0.089,
+          "share": 0.096,
           "FIP_reg": 3.87
         },
         {
           "name": "Kyle Harrison",
           "role": "RP",
-          "share": 0.082,
+          "share": 0.089,
           "FIP_reg": 4.07
-        },
-        {
-          "name": "Chad Patrick",
-          "role": "RP",
-          "share": 0.075,
-          "FIP_reg": 4.16
         },
         {
           "name": "Aaron Ashby",
           "role": "RP",
-          "share": 0.064,
+          "share": 0.069,
           "FIP_reg": 3.53
         },
         {
           "name": "Antonio Senzatela",
           "role": "RP",
-          "share": 0.052,
+          "share": 0.056,
           "FIP_reg": 3.89
         },
         {
           "name": "Trevor Megill",
           "role": "RP",
-          "share": 0.044,
+          "share": 0.047,
           "FIP_reg": 2.99
         },
         {
           "name": "DL Hall",
           "role": "RP",
-          "share": 0.044,
+          "share": 0.047,
           "FIP_reg": 4.02
+        },
+        {
+          "name": "Abner Uribe",
+          "role": "RP",
+          "share": 0.046,
+          "FIP_reg": 3.43
         }
       ]
     },
@@ -167,31 +167,31 @@
   "Tampa Bay Rays": {
     "pitching": {
       "season_staff_FIP": 3.978355777266039,
-      "october_staff_FIP": 3.872640493882704,
-      "delta_runs_allowed_pg": -0.10571528338333502,
+      "october_staff_FIP": 3.8919974758324587,
+      "delta_runs_allowed_pg": -0.08635830143358048,
       "staff": [
         {
           "name": "Drew Rasmussen",
           "role": "SP",
-          "share": 0.165,
+          "share": 0.157,
           "FIP_reg": 3.16
         },
         {
           "name": "Freddy Peralta",
           "role": "SP",
-          "share": 0.165,
+          "share": 0.157,
           "FIP_reg": 4.25
         },
         {
           "name": "Nick Martinez",
           "role": "SP",
-          "share": 0.165,
+          "share": 0.157,
           "FIP_reg": 4.01
         },
         {
           "name": "Griffin Jax",
           "role": "SP",
-          "share": 0.055,
+          "share": 0.079,
           "FIP_reg": 3.9
         },
         {
@@ -215,7 +215,7 @@
         {
           "name": "Tyler Wells",
           "role": "RP",
-          "share": 0.063,
+          "share": 0.062,
           "FIP_reg": 3.73
         },
         {
@@ -231,10 +231,10 @@
           "FIP_reg": 3.91
         },
         {
-          "name": "Cam Booser",
+          "name": "Garrett Cleavinger",
           "role": "RP",
           "share": 0.036,
-          "FIP_reg": 3.66
+          "FIP_reg": 4.15
         }
       ]
     },

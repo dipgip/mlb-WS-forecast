@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-10-19",
+  "as_of": "2026-10-27",
   "series_state": {
     "ALCS": {
       "Cleveland Guardians": 2,
@@ -10,8 +10,8 @@
       "Milwaukee Brewers": 4
     },
     "WS": {
-      "Milwaukee Brewers": 0,
-      "Tampa Bay Rays": 0
+      "Milwaukee Brewers": 3,
+      "Tampa Bay Rays": 1
     }
   },
   "odds_now": {
@@ -21,7 +21,7 @@
     },
     "Tampa Bay Rays": {
       "pennant": 1.0,
-      "ws": 0.34433705792231717
+      "ws": 0.07480287182559009
     },
     "Los Angeles Dodgers": {
       "pennant": 0.0,
@@ -29,7 +29,7 @@
     },
     "Milwaukee Brewers": {
       "pennant": 1.0,
-      "ws": 0.6556629420776828
+      "ws": 0.9251971281744099
     }
   },
   "odds_before_lcs": {
@@ -65,7 +65,7 @@
     },
     "Tampa Bay Rays vs Milwaukee Brewers": {
       "p_matchup": 1.0,
-      "p_al_wins": 0.34433705792231717
+      "p_al_wins": 0.07480287182559009
     }
   },
   "ws_home_field": {
