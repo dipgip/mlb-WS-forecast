@@ -497,3 +497,76 @@ Tag `forecast-2026-10-20-ALCS4-2-NLCS4-0-WS0-0` was pushed before World Series G
 **Note on the snapshot flag:** the title snapshot `2026-10-28_v2_live_ALCS-TB4-CLE2_NLCS-MIL4-LAD0_WS-MIL3-TB1` is again flagged `pregame_verified=False`, even though it was written at 17:08 UTC, about seven hours before Game 5. This looks like the same stale "Postponed" ALCS Game 4 row in `snapshot.next_games()`. The record is append-only, so the flag stays as written.
 
 Tag `forecast-2026-10-28-ALCS4-2-NLCS4-0-WS3-1` was pushed before World Series Game 5.
+
+Tag `forecast-2026-10-29-ALCS4-2-NLCS4-0-WS4-1` holds the final state.
+
+---
+
+## Update — 2026-10-29 (Brewers win the World Series 4–1)
+
+**Result:** the Brewers beat the Rays 4–1 in World Series Game 5 at Tropicana Field and won the series 4–1. Jacob Misiorowski started for Milwaukee and Drew Rasmussen for Tampa Bay. The model had the Brewers at 54.1% before first pitch, so this forecast hit. **Graded record: 6 of 9 correct.** Log loss is 0.641 and Brier is 0.224, against 0.693 and 0.250 for a coin flip.
+
+**State:** World Series final, Brewers won 4–1. No games remain.
+
+| Team | Title odds | 90% interval | Change | Market |
+|---|---|---|---|---|
+| Milwaukee Brewers | 100% | — | +7.5 | champion |
+| Tampa Bay Rays | 0% | — | −7.5 | out |
+
+**Newly forecast:** none. No games are left to play.
+
+**Market:** none added, because the series is decided.
+
+**Report fixes this run (no model change):** the season ending exposed three edge cases in the report code, and I fixed them so the reports build:
+- `src/record.py::score()` raised `KeyError` because older snapshots list eliminated teams that have no market price. Those teams now count as 0 in the market Brier.
+- `report/build.py` crashed reading the empty `outputs/whatif_next_game.csv`. With no games left, the what-if section now says the series is over.
+- `report/build.py` cited the Rays' October rotation, but `fetch_rosters.py` now returns only teams still alive (just the Brewers). The market note drops the rotation detail when the roster is missing.
+
+The full suite passes (22 tests).
+
+---
+
+## Grade — 2026 World Series
+
+**Champion: Milwaukee Brewers**, 4–1 over the Tampa Bay Rays. It's the franchise's first title. The model had the Brewers as title favorite in every live snapshot.
+
+**Title forecasts** (multi-class Brier, lower is better; equal odds splits the four LCS teams evenly):
+
+| Snapshot | State | Model P(MIL) | Model Brier | Market Brier | Equal-odds Brier |
+|---|---|---|---|---|---|
+| Oct 13 · v1 | ALCS CLE 1–0 · NLCS MIL 2–0 | 57.2% | 0.245 | — | 0.750 |
+| Oct 13 · v2 | ALCS CLE 1–0 · NLCS MIL 2–0 | 57.4% | 0.242 | 0.383 | 0.750 |
+| Oct 14 · v2 | ALCS 1–1 · NLCS MIL 2–0 | 56.5% | 0.257 | 0.388 | 0.750 |
+| Oct 15 · v2 | ALCS 1–1 · NLCS MIL 3–0 | 65.1% | 0.175 | 0.388 | 0.750 |
+| Oct 15 · v2 | ALCS CLE 2–1 · NLCS MIL 3–0 | 66.6% | 0.157 | 0.388 | 0.750 |
+| Oct 16 · v2 | ALCS CLE 2–1 · NLCS MIL 4–0 | 70.7% | 0.130 | 0.220 | 0.750 |
+| Oct 18 · v2 | ALCS 2–2 · NLCS MIL 4–0 | 69.0% | 0.148 | 0.220 | 0.750 |
+| Oct 19 · v2 | ALCS TB 3–2 · NLCS MIL 4–0 | 67.1% | 0.190 | 0.273 | 0.750 |
+| Oct 20 · v2 | WS 0–0 | 65.6% | 0.237 | 0.319 | 0.750 |
+| Oct 28 · v2 | WS MIL 3–1 | 92.5% | 0.011 | 0.319 | 0.750 |
+| Oct 29 · v2 | WS MIL 4–1 (final) | 100% | 0.000 | 0.319 | 0.750 |
+
+The model beat the market's Brier score in every snapshot that had a market price, and beat equal odds in all of them. Some caveats:
+- The market column reuses the latest captured price. The Oct 28 and Oct 29 rows use the Oct 20 opening price, so the model's edge in those rows is inflated.
+- The Oct 29 snapshot was written after the series ended, so its perfect score means nothing.
+- Equal odds always spreads across all four LCS teams, which makes it a weak baseline after the LCS.
+- Several snapshots are flagged `pregame_verified=False` because of the stale ALCS Game 4 row described in earlier entries.
+- Overall this is one champion, so it's one outcome. It says little about the model's skill.
+
+**Per-game record** (every forecast in `forecasts/games/`, all made before first pitch):
+
+| Game | Matchup | Model favorite | Chance | Winner | Hit |
+|---|---|---|---|---|---|
+| ALCS G2 | CLE @ TB | Rays | 57.1% | Rays 3–1 | ✓ |
+| ALCS G3 | TB @ CLE | Rays | 51.6% | Guardians 3–2 | ✗ |
+| ALCS G4 | TB @ CLE | Rays | 51.6% | Rays 7–3 | ✓ |
+| ALCS G5 | TB @ CLE | Rays | 51.6% | Rays 3–1 | ✓ |
+| ALCS G6 | CLE @ TB | Rays | 57.1% | Rays 7–3 | ✓ |
+| NLCS G3 | MIL @ LAD | Dodgers | 51.9% | Brewers 6–2 | ✗ |
+| NLCS G4 | MIL @ LAD | Dodgers | 51.9% | Brewers 6–4 | ✗ |
+| WS G1 | TB @ MIL | Brewers | 59.6% | Brewers 3–2 | ✓ |
+| WS G5 | MIL @ TB | Brewers | 54.1% | Brewers 4–1 | ✓ |
+
+**6 of 9 correct.** Log loss is 0.641 and Brier is 0.224, against 0.693 and 0.250 for a coin flip. That is slightly better than a coin flip, which is about what a 52–60% favorite should produce, and nine games can't tell the two apart.
+
+Gaps: ALCS G1, NLCS G1–G2, and WS G2–G4 have no pregame forecasts. The project started mid-LCS, and no refresh ran between Oct 20 and Oct 28. None were added after the fact.

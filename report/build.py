@@ -61,7 +61,10 @@ def nice_date(s):
 odds = json.loads((OUT / "odds_2026.json").read_text())
 unc = pd.read_csv(OUT / "uncertainty.csv").set_index("team")
 sens = pd.read_csv(OUT / "sensitivity.csv")
-whatif = pd.read_csv(OUT / "whatif_next_game.csv")
+try:
+    whatif = pd.read_csv(OUT / "whatif_next_game.csv")
+except pd.errors.EmptyDataError:  # no games left to play
+    whatif = pd.DataFrame()
 ratings = pd.read_csv(OUT / "ratings_2026.csv")
 roster = json.loads((OUT / "roster_adjustments_2026.json").read_text())
 market = json.loads((OUT / "market_2026.json").read_text())
@@ -186,10 +189,15 @@ nexts = [x for x in (next_label("ALCS", al_next), next_label("NLCS", nl_next)) i
 mkt_note = (f"{len(market['sources'])} sportsbook sources captured {nice_date(market['captured'])}, "
             "margin removed with the power method")
 
-biggest = whatif.copy()
-biggest["drop"] = [min(r[t] - now[t]["ws"] for t in four) for _, r in biggest.iterrows()]
-bw = biggest.sort_values("drop").iloc[0]
-bw_team = min(four, key=lambda t: bw[t] - now[t]["ws"])
+if len(whatif):
+    biggest = whatif.copy()
+    biggest["drop"] = [min(r[t] - now[t]["ws"] for t in four) for _, r in biggest.iterrows()]
+    bw = biggest.sort_values("drop").iloc[0]
+    bw_team = min(four, key=lambda t: bw[t] - now[t]["ws"])
+    watch_text = (f"Title odds after each possible result. The largest single swing: if the {short(bw.if_wins)} win "
+                  f"{bw.series} Game {int(bw.game)}, the {short(bw_team)} fall from {pc(now[bw_team]['ws'])} to {pc(bw[bw_team])}.")
+else:
+    watch_text = "No games are left to play: the World Series is over."
 
 facts = {
     "asof": f"Forecast as of {nice_date(odds['as_of'])} games" + (f" · next: {', '.join(nexts)}" if nexts else ""),
@@ -217,17 +225,19 @@ facts = {
         f"against the model's {pc(now[fav]['ws'])}. The biggest disagreement is the {short(gap_team)}: market {pc(mk[gap_team])}, "
         f"model {pc(now[gap_team]['ws'])}."),
     "market_why": (
-        f"One natural explanation is October deployment: the {short(gap_team)}' playoff rotation "
-        f"({', '.join(roster[gap_team]['pitching']['staff'][i]['name'] for i in range(4))}) projects to a "
-        f"{roster[gap_team]['pitching']['october_staff_FIP']:.2f} FIP against {roster[gap_team]['pitching']['season_staff_FIP']:.2f} "
-        f"for the season, and an adjustment for that moves them to {pc(roster_full[gap_team])}. "
-        f"But I tested the closest checkable version, adjusting each past playoff game for its actual starting "
+        (f"One natural explanation is October deployment: the {short(gap_team)}' playoff rotation "
+         f"({', '.join(roster[gap_team]['pitching']['staff'][i]['name'] for i in range(4))}) projects to a "
+         f"{roster[gap_team]['pitching']['october_staff_FIP']:.2f} FIP against {roster[gap_team]['pitching']['season_staff_FIP']:.2f} "
+         f"for the season, and an adjustment for that moves them to {pc(roster_full[gap_team])}. "
+         if gap_team in roster else
+         # rosters are fetched only for teams still alive
+         "One natural explanation is October deployment: playoff rotations differ from full-season staffs. ")
+        + f"But I tested the closest checkable version, adjusting each past playoff game for its actual starting "
         f"pitchers ({spb['n_games']} games, 2015–2025), and it did not improve predictions: it beat the plain model in only "
         f"{pc(sp_better)} of bootstrap resamples. So the gap is unexplained. The rotation story is a hypothesis, not a finding."),
     "mkt_note": mkt_note,
     "watch_head": "What the next game in each series does",
-    "watch_text": (f"Title odds after each possible result. The largest single swing: if the {short(bw.if_wins)} win "
-                   f"{bw.series} Game {int(bw.game)}, the {short(bw_team)} fall from {pc(now[bw_team]['ws'])} to {pc(bw[bw_team])}."),
+    "watch_text": watch_text,
     "ratings_text": (f"Expected runs per game against a league-average opponent after shrinkage, and the implied win rate. "
                      f"The {short(weakest)} rank {ordinal(rank[weakest])}, the lowest of the four teams left."),
     "next_matchup_caveat": (

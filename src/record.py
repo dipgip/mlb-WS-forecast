@@ -125,7 +125,8 @@ def score():
                "Model log score": float(-np.log(max(s["odds"].get(champ, {}).get("title", 0), 1e-6)))}
         mk = (s.get("market") or {}).get("fair_power")
         if mk:
-            q = np.array([mk[t] for t in teams])
+            # prices exist only for teams alive at capture; eliminated teams are 0
+            q = np.array([mk.get(t, 0.0) for t in teams])
             row["Market Brier"] = float(((q - o) ** 2).sum())
         u = np.full(len(teams), 1 / len(teams))
         row["Equal-odds Brier"] = float(((u - o) ** 2).sum())
