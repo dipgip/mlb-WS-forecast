@@ -28675,6 +28675,4 @@ season,game_pk,date,game_time_utc,game_type,series_desc,series_game,status,coded
 2026,849802,2026-10-24,2026-10-25T00:00:00Z,W,World Series,2,Final,F,158,Milwaukee Brewers,139,Tampa Bay Rays,5.0,4.0,Logan Henderson,Drew Rasmussen,American Family Field
 2026,849804,2026-10-26,2026-10-27T00:00:00Z,W,World Series,3,Final,F,139,Tampa Bay Rays,158,Milwaukee Brewers,1.0,10.0,Freddy Peralta,Robert Gasser,Tropicana Field
 2026,849803,2026-10-27,2026-10-28T00:00:00Z,W,World Series,4,Final,F,139,Tampa Bay Rays,158,Milwaukee Brewers,4.0,3.0,Griffin Jax,Dustin May,Tropicana Field
-2026,849799,2026-10-28,2026-10-29T00:00:00Z,W,World Series,5,Scheduled,S,139,Tampa Bay Rays,158,Milwaukee Brewers,,,,Jacob Misiorowski,Tropicana Field
-2026,849801,2026-10-30,2026-10-31T00:00:00Z,W,World Series,6,Scheduled,S,158,Milwaukee Brewers,139,Tampa Bay Rays,,,,,American Family Field
-2026,849800,2026-10-31,2026-11-01T00:00:00Z,W,World Series,7,Scheduled,S,158,Milwaukee Brewers,139,Tampa Bay Rays,,,,,American Family Field
+2026,849799,2026-10-28,2026-10-29T00:00:00Z,W,World Series,5,Final,F,139,Tampa Bay Rays,158,Milwaukee Brewers,1.0,4.0,Drew Rasmussen,Jacob Misiorowski,Tropicana Field
