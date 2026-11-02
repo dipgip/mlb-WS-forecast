@@ -251,17 +251,18 @@ def build_markdown():
     L = []
     L += ["# 2026 World Series Forecast", "",
           f"*{F['asof']}. Static version of the report. The [live dashboard](https://mlb-ws-forecast-w3huajspduv8ae2mctsydr.streamlit.app/) has the same numbers plus a what-if simulator.*", "",
+          *([f"**{F['result_line']}**", ""] if F.get("result_line") else []),
           f"## The pick: {F['fav']}, {F['fav_pct']}%", "",
           table(["", ""], [["Model", f"**{F['fav_pct']}%**"],
                            ["90% interval (1,000 resampled seasons)", F["fav_ci"]],
                            ["Betting market, margin removed", F["fav_mkt"]],
-                           ["Most likely World Series", f"{F['top_mu']} ({F['top_mu_pct']})"]],
+                           [F["mu_metric_label"], F["top_mu"] + ("" if F.get("result_line") else f" ({F['top_mu_pct']})")]],
                 ["---", "---:"]), "",
           F["lede"] + " October baseball is mostly noise, and this report shows how much.", "",
-          "## Where the series stand", ""]
+          "## How the series went" if F.get("result_line") else "## Where the series stand", ""]
     for desc, games in DATA["series"].items():
         L += [linescore(desc, games), ""]
-    L += ["## Title odds", "",
+    L += [f"## {F['odds_head']}", "",
           "Exact probabilities from every remaining path through the bracket, using the real home/away schedule. "
           + F["swing"], "",
           picture("odds", "Chance to win the 2026 World Series by team, with 90% intervals"), "",
@@ -284,6 +285,10 @@ def build_markdown():
                  for s in DATA["record"]["snapshots"]],
                 ["---", "---", "---", "---", ":---:", *["---:"] * len(order), "---"]), "",
           *[f"- **{c['from']} → {c['to']}:** {c['what']}." for c in DATA["record"]["changes"]], "",
+          *([F["grade_text"], ""] if F.get("grade_text") else []),
+          *([table(list(DATA["record"]["score"]["rows"][0]),
+                   [[f"{v:.3f}" if isinstance(v, float) else v for v in r.values()] for r in DATA["record"]["score"]["rows"]]), ""]
+            if DATA["record"].get("score") else []),
           "**Game-by-game forecasts**", "",
           table(["Game", "Matchup", "First pitch (UTC)", "Forecast made (UTC)", "Model favorite", "Chance", "Result"],
                 [[g["game"], g["matchup"], g["first_pitch"].replace("T", " ").rstrip("Z"), g["made"].replace("T", " ").rstrip("Z"),

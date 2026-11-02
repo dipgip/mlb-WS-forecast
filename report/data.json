@@ -1,66 +1,67 @@
 {
- "as_of": "2026-10-28",
+ "as_of": "2026-10-12",
  "facts": {
-  "asof": "Forecast as of Oct 28, 2026 games",
+  "asof": "Final \u00b7 World Series decided Oct 28, 2026 \u00b7 the call below was made Oct 13, 2026",
   "fav": "Milwaukee Brewers",
   "fav_short": "Brewers",
-  "fav_pct": 100,
-  "fav_ci": "100%\u2013100%",
-  "fav_mkt": "60%",
+  "fav_pct": 57,
+  "fav_ci": "43%\u201370%",
+  "fav_mkt": "47%",
   "top_mu": "TB vs MIL",
-  "top_mu_pct": "100%",
-  "lede": "The Brewers finished 103\u201359, the best record in baseball. They lead the Dodgers 4\u20130 in the NLCS and would host Games 1, 2, 6 and 7 of any World Series. Every version of the model makes them the favorite. That still leaves a 0% chance the trophy goes somewhere else.",
-  "swing": "Since the LCS began, the Brewers moved from 36% to 100% and the Dodgers went from 32% to 0%.",
+  "top_mu_pct": "47%",
+  "lede": "On Oct 13 (ALCS CLE 1\u20130 \u00b7 NLCS MIL 2\u20130) the model made the Brewers the favorite at 57% (90% interval 43%\u201370%). The betting market had them at 47%. They won it all, beating the Rays 4\u20131. One correct pick from a 57% forecast is what a good model should deliver more often than not, but one outcome can't prove skill. The game-by-game record (6 of 9 favorites won) and the forecast trail below are the fairer test.",
+  "swing": "These are the odds at the time of the call. Since the LCS began, the Brewers moved from 36% to 57% and the Dodgers went from 32% to 12%.",
   "n_games_total": "28,101",
   "bt_series": "When the model's series favorite was predicted to win 59% of the time, favorites actually won 58% across 113 series. With a sample that small, the 95% interval on that win rate is 49%\u201367%: consistent with good calibration, but not proof of it.",
   "ws_clear": "Of 11 World Series since 2015, the model's favorite won 8. Counting only clear favorites (55% or more), it's 5 of 7; the rest were near coin flips.",
   "sens_head": "The Brewers lead under every setup",
-  "sens_range": "100%\u2013100%",
-  "coin_pct": "100%",
-  "market_text": "Sportsbooks agree on the favorite: the market has the Brewers at 60% after removing the bookmaker margin, against the model's 100%. The biggest disagreement is the Rays: market 40%, model 0%.",
-  "market_why": "One natural explanation is October deployment: playoff rotations differ from full-season staffs. But I tested the closest checkable version, adjusting each past playoff game for its actual starting pitchers (387 games, 2015\u20132025), and it did not improve predictions: it beat the plain model in only 39% of bootstrap resamples. So the gap is unexplained. The rotation story is a hypothesis, not a finding.",
-  "mkt_note": "1 sportsbook sources captured Oct 20, 2026, margin removed with the power method",
-  "watch_head": "What the next game in each series does",
-  "watch_text": "No games are left to play: the World Series is over.",
-  "ratings_text": "Expected runs per game against a league-average opponent after shrinkage, and the implied win rate. The Guardians rank 16th, the lowest of the four teams left.",
+  "sens_range": "51%\u201360%",
+  "coin_pct": "41%",
+  "market_text": "At the time of the call, sportsbooks agreed on the favorite: the market had the Brewers at 47% after removing the bookmaker margin, against the model's 57%. The biggest disagreement was the Dodgers: market 20%, model 12%.",
+  "market_why": "One natural explanation is October deployment: the Dodgers' playoff rotation (Tarik Skubal, Blake Snell, Yoshinobu Yamamoto, Tyler Glasnow) projects to a 3.50 FIP against 3.85 for the season, and an adjustment for that moves them to 17%. But I tested the closest checkable version, adjusting each past playoff game for its actual starting pitchers (387 games, 2015\u20132025), and it did not improve predictions: it beat the plain model in only 39% of bootstrap resamples. So the gap is unexplained. The rotation story is a hypothesis, not a finding.",
+  "mkt_note": "2 sportsbook sources captured Oct 13, 2026, margin removed with the power method",
+  "watch_head": "What the next game could do (as of the call)",
+  "watch_text": "Title odds after each possible result, as computed on Oct 13. The largest single swing: if the Brewers win NLCS Game 3, the Dodgers fall from 12% to 4%. That's what happened: the Brewers won it 6\u20132.",
+  "ratings_text": "Expected runs per game against a league-average opponent after shrinkage, and the implied win rate. The Guardians rank 16th, the lowest of the four LCS teams.",
   "next_matchup_caveat": "It ignores the specific pitching matchup in each game. The backtest found that adding starters by season FIP doesn't help, so a better pitcher metric is open work.",
   "data_through": "Oct 28, 2026",
   "calib_note": "Dots show how often the model's series favorite actually won, grouped by how confident the model was. Each bin holds only 19\u201338 series, so expect scatter around the line.",
   "sample_caveat": "The backtest covers 113 series: enough to show the probabilities aren't badly off, not enough to fine-tune them.",
-  "home_rate": "53%"
+  "home_rate": "53%",
+  "result_line": "\u2713 Called it: the Brewers won the World Series 4\u20131 over the Rays, Oct 28, 2026.",
+  "odds_head": "Title odds at the time of the call (Oct 13)",
+  "mu_label": "the actual World Series; the model gave this matchup 35% on Oct 13",
+  "mu_metric_label": "Actual World Series",
+  "grade_text": "The model had the Brewers as the title favorite in every forecast on record. Across the 10 title forecasts made while the outcome was still open, its Brier score beat the market's in 9 of the 9 that had a market price to compare. Market prices were captured only on some days, so later rows reuse the last captured price, which flatters the model. Game by game, the model's favorite won 6 of 9 (log loss 0.641 vs 0.693 for a coin flip), slightly better than chance, about what 52\u201360% favorites should produce."
  },
  "odds": {
-  "as_of": "2026-10-28",
+  "as_of": "2026-10-12",
   "series_state": {
    "ALCS": {
-    "Cleveland Guardians": 2,
-    "Tampa Bay Rays": 4
+    "Cleveland Guardians": 1,
+    "Tampa Bay Rays": 0
    },
    "NLCS": {
     "Los Angeles Dodgers": 0,
-    "Milwaukee Brewers": 4
-   },
-   "WS": {
-    "Milwaukee Brewers": 4,
-    "Tampa Bay Rays": 1
+    "Milwaukee Brewers": 2
    }
   },
   "odds_now": {
    "Cleveland Guardians": {
-    "pennant": 0.0,
-    "ws": 0.0
+    "pennant": 0.5716193543896124,
+    "ws": 0.15168731228543794
    },
    "Tampa Bay Rays": {
-    "pennant": 1.0,
-    "ws": 0.0
+    "pennant": 0.4283806456103876,
+    "ws": 0.14904463155534925
    },
    "Los Angeles Dodgers": {
-    "pennant": 0.0,
-    "ws": 0.0
+    "pennant": 0.1827097842040495,
+    "ws": 0.12498053430822456
    },
    "Milwaukee Brewers": {
-    "pennant": 1.0,
-    "ws": 1.0
+    "pennant": 0.8172902157959505,
+    "ws": 0.5742875218509883
    }
   },
   "odds_before_lcs": {
@@ -83,20 +84,20 @@
   },
   "ws_matchups": {
    "Cleveland Guardians vs Los Angeles Dodgers": {
-    "p_matchup": 0.0,
+    "p_matchup": 0.10444044888738419,
     "p_al_wins": 0.27997693598457585
    },
    "Cleveland Guardians vs Milwaukee Brewers": {
-    "p_matchup": 0.0,
+    "p_matchup": 0.46717890550222824,
     "p_al_wins": 0.2620974405543026
    },
    "Tampa Bay Rays vs Los Angeles Dodgers": {
-    "p_matchup": 0.0,
+    "p_matchup": 0.07826933531666533,
     "p_al_wins": 0.3639782158392192
    },
    "Tampa Bay Rays vs Milwaukee Brewers": {
-    "p_matchup": 1.0,
-    "p_al_wins": 0.0
+    "p_matchup": 0.3501113102937223,
+    "p_al_wins": 0.34433705792231717
    }
   },
   "ws_home_field": {
@@ -118,6 +119,9 @@
    }
   },
   "alive": [
+   "Cleveland Guardians",
+   "Tampa Bay Rays",
+   "Los Angeles Dodgers",
    "Milwaukee Brewers"
   ],
   "home_win_rate_equal_teams": 0.5287566013654696
@@ -125,31 +129,31 @@
  "uncertainty": [
   {
    "team": "Cleveland Guardians",
-   "p05": 0.0,
-   "p50": 0.0,
-   "p95": 0.0,
-   "point": 0.0
+   "p05": 0.0787030466212587,
+   "p50": 0.1469006163574809,
+   "p95": 0.2466891383404066,
+   "point": 0.1516873122854379
   },
   {
    "team": "Tampa Bay Rays",
-   "p05": 0.0,
-   "p50": 0.0,
-   "p95": 0.0,
-   "point": 0.0
+   "p05": 0.0773162429897714,
+   "p50": 0.1527008006250863,
+   "p95": 0.258958143556037,
+   "point": 0.1490446315553492
   },
   {
    "team": "Los Angeles Dodgers",
-   "p05": 0.0,
-   "p50": 0.0,
-   "p95": 0.0,
-   "point": 0.0
+   "p05": 0.0701014941746834,
+   "p50": 0.1228107609905473,
+   "p95": 0.2021963680806442,
+   "point": 0.1249805343082245
   },
   {
    "team": "Milwaukee Brewers",
-   "p05": 1.0,
-   "p50": 1.0,
-   "p95": 1.0,
-   "point": 1.0
+   "p05": 0.426770364113245,
+   "p50": 0.5623407711551818,
+   "p95": 0.6961703504621072,
+   "point": 0.5742875218509883
   }
  ],
  "series": {
@@ -313,83 +317,124 @@
  "sensitivity": [
   {
    "scenario": "Baseline (\u03bb=80, full season)",
-   "Milwaukee Brewers": 1.0,
-   "Cleveland Guardians": 0.0,
-   "Tampa Bay Rays": 0.0,
-   "Los Angeles Dodgers": 0.0
+   "Milwaukee Brewers": 0.5742875218509883,
+   "Cleveland Guardians": 0.1516873122854379,
+   "Tampa Bay Rays": 0.1490446315553492,
+   "Los Angeles Dodgers": 0.1249805343082245
   },
   {
    "scenario": "Less shrinkage (\u03bb=40)",
-   "Milwaukee Brewers": 1.0,
-   "Cleveland Guardians": 0.0,
-   "Tampa Bay Rays": 0.0,
-   "Los Angeles Dodgers": 0.0
+   "Milwaukee Brewers": 0.5896323058287745,
+   "Cleveland Guardians": 0.1371597367016638,
+   "Tampa Bay Rays": 0.1459707808325634,
+   "Los Angeles Dodgers": 0.1272371766369982
   },
   {
    "scenario": "More shrinkage (\u03bb=160)",
-   "Milwaukee Brewers": 1.0,
-   "Cleveland Guardians": 0.0,
-   "Tampa Bay Rays": 0.0,
-   "Los Angeles Dodgers": 0.0
+   "Milwaukee Brewers": 0.5503422386916239,
+   "Cleveland Guardians": 0.1749608300307939,
+   "Tampa Bay Rays": 0.1531698480015232,
+   "Los Angeles Dodgers": 0.1215270832760589
   },
   {
    "scenario": "Recency-weighted (60-day half-life)",
-   "Milwaukee Brewers": 1.0,
-   "Cleveland Guardians": 0.0,
-   "Tampa Bay Rays": 0.0,
-   "Los Angeles Dodgers": 0.0
+   "Milwaukee Brewers": 0.562977638815255,
+   "Cleveland Guardians": 0.1639901554922469,
+   "Tampa Bay Rays": 0.1664545945897258,
+   "Los Angeles Dodgers": 0.1065776111027721
   },
   {
    "scenario": "Include 2026 postseason games",
-   "Milwaukee Brewers": 1.0,
-   "Cleveland Guardians": 0.0,
-   "Tampa Bay Rays": 0.0,
-   "Los Angeles Dodgers": 0.0
+   "Milwaukee Brewers": 0.5726587161333161,
+   "Cleveland Guardians": 0.1602354593955662,
+   "Tampa Bay Rays": 0.143813020063129,
+   "Los Angeles Dodgers": 0.1232928044079884
   },
   {
    "scenario": "Home field from runs (old method)",
-   "Milwaukee Brewers": 1.0,
-   "Cleveland Guardians": 0.0,
-   "Tampa Bay Rays": 0.0,
-   "Los Angeles Dodgers": 0.0
+   "Milwaukee Brewers": 0.5719501970261134,
+   "Cleveland Guardians": 0.1557004545524646,
+   "Tampa Bay Rays": 0.152118329121508,
+   "Los Angeles Dodgers": 0.1202310192999139
   },
   {
    "scenario": "Roster adjustment, untested (50%)",
-   "Milwaukee Brewers": 1.0,
-   "Cleveland Guardians": 0.0,
-   "Tampa Bay Rays": 0.0,
-   "Los Angeles Dodgers": 0.0
+   "Milwaukee Brewers": 0.5584236307100405,
+   "Cleveland Guardians": 0.1513143806112216,
+   "Tampa Bay Rays": 0.144416267226071,
+   "Los Angeles Dodgers": 0.1458457214526667
   },
   {
    "scenario": "Roster adjustment, untested (100%)",
-   "Milwaukee Brewers": 1.0,
-   "Cleveland Guardians": 0.0,
-   "Tampa Bay Rays": 0.0,
-   "Los Angeles Dodgers": 0.0
+   "Milwaukee Brewers": 0.5411069669699551,
+   "Cleveland Guardians": 0.1500084082100278,
+   "Tampa Bay Rays": 0.1392668165471918,
+   "Los Angeles Dodgers": 0.1696178082728252
   },
   {
    "scenario": "More confident (k=1.18)",
-   "Milwaukee Brewers": 1.0,
-   "Cleveland Guardians": 0.0,
-   "Tampa Bay Rays": 0.0,
-   "Los Angeles Dodgers": 0.0
+   "Milwaukee Brewers": 0.5994482876524053,
+   "Cleveland Guardians": 0.1280195299823949,
+   "Tampa Bay Rays": 0.1431585141263641,
+   "Los Angeles Dodgers": 0.1293736682388355
   },
   {
    "scenario": "Less confident (k=0.6)",
-   "Milwaukee Brewers": 1.0,
-   "Cleveland Guardians": 0.0,
-   "Tampa Bay Rays": 0.0,
-   "Los Angeles Dodgers": 0.0
+   "Milwaukee Brewers": 0.5119923373420565,
+   "Cleveland Guardians": 0.2138424860292816,
+   "Tampa Bay Rays": 0.1604241388467151,
+   "Los Angeles Dodgers": 0.1137410377819468
   },
   {
    "scenario": "Every game a coin flip",
-   "Milwaukee Brewers": 1.0,
-   "Cleveland Guardians": 0.0,
-   "Tampa Bay Rays": 0.0,
-   "Los Angeles Dodgers": 0.0
+   "Milwaukee Brewers": 0.40625,
+   "Cleveland Guardians": 0.328125,
+   "Tampa Bay Rays": 0.171875,
+   "Los Angeles Dodgers": 0.09375
   }
  ],
- "whatif": [],
+ "whatif": [
+  {
+   "series": "ALCS",
+   "game": 2,
+   "home": "Tampa Bay Rays",
+   "if_wins": "Cleveland Guardians",
+   "Cleveland Guardians": 0.2021587145719199,
+   "Tampa Bay Rays": 0.0828703039938736,
+   "Los Angeles Dodgers": 0.1278996462383859,
+   "Milwaukee Brewers": 0.5870713351958206
+  },
+  {
+   "series": "ALCS",
+   "game": 2,
+   "home": "Tampa Bay Rays",
+   "if_wins": "Tampa Bay Rays",
+   "Cleveland Guardians": 0.1138083873036316,
+   "Tampa Bay Rays": 0.1987086447562262,
+   "Los Angeles Dodgers": 0.1227897328482521,
+   "Milwaukee Brewers": 0.56469323509189
+  },
+  {
+   "series": "NLCS",
+   "game": 3,
+   "home": "Los Angeles Dodgers",
+   "if_wins": "Los Angeles Dodgers",
+   "Cleveland Guardians": 0.1528711501333504,
+   "Tampa Bay Rays": 0.1500192328080122,
+   "Los Angeles Dodgers": 0.2042143569727409,
+   "Milwaukee Brewers": 0.4928952600858963
+  },
+  {
+   "series": "NLCS",
+   "game": 3,
+   "home": "Los Angeles Dodgers",
+   "if_wins": "Milwaukee Brewers",
+   "Cleveland Guardians": 0.1504095126320384,
+   "Tampa Bay Rays": 0.147992675711015,
+   "Los Angeles Dodgers": 0.0394578832823545,
+   "Milwaukee Brewers": 0.6621399283745919
+  }
+ ],
  "ratings": [
   {
    "team": "Milwaukee Brewers",
@@ -536,10 +581,49 @@
   }
  ],
  "roster": {
+  "Cleveland Guardians": {
+   "fip_season": 3.9273011357700294,
+   "fip_oct": 3.836167876945263,
+   "dra": -0.0911332588247662,
+   "woba_season": 0.31103797293772373,
+   "woba_oct": 0.31340461141317194,
+   "sps": [
+    "Parker Messick",
+    "Gavin Williams",
+    "Daniel Espino",
+    "Foster Griffin"
+   ]
+  },
+  "Tampa Bay Rays": {
+   "fip_season": 3.978355777266039,
+   "fip_oct": 3.857451334666135,
+   "dra": -0.12090444259990418,
+   "woba_season": 0.3181897899070731,
+   "woba_oct": 0.31835230716288127,
+   "sps": [
+    "Drew Rasmussen",
+    "Freddy Peralta",
+    "Nick Martinez",
+    "Griffin Jax"
+   ]
+  },
+  "Los Angeles Dodgers": {
+   "fip_season": 3.8510381108107827,
+   "fip_oct": 3.4998008484524643,
+   "dra": -0.3512372623583184,
+   "woba_season": 0.32715051197438655,
+   "woba_oct": 0.3291290115268152,
+   "sps": [
+    "Tarik Skubal",
+    "Blake Snell",
+    "Yoshinobu Yamamoto",
+    "Tyler Glasnow"
+   ]
+  },
   "Milwaukee Brewers": {
    "fip_season": 3.81372857423836,
-   "fip_oct": 3.5989672727132667,
-   "dra": -0.21476130152509354,
+   "fip_oct": 3.67881409749278,
+   "dra": -0.1349144767455801,
    "woba_season": 0.32317773936960603,
    "woba_oct": 0.3230397195167506,
    "sps": [
@@ -669,26 +753,30 @@
  },
  "market": {
   "Cleveland Guardians": {
-   "american": "out",
-   "implied": 0.0
+   "american": "+400 / +400",
+   "implied": 0.1797837892587278
   },
   "Tampa Bay Rays": {
-   "american": "+140",
-   "implied": 0.39912255177604633
+   "american": "+475 / +500",
+   "implied": 0.1514555528584472
   },
   "Los Angeles Dodgers": {
-   "american": "out",
-   "implied": 0.0
+   "american": "+350 / +340",
+   "implied": 0.2035983421625468
   },
   "Milwaukee Brewers": {
-   "american": "-160",
-   "implied": 0.6008774482239536
+   "american": "+105 / +105",
+   "implied": 0.4651623157202801
   }
  },
  "market_sources": [
   {
-   "source": "SI (DraftKings)",
-   "url": "https://www.si.com/betting/rays-vs-brewers-opening-odds-for-2026-world-series-milwaukee-favored-to-win-first-title-in-franchise-history"
+   "source": "SI (sportsbook consensus)",
+   "url": "https://www.si.com/betting/2026-world-series-odds-brewers-jump-to-favorite-guardians-favored-over-rays-in-al"
+  },
+  {
+   "source": "Fox Sports (DraftKings)",
+   "url": "https://www.foxsports.com/stories/mlb/2026-world-series-odds"
   }
  ],
  "record": {

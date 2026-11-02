@@ -570,3 +570,32 @@ The model beat the market's Brier score in every snapshot that had a market pric
 **6 of 9 correct.** Log loss is 0.641 and Brier is 0.224, against 0.693 and 0.250 for a coin flip. That is slightly better than a coin flip, which is about what a 52–60% favorite should produce, and nine games can't tell the two apart.
 
 Gaps: ALCS G1, NLCS G1–G2, and WS G2–G4 have no pregame forecasts. The project started mid-LCS, and no refresh ran between Oct 20 and Oct 28. None were added after the fact.
+
+---
+
+## Project complete — 2026-11-02
+
+**Final run (2026-11-02 18:39 UTC):** pulled all data again. Nothing new: the last game was World Series Game 5, the record already ends at the final out, and all 22 tests pass.
+
+**The call held up.** On Oct 13, the model made the Brewers the favorite at **57%** (90% interval 43–70%; market 47%). The Brewers swept the Dodgers 4–0 and beat the Rays **4–1**. The clinching game was World Series Game 5 on **Oct 28** (MLB's official date; it started at 00:00 UTC Oct 29, which is why earlier entries say Oct 29).
+
+| Measure | Result |
+|---|---|
+| Original call | Brewers 57% → **won** |
+| Title favorite | Brewers in every forecast on record |
+| Title forecasts vs market (Brier) | Model better in 9 of 9 comparable snapshots (later rows reuse stale market prices, which flatters the model) |
+| Game forecasts | Favorite won **6 of 9**; log loss 0.641 vs 0.693 for a coin flip |
+
+One title is one outcome, and nine games can't separate a good model from a lucky one. The honest summary: the forecast was right, and it was well-calibrated enough not to embarrass itself. It doesn't prove skill.
+
+**Correction to the Grade entry:** it says "no refresh ran between Oct 20 and Oct 28". Refreshes did run on Oct 22 and 23 (no new information). The actual gap was **Oct 24–27**, when no runs happened at all, most likely because the app was closed or the Mac was asleep. That's why World Series Games 2–4 have no forecasts. None were added after the fact.
+
+**Reports in final mode:** once a champion exists, the reports and dashboard present the analysis **as it stood when the call was made**. That means the odds, uncertainty, stress test, market comparison and what-ifs, read from `outputs/call_2026-10-13/` (copied verbatim from the tagged commit `854a843`). They sit next to the result, the grade and the full forecast trail. The latest outputs describe a finished bracket (0% or 100%), so they aren't a forecast.
+
+**The scheduled refresh is disabled.** It ran 27 times; every run succeeded, and every forecast it recorded was made before its game.
+
+**What I'd do differently:**
+- **Run refreshes somewhere always-on.** A cloud routine instead of a laptop app would have prevented the World Series Games 2–4 gap.
+- **Capture market prices every day,** so the model-vs-market comparison isn't scored against stale prices.
+- **Expect MLB's data edge cases from day one.** Truncated series after a sweep, rainouts that reuse game IDs, and teams dropping out of the market each caused a fix mid-postseason.
+- **Starting pitchers are still the open research question.** Season FIP didn't help in the backtest; a better pitcher metric might.

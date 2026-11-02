@@ -1,6 +1,6 @@
 # 2026 World Series Prediction
 
-**Call (as of Oct 13, 2026): Milwaukee Brewers, 57%** (90% interval 43–70% from 1,000 resampled seasons). Milwaukee leads under all 11 modeling scenarios, and the betting market says about 47%.
+**Result: called it.** On Oct 13, 2026 the model picked the **Milwaukee Brewers at 57%** (90% interval 43–70%; market 47%). They won the World Series 4–1 over the Rays. Game by game, the model's favorite won 6 of 9. Every forecast was recorded before its game in [forecasts/](forecasts/). See the final grade in [LOG.md](LOG.md). The project is complete.
 
 ![tests](https://github.com/dipgip/mlb-WS-forecast/actions/workflows/tests.yml/badge.svg)
 

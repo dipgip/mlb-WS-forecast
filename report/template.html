@@ -64,6 +64,9 @@ a { color: var(--accent); }
 .hero { display: grid; gap: 22px; padding-bottom: 36px; }
 .hero h1 { font-size: clamp(3rem, 9vw, 5.6rem); text-transform: uppercase; font-weight: 800; }
 .hero h1 .team { color: var(--accent); display: block; }
+.result { font-family: var(--f-display); font-weight: 700; font-size: clamp(1.3rem, 3.4vw, 1.9rem); color: var(--accent); text-transform: uppercase; letter-spacing: .02em; margin: 0; }
+.result:empty, .grade:empty { display: none; }
+.grade { font-size: 1.05rem; color: var(--ink); }
 .verdict { display: flex; flex-wrap: wrap; gap: 28px 44px; align-items: end; }
 .big { font-family: var(--f-display); font-weight: 800; font-size: clamp(4.5rem, 14vw, 7.5rem); line-height: .85; }
 .big small { font-size: .45em; font-weight: 600; }
@@ -154,11 +157,12 @@ footer { padding-top: 30px; border-top: 1px solid var(--rule); font-size: .8rem;
   <div class="hero">
     <div class="eyebrow" data-f="asof"></div>
     <h1>The pick <span class="team" data-f="fav"></span></h1>
+    <p class="result" data-f="result_line"></p>
     <div class="verdict">
       <div class="big num" id="hero-pct"></div>
       <div class="kv"><b class="num" data-f="fav_ci"></b><span>90% interval, from refitting the model on 1,000 resampled seasons</span></div>
       <div class="kv"><b class="num" data-f="fav_mkt"></b><span>betting market, margin removed</span></div>
-      <div class="kv"><b data-f="top_mu"></b><span>most likely World Series (<span data-f="top_mu_pct"></span>)</span></div>
+      <div class="kv"><b data-f="top_mu"></b><span data-f="mu_label"></span></div>
     </div>
     <p class="lede"><span data-f="lede"></span> October baseball is mostly noise, and this page shows how much.</p>
   </div>
@@ -171,7 +175,7 @@ footer { padding-top: 30px; border-top: 1px solid var(--rule); font-size: .8rem;
   <section id="odds">
     <header>
       <div class="eyebrow">The answer</div>
-      <h2>Title odds for the last four teams</h2>
+      <h2 data-f="odds_head"></h2>
       <p>Exact probabilities from every remaining path through the bracket, using the real home/away schedule. The whisker is the 90% interval from refitting the model on 1,000 resampled seasons. The tick marks where each team stood before the LCS began. <span data-f="swing"></span></p>
     </header>
     <div class="chart">
@@ -190,6 +194,8 @@ footer { padding-top: 30px; border-top: 1px solid var(--rule); font-size: .8rem;
     </header>
     <div class="tbl-wrap"><table class="data" id="t-record"></table></div>
     <ul class="caveats" id="record-changes"></ul>
+    <p class="grade" data-f="grade_text"></p>
+    <div class="tbl-wrap" id="score-wrap" hidden><table class="data" id="t-score"></table></div>
     <h3>Game-by-game forecasts</h3>
     <p class="note" id="record-games-note"></p>
     <div class="tbl-wrap"><table class="data" id="t-games"></table></div>
@@ -557,6 +563,13 @@ document.addEventListener("mousemove", e => {
     g += `<tr><td>${esc(r.game)}</td><td style="text-align:left">${esc(r.matchup)}</td><td>${esc(r.first_pitch.replace("T", " ").replace("Z", ""))}</td><td>${esc(r.made.replace("T", " ").replace("Z", ""))}</td><td style="text-align:left">${esc(r.fav)}</td><td>${pct(r.p_fav)}</td><td class="${r.called === true ? "up" : r.called === false ? "down" : ""}">${r.winner ? (r.called ? "✓ " : "✗ ") + esc(r.winner) : "not played yet"}</td></tr>`;
   });
   document.getElementById("t-games").innerHTML = g + "</tbody>";
+  if (rec.score) {
+    const cols = Object.keys(rec.score.rows[0]);
+    let t = `<thead><tr>${cols.map(c => `<th>${esc(c)}</th>`).join("")}</tr></thead><tbody>`;
+    rec.score.rows.forEach(r => t += `<tr>${cols.map(c => `<td>${typeof r[c] === "number" ? r[c].toFixed(3) : esc(r[c])}</td>`).join("")}</tr>`);
+    document.getElementById("t-score").innerHTML = t + "</tbody>";
+    document.getElementById("score-wrap").hidden = false;
+  }
 })();
 
 /* ---------- ratings */

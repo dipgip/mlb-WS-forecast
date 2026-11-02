@@ -58,16 +58,25 @@ def nice_date(s):
     return f"{d.strftime('%b')} {d.day}, {d.year}"
 
 
-odds = json.loads((OUT / "odds_2026.json").read_text())
-unc = pd.read_csv(OUT / "uncertainty.csv").set_index("team")
-sens = pd.read_csv(OUT / "sensitivity.csv")
+# Once the World Series is decided, the latest outputs describe a finished bracket
+# (every team 0% or 100%), which is no forecast at all. Final mode presents the
+# analysis as it stood when the call was made, from the archive copied verbatim out of
+# the tagged commit (outputs/call_2026-10-13/README.md), next to the result and grade.
+CHAMP = R.champion()
+CALL = OUT / "call_2026-10-13"
+FINAL = CHAMP is not None and CALL.exists()
+SRC = CALL if FINAL else OUT
+
+odds = json.loads((SRC / "odds_2026.json").read_text())
+unc = pd.read_csv(SRC / "uncertainty.csv").set_index("team")
+sens = pd.read_csv(SRC / "sensitivity.csv")
 try:
-    whatif = pd.read_csv(OUT / "whatif_next_game.csv")
+    whatif = pd.read_csv(SRC / "whatif_next_game.csv")
 except pd.errors.EmptyDataError:  # no games left to play
     whatif = pd.DataFrame()
 ratings = pd.read_csv(OUT / "ratings_2026.csv")
-roster = json.loads((OUT / "roster_adjustments_2026.json").read_text())
-market = json.loads((OUT / "market_2026.json").read_text())
+roster = json.loads((SRC / "roster_adjustments_2026.json").read_text())
+market = json.loads((SRC / "market_2026.json").read_text())
 spb = json.loads((OUT / "sp_backtest_summary.json").read_text())
 bg = pd.read_csv(OUT / "backtest_games.csv")
 bs = pd.read_csv(OUT / "backtest_series.csv")
@@ -239,7 +248,7 @@ facts = {
     "watch_head": "What the next game in each series does",
     "watch_text": watch_text,
     "ratings_text": (f"Expected runs per game against a league-average opponent after shrinkage, and the implied win rate. "
-                     f"The {short(weakest)} rank {ordinal(rank[weakest])}, the lowest of the four teams left."),
+                     f"The {short(weakest)} rank {ordinal(rank[weakest])}, the lowest of the four LCS teams."),
     "next_matchup_caveat": (
         f"It ignores the specific pitching matchup in each game (for example {al_next['away_sp']} vs {al_next['home_sp']} "
         f"in ALCS Game {al_next['g']}). The backtest found that adding starters by season FIP doesn't help, so a better "
@@ -253,7 +262,75 @@ facts = {
     "sample_caveat": (f"The backtest covers {backtest['n_series']} series: enough to show the probabilities aren't badly off, "
                       "not enough to fine-tune them."),
     "home_rate": pc(odds["home_win_rate_equal_teams"]),
+    "result_line": None,
+    "odds_head": "Title odds for the last four teams",
+    "mu_label": f"most likely World Series ({pc(topmu[1]['p_matchup'])})",
+    "mu_metric_label": "Most likely World Series",
+    "grade_text": None,
 }
+
+if FINAL:
+    wa, wb, ww, _ = series_line("World Series")
+    loser = wb if wa == CHAMP else wa
+    ws_games = [g for g in series["World Series"] if g["home_runs"] is not None]
+    ws_end = nice_date(max(g["date"] for g in ws_games))
+    call_state = R.state_label(odds["series_state"])
+    gs = R.game_summary()
+    actual_mu = next(k for k in odds["ws_matchups"] if CHAMP in k and loser in k)
+    al_t, nl_t = actual_mu.split(" vs ")
+    # Title forecasts worth scoring: made while the outcome was still open
+    sc = R.score()
+    open_rows = [r for r, s in zip(sc["rows"], [s for s in R.snapshots() if s["kind"] == "live"])
+                 if s["odds"][CHAMP]["title"] < 0.999]
+    with_mkt = [r for r in open_rows if "Market Brier" in r]
+    beat = sum(r["Model Brier"] < r["Market Brier"] for r in with_mkt)
+
+    # did the biggest what-if at the time of the call come true?
+    came_true = ""
+    if len(whatif):
+        name = {"ALCS": "AL Championship Series", "NLCS": "NL Championship Series", "WS": "World Series"}[bw.series]
+        gm = games[(games.season == 2026) & (games.series_desc == name) & (games.series_game == int(bw.game))]
+        if len(gm):
+            r0 = gm.iloc[0]
+            winner = r0.home if r0.home_runs > r0.away_runs else r0.away
+            came_true = (f" That's what happened: the {short(winner)} won it {max(r0.home_runs, r0.away_runs)}–"
+                         f"{min(r0.home_runs, r0.away_runs)}." if winner == bw.if_wins else
+                         f" It didn't happen: the {short(winner)} won that game.")
+    called = CHAMP == fav
+    facts.update({
+        "asof": f"Final · World Series decided {ws_end} · the call below was made Oct 13, 2026",
+        "result_line": (f"{'✓ Called it' if called else '✗ Missed'}: the {short(CHAMP)} won the World Series "
+                        f"{ww[CHAMP]}–{ww[loser]} over the {short(loser)}, {ws_end}."),
+        "lede": (f"On Oct 13 ({call_state}) the model made the {fs} the favorite at {pc(now[fav]['ws'])} "
+                 f"(90% interval {facts['fav_ci']}). The betting market had them at {pc(mk[fav])}. "
+                 + (f"They won it all, beating the {short(loser)} {ww[CHAMP]}–{ww[loser]}. " if called else
+                    f"The {short(CHAMP)} won instead. ")
+                 + f"One correct pick from a {pc(now[fav]['ws'])} forecast is what a good model should deliver more "
+                   "often than not, but one outcome can't prove skill. The game-by-game record "
+                 + f"({gs.get('called', 0)} of {gs['n_graded']} favorites won) and the forecast trail below are the "
+                   "fairer test."),
+        "swing": f"These are the odds at the time of the call. {swing}",
+        "odds_head": "Title odds at the time of the call (Oct 13)",
+        "top_mu": f"{abbrev.get(al_t, short(al_t))} vs {abbrev.get(nl_t, short(nl_t))}",
+        "mu_label": f"the actual World Series; the model gave this matchup {pc(odds['ws_matchups'][actual_mu]['p_matchup'])} on Oct 13",
+        "mu_metric_label": "Actual World Series",
+        "market_text": (
+            f"At the time of the call, sportsbooks agreed on the favorite: the market had the {fs} at {pc(mk[fav])} "
+            f"after removing the bookmaker margin, against the model's {pc(now[fav]['ws'])}. The biggest disagreement "
+            f"was the {short(gap_team)}: market {pc(mk[gap_team])}, model {pc(now[gap_team]['ws'])}."),
+        "watch_head": "What the next game could do (as of the call)",
+        "watch_text": watch_text.replace("Title odds after each possible result.",
+                                         "Title odds after each possible result, as computed on Oct 13.") + came_true,
+        "data_through": nice_date(max(g["date"] for g in ws_games)),
+        "grade_text": (
+            f"The model had the {short(CHAMP)} as the title favorite in every forecast on record. Across the "
+            f"{len(open_rows)} title forecasts made while the outcome was still open, its Brier score beat the "
+            f"market's in {beat} of the {len(with_mkt)} that had a market price to compare. Market prices were captured "
+            "only on some days, so later rows reuse the last captured price, which flatters the model. Game by game, "
+            f"the model's favorite won {gs.get('called', 0)} of {gs['n_graded']} (log loss {gs.get('log_loss', 0):.3f} vs "
+            f"{gs.get('log_loss_coin', 0.693):.3f} for a coin flip), slightly better than chance, about what 52–60% "
+            "favorites should produce."),
+    })
 
 data = {
     "as_of": odds["as_of"],

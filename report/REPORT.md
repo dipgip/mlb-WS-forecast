@@ -1,19 +1,21 @@
 # 2026 World Series Forecast
 
-*Forecast as of Oct 28, 2026 games. Static version of the report. The [live dashboard](https://mlb-ws-forecast-w3huajspduv8ae2mctsydr.streamlit.app/) has the same numbers plus a what-if simulator.*
+*Final · World Series decided Oct 28, 2026 · the call below was made Oct 13, 2026. Static version of the report. The [live dashboard](https://mlb-ws-forecast-w3huajspduv8ae2mctsydr.streamlit.app/) has the same numbers plus a what-if simulator.*
 
-## The pick: Milwaukee Brewers, 100%
+**✓ Called it: the Brewers won the World Series 4–1 over the Rays, Oct 28, 2026.**
+
+## The pick: Milwaukee Brewers, 57%
 
 |  |  |
 | --- | ---: |
-| Model | **100%** |
-| 90% interval (1,000 resampled seasons) | 100%–100% |
-| Betting market, margin removed | 60% |
-| Most likely World Series | TB vs MIL (100%) |
+| Model | **57%** |
+| 90% interval (1,000 resampled seasons) | 43%–70% |
+| Betting market, margin removed | 47% |
+| Actual World Series | TB vs MIL |
 
-The Brewers finished 103–59, the best record in baseball. They lead the Dodgers 4–0 in the NLCS and would host Games 1, 2, 6 and 7 of any World Series. Every version of the model makes them the favorite. That still leaves a 0% chance the trophy goes somewhere else. October baseball is mostly noise, and this report shows how much.
+On Oct 13 (ALCS CLE 1–0 · NLCS MIL 2–0) the model made the Brewers the favorite at 57% (90% interval 43%–70%). The betting market had them at 47%. They won it all, beating the Rays 4–1. One correct pick from a 57% forecast is what a good model should deliver more often than not, but one outcome can't prove skill. The game-by-game record (6 of 9 favorites won) and the forecast trail below are the fairer test. October baseball is mostly noise, and this report shows how much.
 
-## Where the series stand
+## How the series went
 
 ### AL Championship Series: Rays win 4–2
 
@@ -39,9 +41,9 @@ The Brewers finished 103–59, the best record in baseball. They lead the Dodger
 | **Brewers** | **3** | **5** | **10** | 3 | **4** | **4** |
 | *Home* | *Brewers* | *Brewers* | *Rays* | *Rays* | *Rays* |  |
 
-## Title odds
+## Title odds at the time of the call (Oct 13)
 
-Exact probabilities from every remaining path through the bracket, using the real home/away schedule. Since the LCS began, the Brewers moved from 36% to 100% and the Dodgers went from 32% to 0%.
+Exact probabilities from every remaining path through the bracket, using the real home/away schedule. These are the odds at the time of the call. Since the LCS began, the Brewers moved from 36% to 57% and the Dodgers went from 32% to 12%.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="figures/odds-dark.png">
@@ -50,17 +52,17 @@ Exact probabilities from every remaining path through the bracket, using the rea
 
 | Team | Title now | 90% interval | Pennant now | Title before LCS | Market |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Milwaukee Brewers | **100.0%** | 100%–100% | 100.0% | 36.4% | 60% |
-| Cleveland Guardians | **0.0%** | 0%–0% | 0.0% | 10.7% | 0% |
-| Tampa Bay Rays | **0.0%** | 0%–0% | 100.0% | 21.3% | 40% |
-| Los Angeles Dodgers | **0.0%** | 0%–0% | 0.0% | 31.5% | 0% |
+| Milwaukee Brewers | **57.4%** | 43%–70% | 81.7% | 36.4% | 47% |
+| Cleveland Guardians | **15.2%** | 8%–25% | 57.2% | 10.7% | 18% |
+| Tampa Bay Rays | **14.9%** | 8%–26% | 42.8% | 21.3% | 15% |
+| Los Angeles Dodgers | **12.5%** | 7%–20% | 18.3% | 31.5% | 20% |
 
 | Possible World Series | Chance it happens | AL team wins | NL team wins | Home field |
 | --- | ---: | ---: | ---: | ---: |
-| Rays vs Brewers | 100.0% | 0.0% | 100.0% | Brewers (better record) |
-| Guardians vs Dodgers | 0.0% | 28.0% | 72.0% | Dodgers (better record) |
-| Guardians vs Brewers | 0.0% | 26.2% | 73.8% | Brewers (better record) |
-| Rays vs Dodgers | 0.0% | 36.4% | 63.6% | Dodgers (better record) |
+| Guardians vs Brewers | 46.7% | 26.2% | 73.8% | Brewers (better record) |
+| Rays vs Brewers | 35.0% | 34.4% | 65.6% | Brewers (better record) |
+| Guardians vs Dodgers | 10.4% | 28.0% | 72.0% | Dodgers (better record) |
+| Rays vs Dodgers | 7.8% | 36.4% | 63.6% | Dodgers (better record) |
 
 ## The forecast record
 
@@ -91,6 +93,22 @@ Every forecast is saved before the games it predicts and never changed afterward
 - **Oct 19 · v2 → Oct 20 · v2:** ALCS G6: Cleveland Guardians 3, Tampa Bay Rays 7.
 - **Oct 20 · v2 → Oct 28 · v2:** World Series G1: Tampa Bay Rays 2, Milwaukee Brewers 3; World Series G2: Tampa Bay Rays 4, Milwaukee Brewers 5; World Series G3: Milwaukee Brewers 10, Tampa Bay Rays 1; World Series G4: Milwaukee Brewers 3, Tampa Bay Rays 4.
 - **Oct 28 · v2 → Oct 29 · v2:** World Series G5: Milwaukee Brewers 4, Tampa Bay Rays 1.
+
+The model had the Brewers as the title favorite in every forecast on record. Across the 10 title forecasts made while the outcome was still open, its Brier score beat the market's in 9 of the 9 that had a market price to compare. Market prices were captured only on some days, so later rows reuse the last captured price, which flatters the model. Game by game, the model's favorite won 6 of 9 (log loss 0.641 vs 0.693 for a coin flip), slightly better than chance, about what 52–60% favorites should produce.
+
+| Snapshot | Model Brier | Model log score | Equal-odds Brier |
+| --- | ---: | ---: | ---: |
+| Oct 13 · v1 | 0.245 | 0.559 | 0.750 |
+| Oct 13 · v2 | 0.242 | 0.555 | 0.383 | 0.750 |
+| Oct 14 · v2 | 0.257 | 0.571 | 0.388 | 0.750 |
+| Oct 15 · v2 | 0.175 | 0.429 | 0.388 | 0.750 |
+| Oct 15 · v2 | 0.157 | 0.407 | 0.388 | 0.750 |
+| Oct 16 · v2 | 0.130 | 0.347 | 0.220 | 0.750 |
+| Oct 18 · v2 | 0.148 | 0.371 | 0.220 | 0.750 |
+| Oct 19 · v2 | 0.190 | 0.399 | 0.273 | 0.750 |
+| Oct 20 · v2 | 0.237 | 0.422 | 0.319 | 0.750 |
+| Oct 28 · v2 | 0.011 | 0.078 | 0.319 | 0.750 |
+| Oct 29 · v2 | 0.000 | -0.000 | 0.319 | 0.750 |
 
 **Game-by-game forecasts**
 
@@ -152,7 +170,7 @@ Of 11 World Series since 2015, the model's favorite won 8. Counting only clear f
 
 ## Stress test: the Brewers lead under every setup
 
-Each row changes one judgment call. Across these the favorite's title odds range 100%–100%. That range measures sensitivity to choices; the wider interval above measures statistical noise. With every remaining game a coin flip, the current series lead alone still gives the favorite 100%.
+Each row changes one judgment call. Across these the favorite's title odds range 51%–60%. That range measures sensitivity to choices; the wider interval above measures statistical noise. With every remaining game a coin flip, the current series lead alone still gives the favorite 41%.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="figures/sensitivity-dark.png">
@@ -161,9 +179,9 @@ Each row changes one judgment call. Across these the favorite's title odds range
 
 ## Model vs the betting market
 
-Sportsbooks agree on the favorite: the market has the Brewers at 60% after removing the bookmaker margin, against the model's 100%. The biggest disagreement is the Rays: market 40%, model 0%.
+At the time of the call, sportsbooks agreed on the favorite: the market had the Brewers at 47% after removing the bookmaker margin, against the model's 57%. The biggest disagreement was the Dodgers: market 20%, model 12%.
 
-One natural explanation is October deployment: playoff rotations differ from full-season staffs. But I tested the closest checkable version, adjusting each past playoff game for its actual starting pitchers (387 games, 2015–2025), and it did not improve predictions: it beat the plain model in only 39% of bootstrap resamples. So the gap is unexplained. The rotation story is a hypothesis, not a finding.
+One natural explanation is October deployment: the Dodgers' playoff rotation (Tarik Skubal, Blake Snell, Yoshinobu Yamamoto, Tyler Glasnow) projects to a 3.50 FIP against 3.85 for the season, and an adjustment for that moves them to 17%. But I tested the closest checkable version, adjusting each past playoff game for its actual starting pitchers (387 games, 2015–2025), and it did not improve predictions: it beat the plain model in only 39% of bootstrap resamples. So the gap is unexplained. The rotation story is a hypothesis, not a finding.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="figures/market-dark.png">
@@ -172,27 +190,34 @@ One natural explanation is October deployment: playoff rotations differ from ful
 
 | Team | Model | Roster-adjusted (untested) | Market | Sportsbook prices |
 | --- | ---: | ---: | ---: | ---: |
-| Milwaukee Brewers | 100.0% | 100.0% | 60.1% | -160 |
-| Cleveland Guardians | 0.0% | 0.0% | 0.0% | out |
-| Tampa Bay Rays | 0.0% | 0.0% | 39.9% | +140 |
-| Los Angeles Dodgers | 0.0% | 0.0% | 0.0% | out |
+| Milwaukee Brewers | 57.4% | 54.1% | 46.5% | +105 / +105 |
+| Cleveland Guardians | 15.2% | 15.0% | 18.0% | +400 / +400 |
+| Tampa Bay Rays | 14.9% | 13.9% | 15.1% | +475 / +500 |
+| Los Angeles Dodgers | 12.5% | 17.0% | 20.4% | +350 / +340 |
 
-1 sportsbook sources captured Oct 20, 2026, margin removed with the power method.
+2 sportsbook sources captured Oct 13, 2026, margin removed with the power method.
 
 | October roster check (untested) | Starters used | Staff FIP: season → Oct | Lineup wOBA: season → Oct |
 | --- | --- | ---: | ---: |
-| Brewers | Jacob Misiorowski, Logan Henderson, Robert Gasser, Dustin May | 3.81 → 3.60 | 0.323 → 0.323 |
+| Brewers | Jacob Misiorowski, Logan Henderson, Robert Gasser, Dustin May | 3.81 → 3.68 | 0.323 → 0.323 |
+| Guardians | Parker Messick, Gavin Williams, Daniel Espino, Foster Griffin | 3.93 → 3.84 | 0.311 → 0.313 |
+| Rays | Drew Rasmussen, Freddy Peralta, Nick Martinez, Griffin Jax | 3.98 → 3.86 | 0.318 → 0.318 |
+| Dodgers | Tarik Skubal, Blake Snell, Yoshinobu Yamamoto, Tyler Glasnow | 3.85 → 3.50 | 0.327 → 0.329 |
 
-## What the next game in each series does
+## What the next game could do (as of the call)
 
-No games are left to play: the World Series is over.
+Title odds after each possible result, as computed on Oct 13. The largest single swing: if the Brewers win NLCS Game 3, the Dodgers fall from 12% to 4%. That's what happened: the Brewers won it 6–2.
 
 | If this happens | Brewers | Guardians | Rays | Dodgers |
 | --- | ---: | ---: | ---: | ---: |
+| Guardians win ALCS G2 | 58.7% (+1.3) | 20.2% (+5.0) | 8.3% (−6.6) | 12.8% (+0.3) |
+| Rays win ALCS G2 | 56.5% (−1.0) | 11.4% (−3.8) | 19.9% (+5.0) | 12.3% (−0.2) |
+| Dodgers win NLCS G3 | 49.3% (−8.1) | 15.3% (+0.1) | 15.0% (+0.1) | 20.4% (+7.9) |
+| Brewers win NLCS G3 | 66.2% (+8.8) | 15.0% (−0.1) | 14.8% (−0.1) | 3.9% (−8.6) |
 
 ## 2026 team ratings
 
-Expected runs per game against a league-average opponent after shrinkage, and the implied win rate. The Guardians rank 16th, the lowest of the four teams left.
+Expected runs per game against a league-average opponent after shrinkage, and the implied win rate. The Guardians rank 16th, the lowest of the four LCS teams.
 
 | Rank | Team | Wins | Exp. runs scored / G | Exp. runs allowed / G | Win % vs avg |
 | ---: | --- | ---: | ---: | ---: | ---: |
@@ -220,4 +245,4 @@ Expected runs per game against a league-average opponent after shrinkage, and th
 
 ---
 
-Data: MLB Stats API (statsapi.mlb.com), games through Oct 28, 2026. Market prices: [SI (DraftKings)](https://www.si.com/betting/rays-vs-brewers-opening-odds-for-2026-world-series-milwaukee-favored-to-win-first-title-in-franchise-history). Generated 2026-10-29 by `report/build_md.py`; rebuild everything with `./run_all.sh`.
+Data: MLB Stats API (statsapi.mlb.com), games through Oct 28, 2026. Market prices: [SI (sportsbook consensus)](https://www.si.com/betting/2026-world-series-odds-brewers-jump-to-favorite-guardians-favored-over-rays-in-al), [Fox Sports (DraftKings)](https://www.foxsports.com/stories/mlb/2026-world-series-odds). Generated 2026-11-02 by `report/build_md.py`; rebuild everything with `./run_all.sh`.

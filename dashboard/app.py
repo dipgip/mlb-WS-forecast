@@ -84,6 +84,8 @@ def pct(x, d=1):
 
 # ---------------------------------------------------------------- header
 st.title(f"⚾ The pick: {F['fav']}")
+if F.get("result_line"):
+    st.success(F["result_line"])
 st.caption(F["asof"] + " · Data: MLB Stats API · Model and reports: github.com/dipgip/mlb-WS-forecast")
 
 c1, c2, c3, c4 = st.columns(4)
@@ -91,7 +93,7 @@ c1.metric("Model: title odds", f"{F['fav_pct']}%",
           delta=f"{(now[ORDER[0]]['ws'] - pre[ORDER[0]]['ws']) * 100:+.1f} pts since LCS began")
 c2.metric("90% interval", F["fav_ci"], help="From refitting the model on 1,000 resampled 2026 seasons.")
 c3.metric("Betting market", F["fav_mkt"], help=F["mkt_note"])
-c4.metric("Most likely World Series", F["top_mu"], help=f"Chance this matchup happens: {F['top_mu_pct']}")
+c4.metric(F.get("mu_metric_label", "Most likely World Series"), F["top_mu"], help=F.get("mu_label"))
 st.write(F["lede"])
 
 (t_over, t_record, t_sim, t_bt, t_stress, t_mkt, t_rat, t_meth) = st.tabs(
@@ -172,7 +174,7 @@ def current_odds_frame():
 with t_over:
     left, right = st.columns([3, 2], gap="large")
     with left:
-        st.subheader("Title odds for the last four teams")
+        st.subheader(F.get("odds_head", "Title odds for the last four teams"))
         st.caption("Bar = now · whisker = 90% interval (1,000 resampled seasons) · thick tick = before LCS Game 1. "
                    + F["swing"])
         st.altair_chart(odds_chart(current_odds_frame()), width="stretch")
@@ -263,6 +265,8 @@ with t_record:
 
     sc = R.score()
     st.markdown("**Final grade**")
+    if F.get("grade_text"):
+        st.write(F["grade_text"])
     if sc is None:
         st.info("Pending. When the World Series ends, every live forecast above is scored against the champion, "
                 "next to the market's prices from the same day and an equal-odds baseline.")
